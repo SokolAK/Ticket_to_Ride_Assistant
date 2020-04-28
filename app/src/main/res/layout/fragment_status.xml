@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/points_label"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:text="@string/points"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/points_value"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/stations_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/stations"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/points_label" />
+
+    <TextView
+        android:id="@+id/stations_value"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/points_value" />
+
+    <TextView
+        android:id="@+id/tickets_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tickets"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stations_label" />
+
+    <TextView
+        android:id="@+id/tickets_value"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stations_value" />
+
+
+    <include
+        android:id="@+id/cards"
+        layout="@layout/fragment_cards"
+
+        android:layout_width="match_parent"
+        android:layout_height="430dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

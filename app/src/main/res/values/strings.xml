@@ -1,0 +1,24 @@
+<resources>
+    <!-- Menu Activity -->
+    <string name="app_name">Ticket to Ride Assistant</string>
+    <string name="choose_game">Choose game</string>
+
+    <string-array name="games">
+        <item>Ticket to Ride. Europe.</item>
+    </string-array>
+
+    <!-- Top Fragment -->
+    <string name="top_tab">Status</string>
+
+    <!-- Draw Fragment -->
+    <string name="draw_tab">Draw cards</string>
+    <string name="accept_button">OK</string>
+    <string name="reset_button">Reset</string>
+
+    <!-- Main Activity -->
+    <string name="mainActivity_name">Status</string>
+    <string name="points">Points</string>
+    <string name="stations">Stations</string>
+    <string name="tickets">Tickets</string>
+
+</resources>
