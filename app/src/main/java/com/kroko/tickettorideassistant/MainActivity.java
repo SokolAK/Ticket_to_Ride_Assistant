@@ -4,6 +4,8 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -26,45 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(pager);
-
-        Intent intent = getIntent();
-
     }
 
     @Override
     public void onBackPressed() {
     }
 
-    private class SectionsPagerAdapter extends FragmentPagerAdapter {
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
 
-        @Override
-        public int getCount() {
-            return 2;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return new StatusFragment();
-                case 1:
-                    return new DrawFragment();
-            }
-            return null;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return getResources().getText(R.string.top_tab);
-                case 1:
-                    return getResources().getText(R.string.draw_tab);
-            }
-            return null;
-        }
-    }
 }

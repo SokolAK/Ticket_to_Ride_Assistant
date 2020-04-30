@@ -1,10 +1,13 @@
 package com.kroko.tickettorideassistant;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +15,11 @@ import android.widget.TextView;
 class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder> {
     private int[] imageIds;
     private int[] numbers;
+    private Listener listener;
+
+    interface Listener {
+        void onClick(int position);
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private CardView cardView;
@@ -34,6 +42,11 @@ class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder>
     @Override
     public CardImageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         CardView cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
+        GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) cv.getLayoutParams();
+        float density = parent.getContext().getResources().getDisplayMetrics().density;
+        float px = 4 * density * 6 + 1;
+        params.width = (int) ((parent.getMeasuredWidth() - px) / 3);
+        cv.setLayoutParams(params);
         return new ViewHolder(cv);
     }
 
@@ -46,5 +59,15 @@ class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder>
 
         TextView textView = cardView.findViewById(R.id.card_number);
         textView.setText(String.valueOf(numbers[position]));
+
+        cardView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onClick(position);
+            }
+        });
+    }
+
+    public void setListener(Listener listener){
+        this.listener = listener;
     }
 }
