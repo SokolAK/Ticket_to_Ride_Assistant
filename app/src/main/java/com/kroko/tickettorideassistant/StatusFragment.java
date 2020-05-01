@@ -47,18 +47,7 @@ public class StatusFragment extends Fragment {
 
 
         adapter.setListener(position -> {
-            String color = Card.cards[position].getName();
-            int numberOfCards = player.getCards().get(color);
-            player.getCards().put(color, numberOfCards+1);
-            player.setStations(player.getStations()+1);
 
-            ViewPager pager = getActivity().findViewById(R.id.pager);
-            pager.getAdapter().notifyDataSetChanged();
         });
-    }
-
-    public void onResume() {
-        super.onResume();
-
     }
 }
