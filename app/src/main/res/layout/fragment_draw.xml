@@ -6,23 +6,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:orientation="vertical">
+    android:background="#000000"
+    android:orientation="vertical"
+    android:id="@+id/draw_frag">
 
     <TextView
-        android:id="@+id/points_label"
-        android:layout_width="260dp"
+        android:id="@+id/drawCards_label"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Liczba kart:"
+        android:layout_weight="1"
+        android:text="@string/draw_cards_label"
         android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/points_value"
-        android:layout_width="160dp"
+        android:id="@+id/drawCards_value"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="2"
+        android:layout_weight="1"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +36,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toTopOf="@+id/draw_buttons_panel"
-        app:layout_constraintTop_toBottomOf="@+id/points_label"
+        app:layout_constraintTop_toBottomOf="@+id/drawCards_label"
         app:layout_constraintVertical_bias="1.0" />
 
     <LinearLayout
@@ -46,29 +48,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/reset_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:backgroundTint="#EF5350"
-            android:elevation="2dp"
-            android:text="@string/reset_button"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textColor="#B71C1C"
-            android:textSize="36sp" />
 
-        <Button
-            android:id="@+id/accept_button"
+        <ImageView
+            android:id="@+id/reset_icon"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="72dp"
             android:layout_weight="1"
-            android:backgroundTint="#4CAF50"
-            android:elevation="2dp"
-            android:text="@string/accept_button"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textColor="#1B5E20"
-            android:textSize="36sp" />
+            app:srcCompat="@drawable/ic_cached_black_24dp" />
+
+        <ImageView
+            android:id="@+id/accept_icon"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_check_circle_black_24dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

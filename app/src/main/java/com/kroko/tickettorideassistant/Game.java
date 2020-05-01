@@ -8,7 +8,7 @@ import lombok.Data;
 public class Game {
     private String title;
     private int startCards;
-    private int drawCards;
+    private int maxNoOfCardsToDraw;
     private int stations;
     private int stationPoints;
     private HashMap<Integer, Integer> scoring = new HashMap<>();
@@ -22,7 +22,7 @@ public class Game {
                 title = "Ticket to Ride. Europe";
 
                 startCards = 4;
-                drawCards = 2;
+                maxNoOfCardsToDraw = 2;
                 stations = 3;
                 stationPoints = 4;
 

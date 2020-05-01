@@ -1,23 +1,23 @@
 package com.kroko.tickettorideassistant;
 
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
+
+import org.w3c.dom.Text;
 
 public class DrawFragment extends Fragment implements View.OnClickListener {
 
@@ -46,7 +46,7 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
 
         adapter.setListener(position -> {
 
-            if (cardCounter < game.getDrawCards()) {
+            if (cardCounter < game.getMaxNoOfCardsToDraw()) {
                 //String color = Card.cards[position].getName();
                 //int numberOfCards = player.getCards().get(color);
                 //player.getCards().put(color, numberOfCards + 1);
@@ -55,11 +55,21 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
 
                 refreshPage();
             }
+            else
+            {
+                String text = getString(R.string.too_much) + " " + String.valueOf(game.getMaxNoOfCardsToDraw());
+                Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
+                toast.show();
+            }
         });
-        Button resetButton = drawer.findViewById(R.id.reset_button);
-        resetButton.setOnClickListener(this);
-        Button acceptButton = drawer.findViewById(R.id.accept_button);
-        acceptButton.setOnClickListener(this);
+
+        ImageView acceptIcon = drawer.findViewById(R.id.accept_icon);
+        acceptIcon.setOnClickListener(this);
+        ImageView resetIcon = drawer.findViewById(R.id.reset_icon);
+        resetIcon.setOnClickListener(this);
+
+        TextView maxNoDrawCards = drawer.findViewById(R.id.drawCards_value);
+        maxNoDrawCards.setText(String.valueOf(game.getMaxNoOfCardsToDraw()));
 
         return drawer;
     }
@@ -79,17 +89,25 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.accept_button:
-                Player player = ((TtRA_Application) getActivity().getApplication()).player;
-                for (int i = 0; i < cardNumbers.length; i++) {
-                    String color = Card.cards[i].getName();
-                    int cardNumber = player.getCards().get(color) + cardNumbers[i];
-                    player.getCards().put(color, cardNumber);
+            case R.id.accept_icon:
+                if(cardCounter == 0) {
+                    String text = getString(R.string.too_little);
+                    Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
+                    toast.show();
                 }
-                clearDrawCards();
-                refreshPage();
+                else {
+                    Player player = ((TtRA_Application) getActivity().getApplication()).player;
+                    for (int i = 0; i < cardNumbers.length; i++) {
+                        String color = Card.cards[i].getName();
+                        int cardNumber = player.getCards().get(color) + cardNumbers[i];
+                        player.getCards().put(color, cardNumber);
+                    }
+                    clearDrawCards();
+                    refreshPage();
+                    returnToTopPage();
+                }
                 break;
-            case R.id.reset_button:
+            case R.id.reset_icon:
                 clearDrawCards();
                 refreshPage();
                 break;
@@ -103,5 +121,10 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
     private void refreshPage() {
         ViewPager pager = getActivity().findViewById(R.id.pager);
         pager.getAdapter().notifyDataSetChanged();
+    }
+
+    private void returnToTopPage() {
+        TabLayout tabs = (TabLayout)((MainActivity)getActivity()).findViewById(R.id.tabs);
+        tabs.getTabAt(0).select();
     }
 }

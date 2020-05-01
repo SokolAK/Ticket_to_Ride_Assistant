@@ -15,6 +15,9 @@
     <string name="draw_tab">Dobierz karty</string>
     <string name="accept_button">OK</string>
     <string name="reset_button">Cofnij</string>
+    <string name="draw_cards_label">Liczba kart to dobrania:</string>
+    <string name="too_much">Maksymalna liczba dobranych kart:</string>
+    <string name="too_little">Proszę dobrać co najmniej jedną kartę</string>
 
     <!-- Main Activity -->
     <string name="mainActivity_name">Status</string>
