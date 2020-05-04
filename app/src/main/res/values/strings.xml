@@ -1,16 +1,32 @@
 <resources>
-    <!-- Menu Activity -->
+
     <string name="app_name">Ticket to Ride Assistant</string>
+    <string name="user_name">KrokoPL</string>
+    <string name="nav_top">Status</string>
+    <string name="nav_drawCards">Draw train car cards</string>
+    <string name="nav_buildRoute">Build route</string>
+    <string name="nav_showRoutes">Show built routes</string>
+    <string name="nav_buildStation">Build station</string>
+    <string name="nav_drawTickets">Draw tickets</string>
+
+    <string name="nav_help">Help</string>
+    <string name="nav_open_drawer">Open Navigation View</string>
+    <string name="nav_close_drawer">Close Navigation View</string>
+
+    <string name="mainActivity_name">Status</string>
+    <string name="points">Points</string>
+    <string name="stations">Stations</string>
+    <string name="tickets">Tickets</string>
+
+
     <string name="choose_game">Choose game</string>
 
     <string-array name="games">
         <item>Ticket to Ride. Europe.</item>
     </string-array>
 
-    <!-- Top Fragment -->
     <string name="top_tab">Status</string>
 
-    <!-- Draw Fragment -->
     <string name="draw_tab">Draw cards</string>
     <string name="accept_button">OK</string>
     <string name="reset_button">Reset</string>
@@ -18,10 +34,7 @@
     <string name="too_much">Maximal number of cards to draw:</string>
     <string name="too_little">Please draw at least one card</string>
 
-    <!-- Main Activity -->
-    <string name="mainActivity_name">Status</string>
-    <string name="points">Points</string>
-    <string name="stations">Stations</string>
-    <string name="tickets">Tickets</string>
+    <string name="station_cost">Number of cards to choose:</string>
+
 
 </resources>

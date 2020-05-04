@@ -1,4 +1,4 @@
-package com.kroko.tickettorideassistant;
+package com.kroko.TicketToRideAssistant;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class Player implements Serializable {
     }
 
     public void prepare(Game game) {
-        stations = game.getStations();
+        stations = game.getNumberOfStations();
         points = stations*game.getStationPoints();
     }
 

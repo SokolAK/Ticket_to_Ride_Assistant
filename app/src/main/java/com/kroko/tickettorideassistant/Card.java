@@ -1,4 +1,4 @@
-package com.kroko.tickettorideassistant;
+package com.kroko.TicketToRideAssistant;
 
 public class Card {
     private String name;

@@ -1,4 +1,4 @@
-package com.kroko.tickettorideassistant;
+package com.kroko.TicketToRideAssistant;
 
 import android.app.Application;
 

@@ -1,4 +1,4 @@
-package com.kroko.tickettorideassistant;
+package com.kroko.TicketToRideAssistant;
 
 import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.kroko.tickettorideassistant", appContext.getPackageName());
+        assertEquals("com.kroko.TicketToRideAssistant", appContext.getPackageName());
     }
 }

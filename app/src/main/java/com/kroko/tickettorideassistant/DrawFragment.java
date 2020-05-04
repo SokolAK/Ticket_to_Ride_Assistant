@@ -1,20 +1,24 @@
-package com.kroko.tickettorideassistant;
+package com.kroko.TicketToRideAssistant;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import org.w3c.dom.Text;
@@ -31,7 +35,6 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         View drawer = inflater.inflate(R.layout.fragment_draw, container, false);
         RecyclerView cardRecycler = drawer.findViewById(R.id.cards);
 
-        Player player = ((TtRA_Application) getActivity().getApplication()).player;
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
 
         int[] cardImages = new int[9];
@@ -71,20 +74,24 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         TextView maxNoDrawCards = drawer.findViewById(R.id.drawCards_value);
         maxNoDrawCards.setText(String.valueOf(game.getMaxNoOfCardsToDraw()));
 
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.nav_drawCards);
+
         return drawer;
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            cardCounter = savedInstanceState.getInt("cardCounter");
-        }
+        //if (savedInstanceState != null) {
+        //    cardCounter = savedInstanceState.getInt("cardCounter");
+        //    cardNumbers = savedInstanceState.getIntArray("cardNumbers");
+        //}
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putInt("cardCounter", cardCounter);
+        //savedInstanceState.putInt("cardCounter", cardCounter);
+        //savedInstanceState.putIntArray("cardNumbers", cardNumbers);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -119,12 +126,21 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         cardNumbers = new int[9];
     }
     private void refreshPage() {
-        ViewPager pager = getActivity().findViewById(R.id.pager);
-        pager.getAdapter().notifyDataSetChanged();
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, new DrawFragment(cardCounter,cardNumbers));
+        ft.commit();
     }
 
     private void returnToTopPage() {
-        TabLayout tabs = (TabLayout)((MainActivity)getActivity()).findViewById(R.id.tabs);
-        tabs.getTabAt(0).select();
+        ((MainActivity)getActivity()).onNavigationItemSelected(0);
+        NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+        navigationView.getMenu().getItem(0).setChecked(true);
+    }
+
+    public DrawFragment() {
+    }
+    public DrawFragment(int cardCounter, int[] cardNumbers) {
+        this.cardCounter = cardCounter;
+        this.cardNumbers = cardNumbers;
     }
 }

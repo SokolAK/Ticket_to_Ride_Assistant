@@ -1,4 +1,4 @@
-package com.kroko.tickettorideassistant;
+package com.kroko.TicketToRideAssistant;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -71,3 +71,4 @@ class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder>
         this.listener = listener;
     }
 }
+
