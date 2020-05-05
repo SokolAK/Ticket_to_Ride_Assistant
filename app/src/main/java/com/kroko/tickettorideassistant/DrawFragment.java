@@ -50,19 +50,14 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         adapter.setListener(position -> {
 
             if (cardCounter < game.getMaxNoOfCardsToDraw()) {
-                //String color = Card.cards[position].getName();
-                //int numberOfCards = player.getCards().get(color);
-                //player.getCards().put(color, numberOfCards + 1);
                 cardCounter++;
                 cardNumbers[position]++;
-
                 refreshPage();
             }
             else
             {
                 String text = getString(R.string.too_much) + " " + String.valueOf(game.getMaxNoOfCardsToDraw());
-                Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -80,27 +75,13 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         return drawer;
     }
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //if (savedInstanceState != null) {
-        //    cardCounter = savedInstanceState.getInt("cardCounter");
-        //    cardNumbers = savedInstanceState.getIntArray("cardNumbers");
-        //}
-    }
-
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        //savedInstanceState.putInt("cardCounter", cardCounter);
-        //savedInstanceState.putIntArray("cardNumbers", cardNumbers);
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.accept_icon:
                 if(cardCounter == 0) {
                     String text = getString(R.string.too_little);
-                    Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
-                    toast.show();
+                    Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Player player = ((TtRA_Application) getActivity().getApplication()).player;

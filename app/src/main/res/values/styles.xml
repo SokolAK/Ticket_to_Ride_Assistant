@@ -3,7 +3,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/colorText</item>
     </style>
     <style name="HeaderTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:textSize">20sp</item>
@@ -11,7 +12,12 @@
         <item name="android:textColor">@color/colorMenu</item>
     </style>
     <style name="MenuTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/colorMenu</item>
+    </style>
+
+    <style name="spinnerItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textSize">36sp</item>
+        <item name="android:textColor">@color/colorText</item>
     </style>
 </resources>

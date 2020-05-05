@@ -41,9 +41,7 @@ public class TopFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.HORIZONTAL, false);
         cardRecycler.setLayoutManager(layoutManager);
 
-
-        adapter.setListener(position -> {
-
-        });
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.nav_top);
     }
 }

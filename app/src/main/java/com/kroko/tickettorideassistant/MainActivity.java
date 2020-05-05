@@ -4,17 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+
 import com.google.android.material.navigation.NavigationView;
+
 import android.view.MenuItem;
 import android.content.Intent;
+
 import androidx.core.view.GravityCompat;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +28,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
-                        drawer,
-                        toolbar,
-                        R.string.nav_open_drawer,
-                        R.string.nav_close_drawer);
+                drawer,
+                toolbar,
+                R.string.nav_open_drawer,
+                R.string.nav_close_drawer);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -39,22 +43,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Player player = ((TtRA_Application) getApplication()).player;
         player.prepare(game);
 
-
-        DbHelper dbHelper = new DbHelper(this,"TtRADatabase.db",2);
-        try {
-            dbHelper.checkDatabase();
-        }
-        catch (Exception e) {}
-        try {
-            dbHelper.openDatabase();
-        }
-        catch (Exception e) {}
+        /*
+        DbHelper dbHelper = new DbHelper(this, "TtRADatabase.db", 1);
+        dbHelper.checkDatabase();
+        dbHelper.openDatabase();
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String filePath = db.getPath();
+        Cursor cursor = db.rawQuery("SELECT Length FROM Routes WHERE City1='Moskwa'", null);
+        if (cursor.moveToFirst()) {
+            player.setStations(cursor.getInt(0));
+        }
+        cursor.close();
         db.close();
-        db.rawQuery("SELECT * FROM Routes", null);
-
+         */
 
         Fragment fragment = new TopFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ft.commit();
 
     }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -71,12 +73,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(int id) {
         Fragment fragment = null;
         Intent intent = null;
-        switch(id){
+        switch (id) {
             case R.id.nav_draw_cards:
                 fragment = new DrawFragment();
                 break;
             case R.id.nav_build_route:
-                fragment = new BuildRoutesFragment();
+                fragment = new BuildRouteFragment();
                 break;
             case R.id.nav_show_routes:
                 fragment = new ShowRoutesFragment();
