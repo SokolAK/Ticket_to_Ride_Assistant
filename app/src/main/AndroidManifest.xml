@@ -15,8 +15,12 @@
         android:name=".TtRA_Application">
 
 
-        <activity android:name="com.kroko.TicketToRideAssistant.HelpActivity" />
-        <activity android:name="com.kroko.TicketToRideAssistant.MainActivity">
+        <activity
+            android:name="com.kroko.TicketToRideAssistant.HelpActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.kroko.TicketToRideAssistant.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

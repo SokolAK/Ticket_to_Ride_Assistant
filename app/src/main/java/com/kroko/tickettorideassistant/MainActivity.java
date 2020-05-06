@@ -57,9 +57,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         db.close();
          */
 
-        Fragment fragment = new TopFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.content_frame, fragment);
+        ft.add(R.id.content_frame, new TopFragment());
         ft.commit();
 
     }

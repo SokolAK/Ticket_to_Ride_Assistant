@@ -28,6 +28,7 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
     private int cardCounter;
     private int[] cardNumbers = new int[9];
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
