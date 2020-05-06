@@ -79,9 +79,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_build_route:
                 fragment = new BuildRouteFragment();
                 break;
-            case R.id.nav_show_routes:
-                fragment = new ShowRoutesFragment();
-                break;
             case R.id.nav_build_station:
                 fragment = new StationFragment();
                 break;

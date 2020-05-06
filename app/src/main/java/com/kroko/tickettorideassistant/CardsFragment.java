@@ -23,17 +23,26 @@ import com.google.android.material.tabs.TabLayout;
 
 import org.w3c.dom.Text;
 
-public class CardsFragment extends Fragment implements View.OnClickListener {
+public class CardsFragment extends Fragment {
 
     private int cardCounter;
     private int[] cardNumbers = new int[9];
+    private int maxCards;
+
+    public CardsFragment(int maxCards) {
+        this.maxCards = maxCards;
+    }
+    public CardsFragment(int cardCounter, int[] cardNumbers, int maxCards) {
+        this.cardCounter = cardCounter;
+        this.cardNumbers = cardNumbers;
+        this.maxCards = maxCards;
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View drawer = inflater.inflate(R.layout.fragment_cards, container, false);
-        RecyclerView cardRecycler = drawer.findViewById(R.id.cards);
+        View drawer = inflater.inflate(R.layout.fragment_cards2, container, false);
+        RecyclerView cardRecycler = drawer.findViewById(R.id.cards2);
 
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
 
@@ -49,9 +58,9 @@ public class CardsFragment extends Fragment implements View.OnClickListener {
 
         adapter.setListener(position -> {
 
-            if (cardCounter < game.getMaxNoOfCardsToDraw()) {
+            if (cardCounter < maxCards) {
                 cardCounter++;
-                cardNumbers[position]+=2;
+                cardNumbers[position]++;
                 refreshPage();
             }
             else
@@ -61,55 +70,19 @@ public class CardsFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        ImageView acceptIcon = drawer.findViewById(R.id.accept_icon);
-        acceptIcon.setOnClickListener(this);
-        ImageView resetIcon = drawer.findViewById(R.id.reset_icon);
-        resetIcon.setOnClickListener(this);
-
-        TextView maxNoDrawCards = drawer.findViewById(R.id.drawCards_value);
-        maxNoDrawCards.setText(String.valueOf(game.getMaxNoOfCardsToDraw()));
-
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_drawCards);
 
         return drawer;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.accept_icon:
-                if(cardCounter == 0) {
-                    String text = getString(R.string.too_little);
-                    Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Player player = ((TtRA_Application) getActivity().getApplication()).player;
-                    for (int i = 0; i < cardNumbers.length; i++) {
-                        String color = Card.cards[i].getName();
-                        int cardNumber = player.getCards().get(color) + cardNumbers[i];
-                        player.getCards().put(color, cardNumber);
-                    }
-                    clearDrawCards();
-                    refreshPage();
-                    returnToTopPage();
-                }
-                break;
-            case R.id.reset_icon:
-                clearDrawCards();
-                refreshPage();
-                break;
-        }
-    }
 
     private void clearDrawCards() {
         cardCounter = 0;
         cardNumbers = new int[9];
     }
     private void refreshPage() {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, new CardsFragment(cardCounter,cardNumbers));
-        ft.commit();
+
     }
 
     private void returnToTopPage() {
@@ -118,10 +91,4 @@ public class CardsFragment extends Fragment implements View.OnClickListener {
         navigationView.getMenu().getItem(0).setChecked(true);
     }
 
-    public CardsFragment() {
-    }
-    public CardsFragment(int cardCounter, int[] cardNumbers) {
-        this.cardCounter = cardCounter;
-        this.cardNumbers = cardNumbers;
-    }
 }

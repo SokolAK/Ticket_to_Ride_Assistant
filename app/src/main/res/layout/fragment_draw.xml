@@ -27,9 +27,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/cards"
-        layout="@layout/fragment_cards"
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cards_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

@@ -34,50 +34,15 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
         View drawer = inflater.inflate(R.layout.fragment_draw, container, false);
-        RecyclerView cardRecycler = drawer.findViewById(R.id.cards);
-
-        Game game = ((TtRA_Application) getActivity().getApplication()).game;
-
-        int[] cardImages = new int[9];
-        for (int i = 0; i < cardImages.length; i++) {
-            cardImages[i] = Card.cards[i].getImageResourceId();
-        }
-
-        CardImageAdapter adapter = new CardImageAdapter(cardImages, cardNumbers);
-        cardRecycler.setAdapter(adapter);
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.HORIZONTAL, false);
-        cardRecycler.setLayoutManager(layoutManager);
-
-        adapter.setListener(position -> {
-
-            if (cardCounter < game.getMaxNoOfCardsToDraw()) {
-                cardCounter++;
-                cardNumbers[position]++;
-                refreshPage();
-            }
-            else
-            {
-                String text = getString(R.string.too_much) + " " + String.valueOf(game.getMaxNoOfCardsToDraw());
-                Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        ImageView acceptIcon = drawer.findViewById(R.id.accept_icon);
-        acceptIcon.setOnClickListener(this);
-        ImageView resetIcon = drawer.findViewById(R.id.reset_icon);
-        resetIcon.setOnClickListener(this);
-
-        TextView maxNoDrawCards = drawer.findViewById(R.id.drawCards_value);
-        maxNoDrawCards.setText(String.valueOf(game.getMaxNoOfCardsToDraw()));
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_drawCards);
-
         return drawer;
     }
 
     @Override
     public void onClick(View v) {
+        Toast.makeText(getContext(), "DUPA", Toast.LENGTH_SHORT).show();
         switch (v.getId()) {
             case R.id.accept_icon:
                 if(cardCounter == 0) {
@@ -108,9 +73,9 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         cardNumbers = new int[9];
     }
     private void refreshPage() {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, new DrawFragment(cardCounter,cardNumbers));
-        ft.commit();
+        //FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        //ft.replace(R.id.content_frame, new DrawFragment(cardCounter,cardNumbers));
+        //ft.commit();
     }
 
     private void returnToTopPage() {
