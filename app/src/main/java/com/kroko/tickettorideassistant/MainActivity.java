@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = null;
         switch (id) {
             case R.id.nav_draw_cards:
+                Game game = ((TtRA_Application) getApplication()).game;
                 fragment = new DrawFragment();
                 break;
             case R.id.nav_build_route:

@@ -27,22 +27,35 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
 
     private int cardCounter;
     private int[] cardNumbers = new int[9];
+    private int maxCards;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        maxCards = ((TtRA_Application) getActivity().getApplication()).game.getMaxNoOfCardsToDraw();
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        ft.add(R.id.cards_container, CardsFragment.newInstance(0, cardNumbers, maxCards));
+        ft.addToBackStack(null);
+        //ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();
+
         View drawer = inflater.inflate(R.layout.fragment_draw, container, false);
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_drawCards);
+
+        ImageView acceptIcon = drawer.findViewById(R.id.accept_icon);
+        acceptIcon.setOnClickListener(this);
+        ImageView resetIcon = drawer.findViewById(R.id.reset_icon);
+        resetIcon.setOnClickListener(this);
+
         return drawer;
     }
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(getContext(), "DUPA", Toast.LENGTH_SHORT).show();
         switch (v.getId()) {
             case R.id.accept_icon:
                 if(cardCounter == 0) {
@@ -73,9 +86,9 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         cardNumbers = new int[9];
     }
     private void refreshPage() {
-        //FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        //ft.replace(R.id.content_frame, new DrawFragment(cardCounter,cardNumbers));
-        //ft.commit();
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        ft.replace(R.id.cards_container, CardsFragment.newInstance(0, cardNumbers, maxCards));
+        ft.commit();
     }
 
     private void returnToTopPage() {
@@ -84,10 +97,9 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         navigationView.getMenu().getItem(0).setChecked(true);
     }
 
-    public DrawFragment() {
+    public DrawFragment(int maxCards) {
+        this.maxCards = maxCards;
     }
-    public DrawFragment(int cardCounter, int[] cardNumbers) {
-        this.cardCounter = cardCounter;
-        this.cardNumbers = cardNumbers;
+    public DrawFragment() {
     }
 }
