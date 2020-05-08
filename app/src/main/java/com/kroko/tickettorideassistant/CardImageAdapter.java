@@ -16,6 +16,7 @@ class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder>
     private int[] imageIds;
     private int[] numbers;
     private Listener listener;
+    private int[] listOfTypeViews;
 
     interface Listener {
         void onClick(int position);
@@ -30,8 +31,18 @@ class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder>
     }
 
     public CardImageAdapter(int[] imageIds, int[] numbers){
+        this(imageIds, numbers, new int[] {1,1,1,1,1,1,1,1,1});
+    }
+
+    public CardImageAdapter(int[] imageIds, int[] numbers, int[] listOfTypeViews){
         this.imageIds = imageIds;
         this.numbers = numbers;
+        this.listOfTypeViews = listOfTypeViews;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return listOfTypeViews[position];
     }
 
     @Override
@@ -41,7 +52,11 @@ class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder>
 
     @Override
     public CardImageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        CardView cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
+        CardView cv = null;
+        if(viewType == 1)
+            cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
+        if(viewType == 0)
+            cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.blank_card_view, parent, false);
         GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) cv.getLayoutParams();
         float density = parent.getContext().getResources().getDisplayMetrics().density;
         float px = 4 * density * 6 + 1;
@@ -53,12 +68,17 @@ class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder>
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
         CardView cardView = holder.cardView;
-        ImageView imageView = cardView.findViewById(R.id.card_image);
-        Drawable drawable = ContextCompat.getDrawable(cardView.getContext(), imageIds[position]);
-        imageView.setImageDrawable(drawable);
-
-        TextView textView = cardView.findViewById(R.id.card_number);
-        textView.setText(String.valueOf(numbers[position]));
+        switch (holder.getItemViewType()) {
+            case 1:
+                ImageView imageView = cardView.findViewById(R.id.card_image);
+                Drawable drawable = ContextCompat.getDrawable(cardView.getContext(), imageIds[position]);
+                imageView.setImageDrawable(drawable);
+                TextView textView = cardView.findViewById(R.id.card_number);
+                textView.setText(String.valueOf(numbers[position]));
+                break;
+            case 0:
+                break;
+        }
 
         cardView.setOnClickListener(v -> {
             if (listener != null) {

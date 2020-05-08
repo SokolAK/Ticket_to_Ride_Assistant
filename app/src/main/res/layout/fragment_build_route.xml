@@ -25,14 +25,14 @@
         android:layout_height="25sp"
         android:orientation="horizontal">
         <ImageView
-            android:id="@+id/carriage_icon"
+            android:id="@+id/car_icon"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:foreground="@drawable/ic_carriage"
             android:foregroundTint="@color/colorText"
             android:layout_weight="1" />
         <TextView
-            android:id="@+id/carriage_number"
+            android:id="@+id/car_number"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="0"

@@ -81,8 +81,8 @@ public class BuildRouteFragment extends Fragment {
 
                 Cursor cursorCarriage = database.rawQuery("SELECT Length FROM Routes WHERE City1=\'" + city1 + "\' AND City2=\'" + city2 + "\'", null);
                 if(cursorCarriage.moveToFirst()) {
-                    TextView carriageNumber = drawer.findViewById(R.id.carriage_number);
-                    carriageNumber.setText(cursorCarriage.getString(0));
+                    TextView carNumber = drawer.findViewById(R.id.car_number);
+                    carNumber.setText(cursorCarriage.getString(0));
                 }
 
                 Cursor cursorLoco = database.rawQuery("SELECT Locomotives FROM Routes WHERE City1=\'" + city1 + "\' AND City2=\'" + city2 + "\'", null);

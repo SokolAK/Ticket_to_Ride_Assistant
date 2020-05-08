@@ -11,6 +11,7 @@ public class Player implements Serializable {
     private HashMap<String, Integer> cards = new HashMap<>();
     private int points;
     private int stations;
+    private int cars;
 
     public Player() {
         cards.put("violet", 0);
@@ -25,6 +26,7 @@ public class Player implements Serializable {
     }
 
     public void prepare(Game game) {
+        cars = game.getNumberOfCars();
         stations = game.getNumberOfStations();
         points = stations*game.getStationPoints();
     }

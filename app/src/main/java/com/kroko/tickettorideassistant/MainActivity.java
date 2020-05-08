@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.content_frame, new TopFragment());
         ft.commit();
-
     }
 
     @Override

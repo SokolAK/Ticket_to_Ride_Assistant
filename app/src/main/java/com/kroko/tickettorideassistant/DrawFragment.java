@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.viewpager.widget.ViewPager;
@@ -24,10 +25,11 @@ import com.google.android.material.tabs.TabLayout;
 import org.w3c.dom.Text;
 
 public class DrawFragment extends Fragment implements View.OnClickListener {
-
-    private int cardCounter;
+    private SharedViewModel viewModel;
+    private int[] cardCounter = new int[1];
     private int[] cardNumbers = new int[9];
     private int maxCards;
+    private int[] availableCards;
 
 
     @Override
@@ -35,8 +37,9 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
         maxCards = ((TtRA_Application) getActivity().getApplication()).game.getMaxNoOfCardsToDraw();
+        availableCards = new int[] {1,1,1,1,1,1,1,1,1};
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        ft.add(R.id.cards_container, CardsFragment.newInstance(0, cardNumbers, maxCards));
+        ft.add(R.id.cards_container, CardsFragment.newInstance(cardCounter, cardNumbers, maxCards, availableCards));
         ft.addToBackStack(null);
         //ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
@@ -54,11 +57,12 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         return drawer;
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.accept_icon:
-                if(cardCounter == 0) {
+                if(cardCounter[0] == 0) {
                     String text = getString(R.string.too_little);
                     Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
                 }
@@ -82,12 +86,14 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
     }
 
     private void clearDrawCards() {
-        cardCounter = 0;
+        cardCounter[0] = 0;
+        //viewModel.setCardCounter(0);
         cardNumbers = new int[9];
     }
     private void refreshPage() {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        ft.replace(R.id.cards_container, CardsFragment.newInstance(0, cardNumbers, maxCards));
+        ft.replace(R.id.cards_container, CardsFragment.newInstance(cardCounter, cardNumbers, maxCards, availableCards));
+        ft.addToBackStack(null);
         ft.commit();
     }
 
@@ -97,9 +103,6 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         navigationView.getMenu().getItem(0).setChecked(true);
     }
 
-    public DrawFragment(int maxCards) {
-        this.maxCards = maxCards;
-    }
     public DrawFragment() {
     }
 }

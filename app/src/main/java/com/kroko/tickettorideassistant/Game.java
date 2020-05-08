@@ -11,6 +11,7 @@ public class Game {
     private int maxNoOfCardsToDraw;
     private int numberOfStations;
     private int stationPoints;
+    private int numberOfCars;
     private HashMap<Integer, Integer> scoring = new HashMap<>();
     private HashMap<Integer, Integer> stationCost = new HashMap<>();
 
@@ -22,6 +23,7 @@ public class Game {
             case 0:
                 title = "Ticket to Ride. Europe";
 
+                numberOfCars = 45;
                 startCards = 4;
                 maxNoOfCardsToDraw = 2;
                 numberOfStations = 3;

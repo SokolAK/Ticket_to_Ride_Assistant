@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Arrays;
+
 public class TopFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -25,6 +27,8 @@ public class TopFragment extends Fragment {
 
         TextView points = drawer.findViewById(R.id.points_value);
         points.setText(String.valueOf(player.getPoints()));
+        TextView cars = drawer.findViewById(R.id.cars_value);
+        cars.setText(String.valueOf(player.getCars()));
         TextView stations = drawer.findViewById(R.id.stations_value);
         stations.setText(String.valueOf(player.getStations()));
 

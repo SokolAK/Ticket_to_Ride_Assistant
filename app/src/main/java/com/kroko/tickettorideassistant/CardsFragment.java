@@ -8,35 +8,44 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import com.google.android.material.navigation.NavigationView;
 
 public class CardsFragment extends Fragment {
-    private int cardCounter;
+    private SharedViewModel viewModel;
+    private int[] cardCounter;
     private int maxCards;
     private int[] cardNumbers;
+    private int[] availableCards;
     private static final String MAX_CARDS = "maxCards";
     private static final String CARD_COUNTER = "cardCounter";
     private static final String CARD_NUMBERS = "cardNumbers";
+    private static final String AVAILABLE_CARDS = "availableCards";
 
-    public static CardsFragment newInstance(int cardCounter, int[] cardNumbers, int maxCards) {
+    public static CardsFragment newInstance(int[] cardCounter, int[] cardNumbers, int maxCards, int[] availableCards) {
         CardsFragment cardsFragment = new CardsFragment();
         Bundle args = new Bundle();
         args.putInt("maxCards", maxCards);
-        args.putInt("cardCounter", cardCounter);
+        args.putIntArray("cardCounter", cardCounter);
         args.putIntArray("cardNumbers", cardNumbers);
+        args.putIntArray("availableCards", availableCards);
         cardsFragment.setArguments(args);
         return cardsFragment;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View drawer = inflater.inflate(R.layout.fragment_cards2, container, false);
-        cardCounter = getArguments().getInt(CARD_COUNTER);
+        cardCounter = getArguments().getIntArray(CARD_COUNTER);
         cardNumbers = getArguments().getIntArray(CARD_NUMBERS);
         maxCards = getArguments().getInt(MAX_CARDS);
+        availableCards = getArguments().getIntArray(AVAILABLE_CARDS);
 
         RecyclerView cardRecycler = drawer.findViewById(R.id.cards2);
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
@@ -53,13 +62,17 @@ public class CardsFragment extends Fragment {
 
         adapter.setListener(position -> {
 
-            if (cardCounter < maxCards) {
-                cardCounter++;
-                cardNumbers[position]++;
-                refreshPage();
-            } else {
-                String text = getString(R.string.too_much) + " " + maxCards;
-                Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+            if(availableCards[position] == 1) {
+                if (cardCounter[0] < maxCards) {
+                    cardCounter[0]++;
+                    //viewModel.setCardCounter(cardCounter);
+                    cardNumbers[position]++;
+
+                    refreshPage();
+                } else {
+                    String text = getString(R.string.too_much) + " " + maxCards;
+                    Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -69,15 +82,9 @@ public class CardsFragment extends Fragment {
         return drawer;
     }
 
-
-    private void clearDrawCards() {
-        cardCounter = 0;
-        cardNumbers = new int[9];
-    }
-
     private void refreshPage() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.cards_container, CardsFragment.newInstance(cardCounter, cardNumbers, maxCards));
+        ft.replace(R.id.cards_container, CardsFragment.newInstance(cardCounter, cardNumbers, maxCards, availableCards));
         ft.commit();
     }
 
