@@ -1,8 +1,13 @@
 package com.kroko.TicketToRideAssistant;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 public class Game {
@@ -14,6 +19,7 @@ public class Game {
     private int numberOfCars;
     private HashMap<Integer, Integer> scoring = new HashMap<>();
     private HashMap<Integer, Integer> stationCost = new HashMap<>();
+    private ArrayList<Card> cards = new ArrayList<>();
 
     public Game() {
     }
@@ -39,6 +45,16 @@ public class Game {
                 stationCost.put(1, 1);
                 stationCost.put(2, 2);
                 stationCost.put(3, 3);
+
+                cards.add(new Card("violet", R.drawable.violet));
+                cards.add(new Card("orange", R.drawable.orange));
+                cards.add(new Card("blue", R.drawable.blue));
+                cards.add(new Card("yellow", R.drawable.yellow));
+                cards.add(new Card("black", R.drawable.black));
+                cards.add(new Card("green", R.drawable.green));
+                cards.add(new Card("red", R.drawable.red));
+                cards.add(new Card("white", R.drawable.white));
+                cards.add(new Card("loco", R.drawable.loco));
 
                 break;
         }

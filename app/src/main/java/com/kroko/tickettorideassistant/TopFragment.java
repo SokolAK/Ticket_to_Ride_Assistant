@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,8 +22,6 @@ public class TopFragment extends Fragment {
 
     @Override
     public void onViewCreated(View drawer, Bundle savedInstanceState) {
-        RecyclerView cardRecycler = drawer.findViewById(R.id.cards);
-
         Player player = ((TtRA_Application) getActivity().getApplication()).player;
 
         TextView points = drawer.findViewById(R.id.points_value);
@@ -32,18 +31,12 @@ public class TopFragment extends Fragment {
         TextView stations = drawer.findViewById(R.id.stations_value);
         stations.setText(String.valueOf(player.getStations()));
 
-        int[] cardImages = new int[9];
-        int[] cardNumbers = new int[9];
-        for (int i = 0; i < cardImages.length; i++) {
-            cardImages[i] = Card.cards[i].getImageResourceId();
-            String color = Card.cards[i].getName();
-            cardNumbers[i] = player.getCards().get(color);
-        }
-
-        CardImageAdapter adapter = new CardImageAdapter(cardImages, cardNumbers);
-        cardRecycler.setAdapter(adapter);
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.HORIZONTAL, false);
-        cardRecycler.setLayoutManager(layoutManager);
+        //maxCards = ((TtRA_Application) getActivity().getApplication()).game.getMaxNoOfCardsToDraw();
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        ft.add(R.id.cards_container, new CardsFragment(player.getCards()));
+        ft.addToBackStack(null);
+        //ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_top);

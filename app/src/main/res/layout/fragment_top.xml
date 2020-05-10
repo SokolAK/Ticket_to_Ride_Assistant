@@ -14,8 +14,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/points"
         android:background="@color/colorBackLight"
+        android:text="@string/points"
+        app:layout_constraintEnd_toStartOf="@+id/points_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/cars"
+        app:layout_constraintEnd_toStartOf="@+id/cars_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/points_label" />
 
@@ -52,8 +54,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/stations"
         android:background="@color/colorBackLight"
+        android:text="@string/stations"
+        app:layout_constraintEnd_toStartOf="@+id/stations_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cars_label" />
 
@@ -73,6 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/tickets"
+        app:layout_constraintEnd_toStartOf="@+id/tickets_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stations_label" />
 
@@ -86,9 +90,8 @@
         app:layout_constraintTop_toBottomOf="@+id/stations_value" />
 
 
-    <include
-        android:id="@+id/cards"
-        layout="@layout/fragment_cards"
+    <FrameLayout
+        android:id="@+id/cards_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

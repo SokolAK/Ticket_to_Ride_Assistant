@@ -20,6 +20,9 @@ import android.content.Intent;
 import androidx.core.view.GravityCompat;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    //private Game game = ((TtRA_Application) getApplication()).game;
+    //private Player player = ((TtRA_Application) getApplication()).player;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,11 +40,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         Game game = ((TtRA_Application) getApplication()).game;
-        game.prepare((int) 0);
         Player player = ((TtRA_Application) getApplication()).player;
-        player.prepare(game);
+        game.prepare((int) 0);
+        player.setGame(game);
+        player.prepare();
 
         /*
         DbHelper dbHelper = new DbHelper(this, "TtRADatabase.db", 1);
@@ -73,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = null;
         switch (id) {
             case R.id.nav_draw_cards:
-                Game game = ((TtRA_Application) getApplication()).game;
                 fragment = new DrawFragment();
                 break;
             case R.id.nav_build_route:

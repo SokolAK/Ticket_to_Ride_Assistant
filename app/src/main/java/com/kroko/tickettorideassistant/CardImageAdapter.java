@@ -30,9 +30,6 @@ class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder>
         }
     }
 
-    public CardImageAdapter(int[] imageIds, int[] numbers){
-        this(imageIds, numbers, new int[] {1,1,1,1,1,1,1,1,1});
-    }
 
     public CardImageAdapter(int[] imageIds, int[] numbers, int[] listOfTypeViews){
         this.imageIds = imageIds;

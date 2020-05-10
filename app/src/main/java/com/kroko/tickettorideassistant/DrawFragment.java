@@ -25,21 +25,28 @@ import com.google.android.material.tabs.TabLayout;
 import org.w3c.dom.Text;
 
 public class DrawFragment extends Fragment implements View.OnClickListener {
-    private SharedViewModel viewModel;
-    private int[] cardCounter = new int[1];
-    private int[] cardNumbers = new int[9];
+    private Game game;
+    private Player player;
+
+    private int[] cardCounter;
+    private int[] cardNumbers;
     private int maxCards;
-    private int[] availableCards;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        maxCards = ((TtRA_Application) getActivity().getApplication()).game.getMaxNoOfCardsToDraw();
-        availableCards = new int[] {1,1,1,1,1,1,1,1,1};
+        game = ((TtRA_Application) getActivity().getApplication()).game;
+        player = ((TtRA_Application) getActivity().getApplication()).player;
+        cardCounter = new int[1];
+        cardNumbers = new int[game.getCards().size()];
+
+        Game game = ((TtRA_Application) getActivity().getApplication()).game;
+        Player player = ((TtRA_Application) getActivity().getApplication()).player;
+        maxCards = game.getMaxNoOfCardsToDraw();
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        ft.add(R.id.cards_container, CardsFragment.newInstance(cardCounter, cardNumbers, maxCards, availableCards));
+        ft.add(R.id.cards_container, new CardsFragment(cardCounter, cardNumbers, maxCards , true));
         ft.addToBackStack(null);
         //ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
@@ -69,30 +76,29 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
                 else {
                     Player player = ((TtRA_Application) getActivity().getApplication()).player;
                     for (int i = 0; i < cardNumbers.length; i++) {
-                        String color = Card.cards[i].getName();
-                        int cardNumber = player.getCards().get(color) + cardNumbers[i];
-                        player.getCards().put(color, cardNumber);
+                        int cardNumber = player.getCards()[i] + cardNumbers[i];
+                        player.getCards()[i] = cardNumber;
                     }
                     clearDrawCards();
-                    refreshPage();
+                    refreshCards();
                     returnToTopPage();
                 }
                 break;
             case R.id.reset_icon:
                 clearDrawCards();
-                refreshPage();
+                refreshCards();
                 break;
         }
     }
 
     private void clearDrawCards() {
         cardCounter[0] = 0;
-        //viewModel.setCardCounter(0);
-        cardNumbers = new int[9];
+        Game game = ((TtRA_Application) getActivity().getApplication()).game;
+        cardNumbers = new int[game.getCards().size()];
     }
-    private void refreshPage() {
+    private void refreshCards() {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        ft.replace(R.id.cards_container, CardsFragment.newInstance(cardCounter, cardNumbers, maxCards, availableCards));
+        ft.replace(R.id.cards_container, new CardsFragment(cardCounter, cardNumbers, maxCards, true));
         ft.addToBackStack(null);
         ft.commit();
     }
@@ -104,5 +110,6 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
     }
 
     public DrawFragment() {
+
     }
 }
