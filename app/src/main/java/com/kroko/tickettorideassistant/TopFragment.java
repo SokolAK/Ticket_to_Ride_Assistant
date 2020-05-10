@@ -31,11 +31,16 @@ public class TopFragment extends Fragment {
         TextView stations = drawer.findViewById(R.id.stations_value);
         stations.setText(String.valueOf(player.getStations()));
 
-        //maxCards = ((TtRA_Application) getActivity().getApplication()).game.getMaxNoOfCardsToDraw();
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        ft.add(R.id.cards_container, new CardsFragment(player.getCards()));
+
+        Game game = ((TtRA_Application) getActivity().getApplication()).game;
+        for(Card card: game.getCards()) {
+            card.setClickable(0);
+            card.setVisible(1);
+        }
+
+        ft.add(R.id.cards_container, new CardsFragment(player.getCardsNumbers()));
         ft.addToBackStack(null);
-        //ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);

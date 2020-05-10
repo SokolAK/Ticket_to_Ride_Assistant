@@ -2,69 +2,52 @@ package com.kroko.TicketToRideAssistant;
 
 import android.os.Bundle;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class CardsFragment extends Fragment {
-    private Game game;
-    private Player player;
+import java.util.ArrayList;
 
-    boolean clickable;
-    private SharedViewModel viewModel;
+public class CardsFragment extends Fragment {
     private int[] cardCounter;
     private int maxCards;
-    private int[] cardNumbers;
-    private int[] availableCards;
+    private int[] cardsNumbers;
+    private boolean drawingCards;
+    private int[] maxCardsNumbers;
 
-
-    public CardsFragment() {
-
+    public CardsFragment(int[] cardsNumbers) {
+        this.cardsNumbers = cardsNumbers;
     }
 
-    public CardsFragment(int[] cardNumbers) {
-        this();
-        this.cardNumbers = cardNumbers;
-        this.availableCards = new int[cardNumbers.length];
-        for (int i = 0; i < this.availableCards.length; ++i)
-            this.availableCards[i] = 1;
-    }
-
-    public CardsFragment(int[] cardCounter, int[] cardNumbers, int maxCards, boolean clickable) {
-        this(cardNumbers);
+    public CardsFragment(int[] cardsNumbers, int[] cardCounter) {
+        this(cardsNumbers);
         this.cardCounter = cardCounter;
-        this.maxCards = maxCards;
-        this.clickable = clickable;
-        this.availableCards = new int[cardNumbers.length];
-        for (int i = 0; i < this.availableCards.length; ++i)
-            this.availableCards[i] = 1;
     }
 
-    public CardsFragment(int[] cardCounter, int[] cardNumbers, int maxCards, int[] availableCards, boolean clickable) {
-        this(cardNumbers);
-        this.cardCounter = cardCounter;
+    public CardsFragment(int[] cardsNumbers, int[] cardCounter, int maxCards) {
+        this(cardsNumbers,cardCounter);
         this.maxCards = maxCards;
-        this.clickable = clickable;
-        this.availableCards = availableCards;
     }
 
+    public void setDrawingCards(boolean drawingCards) {
+        this.drawingCards = drawingCards;
+    }
+    public void setMaxCardsNumbers(int[] maxCardsNumbers) {
+        this.maxCardsNumbers = maxCardsNumbers;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
         Player player = ((TtRA_Application) getActivity().getApplication()).player;
         View drawer = inflater.inflate(R.layout.fragment_cards, container, false);
@@ -75,41 +58,49 @@ public class CardsFragment extends Fragment {
             cardImages[i] = game.getCards().get(i).getImageResourceId();
         }
 
-        CardImageAdapter adapter = new CardImageAdapter(cardImages, cardNumbers, availableCards);
+        CardImageAdapter adapter = new CardImageAdapter(game.getCards(), cardsNumbers);
         cardRecycler.setAdapter(adapter);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.HORIZONTAL, false);
         cardRecycler.setLayoutManager(layoutManager);
 
         adapter.setListener(position -> {
-            if (clickable && availableCards[position] == 1) {
-                if (cardCounter[0] < maxCards) {
-                    for (int i = 0; i < availableCards.length; ++i) {
-                        if(i != position && !game.getCards().get(position).getName().equals("loco")  && !game.getCards().get(i).getName().equals("loco")  ) {
-                            availableCards[i] = 0;
-                        }
-                    }
-
+            if(drawingCards) {
+                if (cardCounter[0] < maxCards || maxCards == 0) {
                     cardCounter[0]++;
-                    //viewModel.setCardCounter(cardCounter);
-                    cardNumbers[position]++;
-
-                    refreshPage();
-                } else {
-                    String text = getString(R.string.too_much) + " " + maxCards;
-                    Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+                    cardsNumbers[position]++;
                 }
             }
+            else {
+                if (cardsNumbers[position] == maxCardsNumbers[position]) {
+                    game.getCards().get(position).setClickable(0);
+                }
+                if(game.getCards().get(position).getClickable() == 1) {
+                    if (cardCounter[0] < maxCards || maxCards == 0) {
+                        cardCounter[0]++;
+                        cardsNumbers[position]++;
+                    }
+                    if (game.getCards().get(position).getColor() != 'L') {
+                        for (int i = 0; i < game.getCards().size(); ++i) {
+                            if (i != position && game.getCards().get(i).getColor() != 'L') {
+                                game.getCards().get(i).setClickable(0);
+                                game.getCards().get(i).setVisible(0);
+                            }
+                        }
+                    }
+                }
+            }
+            refreshPage();
         });
-
-        //Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        //toolbar.setTitle(R.string.nav_drawCards);
 
         return drawer;
     }
 
     private void refreshPage() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.cards_container, new CardsFragment(cardCounter, cardNumbers, maxCards, availableCards, clickable));
+        CardsFragment cardsFragment = new CardsFragment(cardsNumbers,cardCounter,maxCards);
+        cardsFragment.setDrawingCards(drawingCards);
+        cardsFragment.setMaxCardsNumbers(maxCardsNumbers);
+        ft.replace(R.id.cards_container, cardsFragment);
         ft.commit();
     }
 
@@ -118,5 +109,6 @@ public class CardsFragment extends Fragment {
         NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
         navigationView.getMenu().getItem(0).setChecked(true);
     }
+
 
 }

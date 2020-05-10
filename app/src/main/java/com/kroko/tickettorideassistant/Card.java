@@ -1,18 +1,18 @@
 package com.kroko.TicketToRideAssistant;
 
+import lombok.Data;
+
+@Data
 public class Card {
-    private String name;
+    private char color;
     private int imageResourceId;
+    private int clickable;
+    private int visible;
 
-    public Card(String name, int imageResourceId) {
-        this.name = name;
+    public Card(char color, int imageResourceId) {
+        this.color = color;
         this.imageResourceId = imageResourceId;
-    }
-
-    public String getName() {
-        return name;
-    }
-    public int getImageResourceId() {
-        return imageResourceId;
+        this.clickable = 0;
+        this.visible = 1;
     }
 }

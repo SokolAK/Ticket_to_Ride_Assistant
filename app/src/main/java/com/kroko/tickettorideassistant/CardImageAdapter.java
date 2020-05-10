@@ -1,22 +1,21 @@
 package com.kroko.TicketToRideAssistant;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder> {
-    private int[] imageIds;
-    private int[] numbers;
     private Listener listener;
-    private int[] listOfTypeViews;
+    private ArrayList<Card> cards;
+    private int[] cardsNumbers;
 
     interface Listener {
         void onClick(int position);
@@ -30,21 +29,19 @@ class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder>
         }
     }
 
-
-    public CardImageAdapter(int[] imageIds, int[] numbers, int[] listOfTypeViews){
-        this.imageIds = imageIds;
-        this.numbers = numbers;
-        this.listOfTypeViews = listOfTypeViews;
+    public CardImageAdapter(ArrayList<Card> cards, int[] cardsNumbers){
+        this.cards = cards;
+        this.cardsNumbers = cardsNumbers;
     }
 
     @Override
     public int getItemViewType(int position) {
-        return listOfTypeViews[position];
+        return cards.get(position).getVisible();
     }
 
     @Override
     public int getItemCount(){
-        return imageIds.length;
+        return cards.size();
     }
 
     @Override
@@ -68,10 +65,10 @@ class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder>
         switch (holder.getItemViewType()) {
             case 1:
                 ImageView imageView = cardView.findViewById(R.id.card_image);
-                Drawable drawable = ContextCompat.getDrawable(cardView.getContext(), imageIds[position]);
+                Drawable drawable = ContextCompat.getDrawable(cardView.getContext(), cards.get(position).getImageResourceId());
                 imageView.setImageDrawable(drawable);
                 TextView textView = cardView.findViewById(R.id.card_number);
-                textView.setText(String.valueOf(numbers[position]));
+                textView.setText(String.valueOf(cardsNumbers[position]));
                 break;
             case 0:
                 break;
