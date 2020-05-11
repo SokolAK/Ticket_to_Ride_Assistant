@@ -20,16 +20,14 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class BuildRouteFragment extends Fragment implements View.OnClickListener {
-
     private Game game;
     private Player player;
-
     private SQLiteDatabase database;
     private final String DB_NAME = "TtRADatabase.db";
-
     private int[] cardCounter;
     private int[] cardsNumbers;
     private String city1;
@@ -38,7 +36,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
     private int locos;
     private boolean tunnel;
     private String colors;
-
+    private int maxCards;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,72 +64,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         manageSpinner1(drawer);
         manageSpinner2(drawer);
         Spinner listCity2 = drawer.findViewById(R.id.spinner_city2);
-        listCity2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view,
-                                       int position, long id) {
-                Spinner listCity1 = drawer.findViewById(R.id.spinner_city1);
-                Cursor cursor1 = (Cursor) listCity1.getSelectedItem();
-                city1 = cursor1.getString(0);
-                Cursor cursor2 = (Cursor) listCity2.getSelectedItem();
-                city2 = cursor2.getString(0);
-
-                Cursor cursorCarriage = database.rawQuery("SELECT Length FROM Routes " +
-                        "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
-                        "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ", null);
-                if (cursorCarriage.moveToFirst()) {
-                    length = cursorCarriage.getInt(0);
-                }
-
-                Cursor cursorLoco = database.rawQuery("SELECT Locomotives FROM Routes " +
-                        "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
-                        "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ", null);
-                if (cursorLoco.moveToFirst()) {
-                    locos = cursorLoco.getInt(0);
-                }
-
-                Cursor cursorColors = database.rawQuery("SELECT Colors FROM Routes " +
-                        "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
-                        "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ", null);
-                if (cursorColors.moveToFirst()) {
-                    colors = cursorColors.getString(0);
-                }
-
-                Cursor cursorTunnel = database.rawQuery("SELECT Tunnel FROM Routes " +
-                        "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
-                        "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ", null);
-                if (cursorTunnel.moveToFirst()) {
-                    if (cursorTunnel.getString(0).equals("true")) {
-                        tunnel = true;
-                    } else {
-                        tunnel = false;
-                    }
-                }
-
-
-                TextView lengthText = drawer.findViewById(R.id.car_number);
-                lengthText.setText(String.valueOf(length));
-                TextView locoText = drawer.findViewById(R.id.loco_number);
-                locoText.setText(String.valueOf(locos));
-
-                setAvailableCards(colors);
-
-                if (tunnel) {
-                    drawer.findViewById(R.id.tunnel_icon).setVisibility(View.VISIBLE);
-                } else {
-                    drawer.findViewById(R.id.tunnel_icon).setVisibility(View.INVISIBLE);
-                }
-
-
-                clearCards();
-                refreshCards();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                // TODO Auto-generated method stub
-            }
-        });
+        listCity2.setOnItemSelectedListener(new Listener(drawer));
 
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
@@ -143,8 +76,9 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case R.id.accept_icon:
-                if ( length <= player.getCars()) {
+                if (length <= player.getCars()) {
                     if (cardCounter[0] >= length) {
                         int selectedLocos = 0;
                         for (int i = 0; i < game.getCards().size(); ++i) {
@@ -155,7 +89,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                         if (selectedLocos >= locos) {
                             Player player = ((TtRA_Application) getActivity().getApplication()).player;
                             player.addPoints(game.getScoring().get(length));
-                            player.spendCars(cardCounter[0]);
+                            player.spendCars(length);
                             player.spendCards(cardsNumbers);
                             clearCards();
                             refreshCards();
@@ -166,16 +100,114 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                     } else {
                         Toast.makeText(getContext(), R.string.too_little_cards, Toast.LENGTH_SHORT).show();
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(getContext(), R.string.too_little_cars, Toast.LENGTH_SHORT).show();
                 }
 
                 break;
+
             case R.id.reset_icon:
                 clearCards();
                 refreshCards();
                 break;
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        database.close();
+    }
+
+    private class Listener implements AdapterView.OnItemSelectedListener {
+        private View drawer;
+
+        private Listener(View drawer) {
+            this.drawer = drawer;
+        }
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Spinner listCity1 = drawer.findViewById(R.id.spinner_city1);
+            Cursor cursor1 = (Cursor) listCity1.getSelectedItem();
+            city1 = cursor1.getString(0);
+            Spinner listCity2 = drawer.findViewById(R.id.spinner_city2);
+            Cursor cursor2 = (Cursor) listCity2.getSelectedItem();
+            city2 = cursor2.getString(0);
+
+            Cursor cursorCarriage = database.rawQuery("SELECT Length FROM Routes " +
+                    "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
+                    "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ", null);
+            if (cursorCarriage.moveToFirst()) {
+                length = cursorCarriage.getInt(0);
+            }
+
+
+            Cursor cursorLoco = database.rawQuery("SELECT Locomotives FROM Routes " +
+                    "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
+                    "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ", null);
+            if (cursorLoco.moveToFirst()) {
+                if (cursorLoco == null) {
+                    locos = 0;
+                }
+                else {
+                    locos = cursorLoco.getInt(0);
+                }
+            }
+
+
+            Cursor cursorColors = database.rawQuery("SELECT Colors FROM Routes " +
+                    "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
+                    "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ", null);
+            if (cursorColors.moveToFirst()) {
+                colors = cursorColors.getString(0);
+            }
+
+
+            Cursor cursorTunnel = database.rawQuery("SELECT Tunnel FROM Routes " +
+                    "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
+                    "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ", null);
+            if (cursorTunnel.moveToFirst()) {
+                //if (cursorTunnel.getString(0).equals("TRUE")) {
+                if (cursorTunnel.getString(0) == null) {
+                    tunnel = false;
+                } else {
+                    tunnel = true;
+                }
+            }
+
+            TextView carText = drawer.findViewById(R.id.car_number);
+            carText.setText(" "+String.valueOf(length - locos));
+            setAvailableCards(colors);
+            maxCards = length;
+
+            if (locos > 0) {
+                drawer.findViewById(R.id.loco_icon).setVisibility(View.VISIBLE);
+                drawer.findViewById(R.id.loco_number).setVisibility(View.VISIBLE);
+                TextView locoText = drawer.findViewById(R.id.loco_number);
+                locoText.setText(" "+String.valueOf(locos));
+            } else {
+                drawer.findViewById(R.id.loco_icon).setVisibility(View.INVISIBLE);
+                drawer.findViewById(R.id.loco_number).setVisibility(View.INVISIBLE);
+            }
+            if (tunnel) {
+                drawer.findViewById(R.id.tunnel_icon).setVisibility(View.VISIBLE);
+                maxCards += game.getMaxExtraCardsForTunnel();
+            } else {
+                drawer.findViewById(R.id.tunnel_icon).setVisibility(View.INVISIBLE);
+            }
+
+            TextView lengthText = drawer.findViewById(R.id.length_value);
+            lengthText.setText(" "+String.valueOf(length));
+            TextView pointsText = drawer.findViewById(R.id.points_value);
+            pointsText.setText(" "+String.valueOf(game.getScoring().get(length)));
+
+            clearCards();
+            refreshCards();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
         }
     }
 
@@ -190,9 +222,27 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
 
     private void refreshCards() {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        CardsFragment cardsFragment = new CardsFragment(cardsNumbers, cardCounter);
-        cardsFragment.setDrawingCards(false);
-        cardsFragment.setMaxCardsNumbers(player.getCardsNumbers());
+        CardsFragment cardsFragment = new CardsFragment(cardsNumbers, cardCounter, maxCards);
+        cardsFragment.setActive(true);
+        cardsFragment.setOneColor(true);
+
+        int[] maxCardsNumbers = new int [player.getCardsNumbers().length];
+        for (int i = 0; i < player.getCardsNumbers().length; ++i) {
+            if( player.getCardsNumbers()[i] < length) {
+                maxCardsNumbers[i] = player.getCardsNumbers()[i];
+            }
+            else {
+
+                maxCardsNumbers[i] = length;
+                if(tunnel) {
+                    maxCardsNumbers[i] += game.getMaxExtraCardsForTunnel();
+                }
+                if(game.getCards().get(i).getColor() != 'L') {
+                    maxCardsNumbers[i] -= locos;
+                }
+            }
+        }
+        cardsFragment.setMaxCardsNumbers(maxCardsNumbers);
         ft.replace(R.id.cards_container, cardsFragment);
         ft.addToBackStack(null);
         ft.commit();
@@ -204,8 +254,6 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         navigationView.getMenu().getItem(0).setChecked(true);
     }
 
-    public BuildRouteFragment() {
-    }
 
     private void connectToDatabase() {
         DbHelper dbHelper = new DbHelper(getContext(), DB_NAME, 1);
@@ -217,16 +265,10 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
     private void manageSpinner1(View drawer) {
         Cursor cursor = database.rawQuery("SELECT cities, _id FROM (SELECT City1 as cities, _id FROM Routes " +
                 "UNION " +
-                "                                                        SELECT City2, _id FROM Routes) " +
+                "SELECT City2, _id FROM Routes) " +
                 "GROUP BY cities", null);
-        SimpleCursorAdapter spinnerAdapter = new SimpleCursorAdapter(getContext(),
-                android.R.layout.simple_spinner_dropdown_item,
-                cursor,
-                new String[]{"cities"},
-                new int[]{android.R.id.text1},
-                0);
         Spinner listCity1 = drawer.findViewById(R.id.spinner_city1);
-        listCity1.setAdapter(spinnerAdapter);
+        setSpinnerAdapter(listCity1, cursor, "cities");
     }
 
     public void manageSpinner2(View drawer) {
@@ -238,20 +280,13 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                 Cursor cursor1 = (Cursor) listCity1.getSelectedItem();
                 String city1 = cursor1.getString(0);
                 if (cursor1.moveToFirst()) {
-                    //Cursor cursor2 = database.rawQuery("SELECT City2, _id FROM Routes WHERE City1=\'"+city1+"\'", null);
                     Cursor cursor2 = database.rawQuery("SELECT cities, _id FROM (SELECT City1 as cities, _id FROM Routes WHERE City2 = \'" + city1 + "\' " +
                             " UNION " +
                             "SELECT City2, _id FROM Routes WHERE City1 = \'" + city1 + "\') " +
                             "GROUP BY cities", null);
 
-                    SimpleCursorAdapter spinnerAdapter2 = new SimpleCursorAdapter(getContext(),
-                            android.R.layout.simple_spinner_dropdown_item,
-                            cursor2,
-                            new String[]{"cities"},
-                            new int[]{android.R.id.text1},
-                            0);
                     Spinner listCity2 = drawer.findViewById(R.id.spinner_city2);
-                    listCity2.setAdapter(spinnerAdapter2);
+                    setSpinnerAdapter(listCity2, cursor2, "cities");
                 }
             }
 
@@ -262,8 +297,18 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         });
     }
 
+    public void setSpinnerAdapter(Spinner list, Cursor cursor, String columnName) {
+        SimpleCursorAdapter spinnerAdapter = new SimpleCursorAdapter(getContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                cursor,
+                new String[]{columnName},
+                new int[]{android.R.id.text1},
+                0);
+        list.setAdapter(spinnerAdapter);
+    }
+
     private void setAvailableCards(String colors) {
-        if (colors.equals("")) {
+        if (colors == null) {
             for (Card card : game.getCards()) {
                 card.setClickable(1);
                 card.setVisible(1);

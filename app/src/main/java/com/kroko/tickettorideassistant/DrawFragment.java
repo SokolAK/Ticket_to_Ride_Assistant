@@ -1,32 +1,23 @@
 package com.kroko.TicketToRideAssistant;
 
 import android.os.Bundle;
-
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.fragment.app.FragmentTransaction;
-
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
 
 public class DrawFragment extends Fragment implements View.OnClickListener {
     private Game game;
     private Player player;
-
     private int[] cardCounter;
     private int[] cardsNumbers;
     private int maxCards;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,10 +54,10 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         return drawer;
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case R.id.accept_icon:
                 if(cardCounter[0] == 0) {
                     String text = getString(R.string.too_little_cards);
@@ -80,6 +71,7 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
                     returnToTopPage();
                 }
                 break;
+
             case R.id.reset_icon:
                 clearDrawCards();
                 refreshCards();
@@ -99,7 +91,8 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
     private void refreshCards() {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         CardsFragment cardsFragment = new CardsFragment(cardsNumbers,cardCounter,maxCards);
-        cardsFragment.setDrawingCards(true);
+        cardsFragment.setActive(true);
+        cardsFragment.setOneColor(false);
         ft.replace(R.id.cards_container, cardsFragment);
         ft.addToBackStack(null);
         ft.commit();
@@ -109,9 +102,5 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         ((MainActivity)getActivity()).onNavigationItemSelected(0);
         NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
         navigationView.getMenu().getItem(0).setChecked(true);
-    }
-
-    public DrawFragment() {
-
     }
 }

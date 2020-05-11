@@ -22,7 +22,9 @@ public class CardsFragment extends Fragment {
     private int[] cardCounter;
     private int maxCards;
     private int[] cardsNumbers;
-    private boolean drawingCards;
+
+    private boolean active;
+    private boolean oneColor;
     private int[] maxCardsNumbers;
 
     public CardsFragment(int[] cardsNumbers) {
@@ -39,8 +41,11 @@ public class CardsFragment extends Fragment {
         this.maxCards = maxCards;
     }
 
-    public void setDrawingCards(boolean drawingCards) {
-        this.drawingCards = drawingCards;
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+    public void setOneColor(boolean oneColor) {
+        this.oneColor = oneColor;
     }
     public void setMaxCardsNumbers(int[] maxCardsNumbers) {
         this.maxCardsNumbers = maxCardsNumbers;
@@ -64,32 +69,30 @@ public class CardsFragment extends Fragment {
         cardRecycler.setLayoutManager(layoutManager);
 
         adapter.setListener(position -> {
-            if(drawingCards) {
-                if (cardCounter[0] < maxCards || maxCards == 0) {
-                    cardCounter[0]++;
-                    cardsNumbers[position]++;
-                }
-            }
-            else {
-                if (cardsNumbers[position] == maxCardsNumbers[position]) {
-                    game.getCards().get(position).setClickable(0);
+            if(active) {
+                if (maxCardsNumbers != null) {
+                    if (cardsNumbers[position] == maxCardsNumbers[position]) {
+                        game.getCards().get(position).setClickable(0);
+                    }
                 }
                 if(game.getCards().get(position).getClickable() == 1) {
                     if (cardCounter[0] < maxCards || maxCards == 0) {
                         cardCounter[0]++;
                         cardsNumbers[position]++;
                     }
-                    if (game.getCards().get(position).getColor() != 'L') {
-                        for (int i = 0; i < game.getCards().size(); ++i) {
-                            if (i != position && game.getCards().get(i).getColor() != 'L') {
-                                game.getCards().get(i).setClickable(0);
-                                game.getCards().get(i).setVisible(0);
+                    if(oneColor) {
+                        if (game.getCards().get(position).getColor() != 'L') {
+                            for (int i = 0; i < game.getCards().size(); ++i) {
+                                if (i != position && game.getCards().get(i).getColor() != 'L') {
+                                    game.getCards().get(i).setClickable(0);
+                                    game.getCards().get(i).setVisible(0);
+                                }
                             }
                         }
                     }
                 }
+                refreshPage();
             }
-            refreshPage();
         });
 
         return drawer;
@@ -98,7 +101,8 @@ public class CardsFragment extends Fragment {
     private void refreshPage() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         CardsFragment cardsFragment = new CardsFragment(cardsNumbers,cardCounter,maxCards);
-        cardsFragment.setDrawingCards(drawingCards);
+        cardsFragment.setActive(active);
+        cardsFragment.setOneColor(oneColor);
         cardsFragment.setMaxCardsNumbers(maxCardsNumbers);
         ft.replace(R.id.cards_container, cardsFragment);
         ft.commit();

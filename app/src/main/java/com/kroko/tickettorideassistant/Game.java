@@ -13,6 +13,7 @@ public class Game {
     private int numberOfStations;
     private int stationPoints;
     private int numberOfCars;
+    private int maxExtraCardsForTunnel;
     private HashMap<Integer, Integer> scoring = new HashMap<>();
     private HashMap<Integer, Integer> stationCost = new HashMap<>();
     private ArrayList<Card> cards = new ArrayList<>();
@@ -27,9 +28,10 @@ public class Game {
 
                 numberOfCars = 10;
                 startCards = 4;
-                maxNoOfCardsToDraw = 2;
+                maxNoOfCardsToDraw = 10;
                 numberOfStations = 3;
                 stationPoints = 4;
+                maxExtraCardsForTunnel = 3;
 
                 scoring.put(1, 1);
                 scoring.put(2, 2);

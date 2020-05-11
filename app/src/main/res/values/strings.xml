@@ -31,7 +31,7 @@
     <string name="draw_tab">Draw cards</string>
     <string name="accept_button">OK</string>
     <string name="reset_button">Reset</string>
-    <string name="draw_cards_label">Number of cards to draw</string>
+    <string name="draw_cards_label">Number of cards to draw:</string>
     <string name="too_much_cards">Too much cards</string>
     <string name="too_little_cards">To little cards</string>
     <string name="too_little_locos">To little locomotives</string>

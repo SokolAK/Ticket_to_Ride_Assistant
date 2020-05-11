@@ -9,10 +9,6 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.Arrays;
 
 public class TopFragment extends Fragment {
     @Override
@@ -23,7 +19,6 @@ public class TopFragment extends Fragment {
     @Override
     public void onViewCreated(View drawer, Bundle savedInstanceState) {
         Player player = ((TtRA_Application) getActivity().getApplication()).player;
-
         TextView points = drawer.findViewById(R.id.points_value);
         points.setText(String.valueOf(player.getPoints()));
         TextView cars = drawer.findViewById(R.id.cars_value);
@@ -31,15 +26,16 @@ public class TopFragment extends Fragment {
         TextView stations = drawer.findViewById(R.id.stations_value);
         stations.setText(String.valueOf(player.getStations()));
 
-        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
-        for(Card card: game.getCards()) {
+        for (Card card : game.getCards()) {
             card.setClickable(0);
             card.setVisible(1);
         }
 
-        ft.add(R.id.cards_container, new CardsFragment(player.getCardsNumbers()));
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        CardsFragment cardsFragment = new CardsFragment(player.getCardsNumbers());
+        cardsFragment.setActive(false);
+        ft.replace(R.id.cards_container, cardsFragment);
         ft.addToBackStack(null);
         ft.commit();
 
