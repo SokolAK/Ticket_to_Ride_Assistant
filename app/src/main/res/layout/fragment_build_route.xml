@@ -33,7 +33,7 @@
             app:srcCompat="@drawable/ic_carriage" />
         <TextView
             android:id="@+id/car_number"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="0" />
@@ -46,10 +46,10 @@
             android:layout_weight="1" />
         <TextView
             android:id="@+id/loco_number"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="0"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:text="0" />
 
         <ImageView
             android:id="@+id/tunnel_icon"
@@ -60,12 +60,11 @@
             android:visibility="invisible" />
         <TextView
             android:id="@+id/tunnel_number"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="0"
             android:layout_weight="1"
+            android:text="0"
             android:visibility="invisible" />
-
 
         <ImageView
             android:id="@+id/length_icon"
@@ -75,7 +74,7 @@
             app:srcCompat="@drawable/ic_length" />
         <TextView
             android:id="@+id/length_value"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="0" />

@@ -13,6 +13,7 @@ public class Player implements Serializable {
     private int stations;
     private int cars;
     private int[] cardsNumbers;
+    private ArrayList<Route> builtRoutes = new ArrayList<>();
 
     public void setGame(Game game) {
         this.game = game;

@@ -40,5 +40,7 @@
 
     <string name="station_cost">Number of cards to choose:</string>
 
+    <string name="already_built">Route already built</string>
+
 
 </resources>

@@ -20,9 +20,6 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
 public class BuildRouteFragment extends Fragment implements View.OnClickListener {
     private Game game;
     private Player player;
@@ -32,15 +29,11 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
     private int[] cardsNumbers;
     private String city1;
     private String city2;
-    private int length;
-    private int locos;
-    private boolean tunnel;
-    private String colors;
     private int maxCards;
+    private Route route;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         game = ((TtRA_Application) getActivity().getApplication()).game;
         player = ((TtRA_Application) getActivity().getApplication()).player;
@@ -78,6 +71,9 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         switch (v.getId()) {
 
             case R.id.accept_icon:
+                int id = route.get_id();
+                int length = route.getLength();
+                int locos = route.getLocos();
                 if (length <= player.getCars()) {
                     if (cardCounter[0] >= length) {
                         int selectedLocos = 0;
@@ -88,6 +84,8 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                         }
                         if (selectedLocos >= locos) {
                             Player player = ((TtRA_Application) getActivity().getApplication()).player;
+                            player.getBuiltRoutes().add(route);
+                            route.setColor(determineRouteColor(cardsNumbers));
                             player.addPoints(game.getScoring().get(length));
                             player.spendCars(length);
                             player.spendCards(cardsNumbers);
@@ -135,62 +133,22 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
             Cursor cursor2 = (Cursor) listCity2.getSelectedItem();
             city2 = cursor2.getString(0);
 
-            Cursor cursorCarriage = database.rawQuery("SELECT Length FROM Routes " +
-                    "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
-                    "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ", null);
-            if (cursorCarriage.moveToFirst()) {
-                length = cursorCarriage.getInt(0);
-            }
-
-
-            Cursor cursorLoco = database.rawQuery("SELECT Locomotives FROM Routes " +
-                    "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
-                    "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ", null);
-            if (cursorLoco.moveToFirst()) {
-                if (cursorLoco == null) {
-                    locos = 0;
-                }
-                else {
-                    locos = cursorLoco.getInt(0);
-                }
-            }
-
-
-            Cursor cursorColors = database.rawQuery("SELECT Colors FROM Routes " +
-                    "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
-                    "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ", null);
-            if (cursorColors.moveToFirst()) {
-                colors = cursorColors.getString(0);
-            }
-
-
-            Cursor cursorTunnel = database.rawQuery("SELECT Tunnel FROM Routes " +
-                    "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
-                    "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ", null);
-            if (cursorTunnel.moveToFirst()) {
-                //if (cursorTunnel.getString(0).equals("TRUE")) {
-                if (cursorTunnel.getString(0) == null) {
-                    tunnel = false;
-                } else {
-                    tunnel = true;
-                }
-            }
+            route = getRoute(city1, city2);
 
             TextView carText = drawer.findViewById(R.id.car_number);
-            carText.setText(" "+String.valueOf(length - locos));
-            setAvailableCards(colors);
-            maxCards = length;
+            carText.setText(" " + String.valueOf(route.getLength() - route.getLocos()));
+            maxCards = route.getLength();
 
-            if (locos > 0) {
+            if (route.getLocos() > 0) {
                 drawer.findViewById(R.id.loco_icon).setVisibility(View.VISIBLE);
                 drawer.findViewById(R.id.loco_number).setVisibility(View.VISIBLE);
                 TextView locoText = drawer.findViewById(R.id.loco_number);
-                locoText.setText(" "+String.valueOf(locos));
+                locoText.setText(" " + String.valueOf(route.getLocos()));
             } else {
                 drawer.findViewById(R.id.loco_icon).setVisibility(View.INVISIBLE);
                 drawer.findViewById(R.id.loco_number).setVisibility(View.INVISIBLE);
             }
-            if (tunnel) {
+            if (route.isTunnel()) {
                 drawer.findViewById(R.id.tunnel_icon).setVisibility(View.VISIBLE);
                 maxCards += game.getMaxExtraCardsForTunnel();
             } else {
@@ -198,9 +156,11 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
             }
 
             TextView lengthText = drawer.findViewById(R.id.length_value);
-            lengthText.setText(" "+String.valueOf(length));
+            lengthText.setText(" " + String.valueOf(route.getLength()));
             TextView pointsText = drawer.findViewById(R.id.points_value);
-            pointsText.setText(" "+String.valueOf(game.getScoring().get(length)));
+            pointsText.setText(" " + String.valueOf(game.getScoring().get(route.getLength())));
+
+            setAvailableCards(route.get_id(), route.getColors());
 
             clearCards();
             refreshCards();
@@ -211,41 +171,97 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         }
     }
 
+    private Route getRoute(String city1, String city2) {
+        int id = getIntField("SELECT _id FROM Routes " +
+                "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
+                "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ");
+        int length = getIntField("SELECT Length FROM Routes " +
+                "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
+                "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ");
+        int loco = getIntField("SELECT Locomotives FROM Routes " +
+                "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
+                "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ");
+        boolean tunnel = getIntField("SELECT Tunnel FROM Routes " +
+                "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
+                "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ") > 0;
+        String colors = getStringField("SELECT Colors FROM Routes " +
+                "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
+                "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ");
+
+        for(Route route: player.getBuiltRoutes()) {
+            if (route.get_id() == id) {
+                return new Route(-1, city1, city2, length, loco, tunnel, colors);
+            }
+        }
+        return new Route(id, city1, city2, length, loco, tunnel, colors);
+    }
+
+    private int getIntField(String query) {
+        Cursor cursor = database.rawQuery(query, null);
+        int field = 0;
+        if (cursor.moveToFirst()) {
+            if (cursor != null) {
+                field = cursor.getInt(0);
+            }
+        }
+        return field;
+    }
+
+    private String getStringField(String query) {
+        Cursor cursor = database.rawQuery(query, null);
+        String field = null;
+        if (cursor.moveToFirst()) {
+            if (cursor != null) {
+                field = cursor.getString(0);
+            }
+        }
+        return field;
+    }
+
+
     private void clearCards() {
         cardCounter[0] = 0;
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
         for (int i = 0; i < game.getCards().size(); ++i) {
             cardsNumbers[i] = 0;
         }
-        setAvailableCards(colors);
+        setAvailableCards(route.get_id(), route.getColors());
     }
 
     private void refreshCards() {
-        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        CardsFragment cardsFragment = new CardsFragment(cardsNumbers, cardCounter, maxCards);
-        cardsFragment.setActive(true);
-        cardsFragment.setOneColor(true);
+        if(route.get_id() > 0) {
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+            CardsFragment cardsFragment = new CardsFragment(cardsNumbers, cardCounter, maxCards);
+            cardsFragment.setActive(true);
+            cardsFragment.setOneColor(true);
 
-        int[] maxCardsNumbers = new int [player.getCardsNumbers().length];
-        for (int i = 0; i < player.getCardsNumbers().length; ++i) {
-            if( player.getCardsNumbers()[i] < length) {
-                maxCardsNumbers[i] = player.getCardsNumbers()[i];
-            }
-            else {
+            int[] maxCardsNumbers = new int[player.getCardsNumbers().length];
+            for (int i = 0; i < player.getCardsNumbers().length; ++i) {
+                if (player.getCardsNumbers()[i] < route.getLength()) {
+                    maxCardsNumbers[i] = player.getCardsNumbers()[i];
+                } else {
 
-                maxCardsNumbers[i] = length;
-                if(tunnel) {
-                    maxCardsNumbers[i] += game.getMaxExtraCardsForTunnel();
-                }
-                if(game.getCards().get(i).getColor() != 'L') {
-                    maxCardsNumbers[i] -= locos;
+                    maxCardsNumbers[i] = route.getLength();
+                    if (route.isTunnel()) {
+                        maxCardsNumbers[i] += game.getMaxExtraCardsForTunnel();
+                    }
+                    if (game.getCards().get(i).getColor() != 'L') {
+                        maxCardsNumbers[i] -= route.getLocos();
+                    }
                 }
             }
+            cardsFragment.setMaxCardsNumbers(maxCardsNumbers);
+            ft.replace(R.id.cards_container, cardsFragment);
+            ft.addToBackStack(null);
+            ft.commit();
+            getActivity().findViewById(R.id.draw_buttons_panel).setVisibility(View.VISIBLE);
+        } else {
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+            ft.replace(R.id.cards_container, new BlankFragment(getString(R.string.already_built)));
+            ft.addToBackStack(null);
+            ft.commit();
+            getActivity().findViewById(R.id.draw_buttons_panel).setVisibility(View.INVISIBLE);
         }
-        cardsFragment.setMaxCardsNumbers(maxCardsNumbers);
-        ft.replace(R.id.cards_container, cardsFragment);
-        ft.addToBackStack(null);
-        ft.commit();
     }
 
     private void returnToTopPage() {
@@ -307,7 +323,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         list.setAdapter(spinnerAdapter);
     }
 
-    private void setAvailableCards(String colors) {
+    private void setAvailableCards(int id, String colors) {
         if (colors == null) {
             for (Card card : game.getCards()) {
                 card.setClickable(1);
@@ -326,5 +342,15 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                 }
             }
         }
+    }
+
+    private char determineRouteColor(int[] cardsNumbers) {
+        int i = 0;
+        for (; i < cardsNumbers.length; ++i) {
+            if (cardsNumbers[i] > 0) {
+                break;
+            }
+        }
+        return game.getCards().get(i).getColor();
     }
 }
