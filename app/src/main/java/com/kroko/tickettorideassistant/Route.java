@@ -11,7 +11,6 @@ public class Route {
     private int locos;
     private boolean tunnel;
     private String colors;
-    private char color;
 
     public Route(int _id, String city1, String city2, int length, int locos, boolean tunnel, String colors) {
         this._id = _id;
@@ -25,6 +24,6 @@ public class Route {
 
     @Override
     public String toString() {
-        return city1 + " - " + city2 + " (" + color + ")";
+        return city1 + " - " + city2 + " (" + colors + ")";
     }
 }

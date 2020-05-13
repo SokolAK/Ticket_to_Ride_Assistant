@@ -4,6 +4,6 @@ import android.app.Application;
 
 public class TtRA_Application extends Application {
 
-    public Game game = new Game();
+    public Game game = new Game(getApplicationContext());
     public Player player = new Player();
 }

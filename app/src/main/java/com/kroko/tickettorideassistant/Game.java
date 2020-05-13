@@ -1,5 +1,10 @@
 package com.kroko.TicketToRideAssistant;
 
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,8 +22,13 @@ public class Game {
     private HashMap<Integer, Integer> scoring = new HashMap<>();
     private HashMap<Integer, Integer> stationCost = new HashMap<>();
     private ArrayList<Card> cards = new ArrayList<>();
+    private ArrayList<Route> routes = new ArrayList<>();
+    private String databaseName;
+    private int databaseVersion;
+    private Context context;
 
-    public Game() {
+    public Game(Context context) {
+        this.context = context;
     }
 
     public void prepare(int gameId) {
@@ -26,7 +36,7 @@ public class Game {
             case 0:
                 title = "Ticket to Ride. Europe";
 
-                numberOfCars = 10;
+                numberOfCars = 20;
                 startCards = 4;
                 maxNoOfCardsToDraw = 10;
                 numberOfStations = 3;
@@ -54,7 +64,36 @@ public class Game {
                 cards.add(new Card('W', R.drawable.white));
                 cards.add(new Card('L', R.drawable.loco));
 
+                databaseName = "TtRADatabase_Europe.db";
+                databaseVersion = 1;
+                routes = readRoutes(databaseName, databaseVersion);
+
                 break;
         }
+    }
+
+    private ArrayList<Route> readRoutes(String databaseName, int databaseVersion) {
+        SQLiteDatabase database;
+        DbHelper dbHelper = new DbHelper(context, databaseName, databaseVersion);
+        dbHelper.checkDatabase();
+        dbHelper.openDatabase();
+        database = dbHelper.getReadableDatabase();
+
+        ArrayList<Route> routes = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT * FROM Routes", null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String city1 = cursor.getString(1);
+            String city2 = cursor.getString(2);
+            int length = cursor.getInt(3);
+            int locos = cursor.getInt(4);
+            boolean tunnel = cursor.getInt(5) > 0;
+            String colors = cursor.getString(6);
+            routes.add(new Route(id, city1, city2, length, locos, tunnel, colors));
+        }
+        cursor.close();
+        database.close();
+
+        return routes;
     }
 }

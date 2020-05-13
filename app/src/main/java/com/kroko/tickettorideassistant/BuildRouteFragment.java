@@ -84,8 +84,8 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                         }
                         if (selectedLocos >= locos) {
                             Player player = ((TtRA_Application) getActivity().getApplication()).player;
+                            route.setColors(String.valueOf(determineRouteColor(cardsNumbers)));
                             player.getBuiltRoutes().add(route);
-                            route.setColor(determineRouteColor(cardsNumbers));
                             player.addPoints(game.getScoring().get(length));
                             player.spendCars(length);
                             player.spendCards(cardsNumbers);
@@ -188,10 +188,8 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                 "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
                 "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ");
 
-        for(Route route: player.getBuiltRoutes()) {
-            if (route.get_id() == id) {
-                return new Route(-1, city1, city2, length, loco, tunnel, colors);
-            }
+        if (checkIfRouteBuilt(id,colors)) {
+            return new Route(-1, city1, city2, length, loco, tunnel, colors);
         }
         return new Route(id, city1, city2, length, loco, tunnel, colors);
     }
@@ -218,6 +216,17 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         return field;
     }
 
+    private boolean checkIfRouteBuilt(int id, String colors) {
+        for(Route playerRoute: player.getBuiltRoutes()) {
+            char playerColor = playerRoute.getColors().charAt(0);
+            for(char routeColor: colors.toCharArray()) {
+                if(id == playerRoute.get_id() && routeColor == playerColor) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     private void clearCards() {
         cardCounter[0] = 0;
@@ -240,7 +249,6 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                 if (player.getCardsNumbers()[i] < route.getLength()) {
                     maxCardsNumbers[i] = player.getCardsNumbers()[i];
                 } else {
-
                     maxCardsNumbers[i] = route.getLength();
                     if (route.isTunnel()) {
                         maxCardsNumbers[i] += game.getMaxExtraCardsForTunnel();
