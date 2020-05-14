@@ -33,9 +33,9 @@ public class TopFragment extends Fragment {
         }
 
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        CardsFragment cardsFragment = new CardsFragment(player.getCardsNumbers());
-        cardsFragment.setActive(false);
-        ft.replace(R.id.cards_container, cardsFragment);
+        CardsCarFragment cardsCarFragment = new CardsCarFragment(player.getCardsNumbers());
+        cardsCarFragment.setActive(false);
+        ft.replace(R.id.cards_container, cardsCarFragment);
         ft.addToBackStack(null);
         ft.commit();
 

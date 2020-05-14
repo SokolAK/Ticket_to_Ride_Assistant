@@ -10,20 +10,20 @@ public class Route {
     private int length;
     private int locos;
     private boolean tunnel;
-    private String colors;
+    private char color;
 
-    public Route(int _id, String city1, String city2, int length, int locos, boolean tunnel, String colors) {
+    public Route(int _id, String city1, String city2, int length, int locos, boolean tunnel, char color) {
         this._id = _id;
         this.city1 = city1;
         this.city2 = city2;
         this.length = length;
         this.locos = locos;
         this.tunnel = tunnel;
-        this.colors = colors;
+        this.color = color;
     }
 
     @Override
     public String toString() {
-        return city1 + " - " + city2 + " (" + colors + ")";
+        return city1 + " - " + city2 + " (" + color + ")";
     }
 }

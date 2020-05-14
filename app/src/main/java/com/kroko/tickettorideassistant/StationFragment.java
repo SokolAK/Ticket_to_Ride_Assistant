@@ -20,9 +20,6 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
 public class StationFragment extends Fragment implements View.OnClickListener {
     private Game game;
     private Player player;
@@ -221,9 +218,9 @@ public class StationFragment extends Fragment implements View.OnClickListener {
 
     private void refreshCards() {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        CardsFragment cardsFragment = new CardsFragment(cardsNumbers, cardCounter, maxCards);
-        cardsFragment.setActive(true);
-        cardsFragment.setOneColor(true);
+        CardsCarFragment cardsCarFragment = new CardsCarFragment(cardsNumbers, cardCounter, maxCards);
+        cardsCarFragment.setActive(true);
+        cardsCarFragment.setOneColor(true);
 
         int[] maxCardsNumbers = new int [player.getCardsNumbers().length];
         for (int i = 0; i < player.getCardsNumbers().length; ++i) {
@@ -241,8 +238,8 @@ public class StationFragment extends Fragment implements View.OnClickListener {
                 }
             }
         }
-        cardsFragment.setMaxCardsNumbers(maxCardsNumbers);
-        ft.replace(R.id.cards_container, cardsFragment);
+        cardsCarFragment.setMaxCardsNumbers(maxCardsNumbers);
+        ft.replace(R.id.cards_container, cardsCarFragment);
         ft.addToBackStack(null);
         ft.commit();
     }

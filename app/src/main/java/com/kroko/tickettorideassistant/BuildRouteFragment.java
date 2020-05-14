@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -19,6 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class BuildRouteFragment extends Fragment implements View.OnClickListener {
     private Game game;
@@ -31,6 +35,10 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
     private String city2;
     private int maxCards;
     private Route route;
+    private ArrayList<String> cities1;
+    private ArrayList<String> cities2;
+    int cars;
+    int routeId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,9 +64,6 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         connectToDatabase();
         manageSpinner1(drawer);
         manageSpinner2(drawer);
-        Spinner listCity2 = drawer.findViewById(R.id.spinner_city2);
-        listCity2.setOnItemSelectedListener(new Listener(drawer));
-
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_buildRoute);
@@ -84,11 +89,14 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                         }
                         if (selectedLocos >= locos) {
                             Player player = ((TtRA_Application) getActivity().getApplication()).player;
-                            route.setColors(String.valueOf(determineRouteColor(cardsNumbers)));
-                            player.getBuiltRoutes().add(route);
                             player.addPoints(game.getScoring().get(length));
                             player.spendCars(length);
                             player.spendCards(cardsNumbers);
+
+                            char builtColor = determineRouteColor(cardsNumbers);
+                            game.removeRoute(route.get_id());
+                            player.addRoute(route);
+
                             clearCards();
                             refreshCards();
                             returnToTopPage();
@@ -117,115 +125,15 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         database.close();
     }
 
-    private class Listener implements AdapterView.OnItemSelectedListener {
-        private View drawer;
-
-        private Listener(View drawer) {
-            this.drawer = drawer;
-        }
-
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Spinner listCity1 = drawer.findViewById(R.id.spinner_city1);
-            Cursor cursor1 = (Cursor) listCity1.getSelectedItem();
-            city1 = cursor1.getString(0);
-            Spinner listCity2 = drawer.findViewById(R.id.spinner_city2);
-            Cursor cursor2 = (Cursor) listCity2.getSelectedItem();
-            city2 = cursor2.getString(0);
-
-            route = getRoute(city1, city2);
-
-            TextView carText = drawer.findViewById(R.id.car_number);
-            carText.setText(" " + String.valueOf(route.getLength() - route.getLocos()));
-            maxCards = route.getLength();
-
-            if (route.getLocos() > 0) {
-                drawer.findViewById(R.id.loco_icon).setVisibility(View.VISIBLE);
-                drawer.findViewById(R.id.loco_number).setVisibility(View.VISIBLE);
-                TextView locoText = drawer.findViewById(R.id.loco_number);
-                locoText.setText(" " + String.valueOf(route.getLocos()));
-            } else {
-                drawer.findViewById(R.id.loco_icon).setVisibility(View.INVISIBLE);
-                drawer.findViewById(R.id.loco_number).setVisibility(View.INVISIBLE);
-            }
-            if (route.isTunnel()) {
-                drawer.findViewById(R.id.tunnel_icon).setVisibility(View.VISIBLE);
-                maxCards += game.getMaxExtraCardsForTunnel();
-            } else {
-                drawer.findViewById(R.id.tunnel_icon).setVisibility(View.INVISIBLE);
-            }
-
-            TextView lengthText = drawer.findViewById(R.id.length_value);
-            lengthText.setText(" " + String.valueOf(route.getLength()));
-            TextView pointsText = drawer.findViewById(R.id.points_value);
-            pointsText.setText(" " + String.valueOf(game.getScoring().get(route.getLength())));
-
-            setAvailableCards(route.get_id(), route.getColors());
-
-            clearCards();
-            refreshCards();
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-        }
-    }
 
     private Route getRoute(String city1, String city2) {
-        int id = getIntField("SELECT _id FROM Routes " +
-                "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
-                "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ");
-        int length = getIntField("SELECT Length FROM Routes " +
-                "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
-                "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ");
-        int loco = getIntField("SELECT Locomotives FROM Routes " +
-                "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
-                "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ");
-        boolean tunnel = getIntField("SELECT Tunnel FROM Routes " +
-                "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
-                "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ") > 0;
-        String colors = getStringField("SELECT Colors FROM Routes " +
-                "WHERE (City1=\'" + city1 + "\' AND City2=\'" + city2 + "\') " +
-                "OR (City2=\'" + city1 + "\' AND City1=\'" + city2 + "\') ");
-
-        if (checkIfRouteBuilt(id,colors)) {
-            return new Route(-1, city1, city2, length, loco, tunnel, colors);
-        }
-        return new Route(id, city1, city2, length, loco, tunnel, colors);
-    }
-
-    private int getIntField(String query) {
-        Cursor cursor = database.rawQuery(query, null);
-        int field = 0;
-        if (cursor.moveToFirst()) {
-            if (cursor != null) {
-                field = cursor.getInt(0);
+        for(Route route: game.getRoutes()) {
+            if((route.getCity1().equals(city1) && route.getCity2().equals(city2)) ||
+                    (route.getCity2().equals(city1) && route.getCity1().equals(city2))) {
+                return route;
             }
         }
-        return field;
-    }
-
-    private String getStringField(String query) {
-        Cursor cursor = database.rawQuery(query, null);
-        String field = null;
-        if (cursor.moveToFirst()) {
-            if (cursor != null) {
-                field = cursor.getString(0);
-            }
-        }
-        return field;
-    }
-
-    private boolean checkIfRouteBuilt(int id, String colors) {
-        for(Route playerRoute: player.getBuiltRoutes()) {
-            char playerColor = playerRoute.getColors().charAt(0);
-            for(char routeColor: colors.toCharArray()) {
-                if(id == playerRoute.get_id() && routeColor == playerColor) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return null;
     }
 
     private void clearCards() {
@@ -234,15 +142,15 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         for (int i = 0; i < game.getCards().size(); ++i) {
             cardsNumbers[i] = 0;
         }
-        setAvailableCards(route.get_id(), route.getColors());
+        setAvailableCards(route.get_id(), route.getColor());
     }
 
     private void refreshCards() {
         if(route.get_id() > 0) {
             FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-            CardsFragment cardsFragment = new CardsFragment(cardsNumbers, cardCounter, maxCards);
-            cardsFragment.setActive(true);
-            cardsFragment.setOneColor(true);
+            CardsCarFragment cardsCarFragment = new CardsCarFragment(cardsNumbers, cardCounter, maxCards);
+            cardsCarFragment.setActive(true);
+            cardsCarFragment.setOneColor(true);
 
             int[] maxCardsNumbers = new int[player.getCardsNumbers().length];
             for (int i = 0; i < player.getCardsNumbers().length; ++i) {
@@ -258,8 +166,8 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                     }
                 }
             }
-            cardsFragment.setMaxCardsNumbers(maxCardsNumbers);
-            ft.replace(R.id.cards_container, cardsFragment);
+            cardsCarFragment.setMaxCardsNumbers(maxCardsNumbers);
+            ft.replace(R.id.cards_container, cardsCarFragment);
             ft.addToBackStack(null);
             ft.commit();
             getActivity().findViewById(R.id.draw_buttons_panel).setVisibility(View.VISIBLE);
@@ -287,12 +195,34 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
     }
 
     private void manageSpinner1(View drawer) {
-        Cursor cursor = database.rawQuery("SELECT cities, _id FROM (SELECT City1 as cities, _id FROM Routes " +
-                "UNION " +
-                "SELECT City2, _id FROM Routes) " +
-                "GROUP BY cities", null);
-        Spinner listCity1 = drawer.findViewById(R.id.spinner_city1);
-        setSpinnerAdapter(listCity1, cursor, "cities");
+        cities1 = new ArrayList<>();
+        for(Route route: game.getRoutes()) {
+            boolean flag = true;
+            for(String city: cities1) {
+                if(city.equals(route.getCity1())) {
+                    flag = false;
+                }
+            }
+            if(flag) {
+                cities1.add(route.getCity1());
+            }
+            flag = true;
+            for(String city: cities1) {
+                if(city.equals(route.getCity2())) {
+                    flag = false;
+                }
+            }
+            if(flag) {
+                cities1.add(route.getCity2());
+            }
+        }
+        Collections.sort(cities1, (x, y) -> x.compareTo(y));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                getActivity(),
+                android.R.layout.simple_list_item_1,
+                cities1);
+        Spinner spinner = drawer.findViewById(R.id.spinner_city1);
+        spinner.setAdapter(adapter);
     }
 
     public void manageSpinner2(View drawer) {
@@ -301,17 +231,99 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
-                Cursor cursor1 = (Cursor) listCity1.getSelectedItem();
-                String city1 = cursor1.getString(0);
-                if (cursor1.moveToFirst()) {
-                    Cursor cursor2 = database.rawQuery("SELECT cities, _id FROM (SELECT City1 as cities, _id FROM Routes WHERE City2 = \'" + city1 + "\' " +
-                            " UNION " +
-                            "SELECT City2, _id FROM Routes WHERE City1 = \'" + city1 + "\') " +
-                            "GROUP BY cities", null);
 
-                    Spinner listCity2 = drawer.findViewById(R.id.spinner_city2);
-                    setSpinnerAdapter(listCity2, cursor2, "cities");
+
+                city1 = (String) listCity1.getSelectedItem();
+                cities2 = new ArrayList<>();
+                for(Route route: game.getRoutes()) {
+                    if(route.getCity1().equals(city1)) {
+                        cities2.add(route.getCity2());
+                    }
+                    if(route.getCity2().equals(city1)) {
+                        cities2.add(route.getCity1());
+                    }
                 }
+
+                ArrayList<CustomSpinnerItem> cityList = new ArrayList<>();
+                for(String city2: cities2) {
+                    for(Route route: game.getRoutes()) {
+                        if((route.getCity1().equals(city1) && route.getCity2().equals(city2) || (route.getCity2().equals(city1) && route.getCity1().equals(city2)))) {
+                            if(route.getColor() == '-') {
+                                if(route.getLength() > route.getLocos()) {
+                                    cityList.add(new CustomSpinnerItem(city2, R.drawable.any, route.get_id()));
+                                }
+                                else {
+                                    cityList.add(new CustomSpinnerItem(city2, R.drawable.loco, route.get_id()));
+                                }
+                            }
+                            else {
+                                for (Card card : game.getCards()) {
+                                    if (card.getColor() == route.getColor()) {
+                                        cityList.add(new CustomSpinnerItem(city2, card.getImageResourceId(), route.get_id()));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                Collections.sort(cityList, (x, y) -> x.compareTo(y));
+
+
+                Spinner spinner = drawer.findViewById(R.id.spinner_city2);
+                CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(), cityList);
+                spinner.setAdapter(adapter);
+
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Spinner spinner3 = drawer.findViewById(R.id.spinner_city2);
+                        routeId = ((CustomSpinnerItem) spinner3.getSelectedItem()).getRouteId();
+                        route = game.getRoute(routeId);
+
+                        cars = route.getLength() - route.getLocos();
+                        maxCards = route.getLength();
+
+                        if (cars > 0) {
+                            drawer.findViewById(R.id.car_icon).setVisibility(View.VISIBLE);
+                            drawer.findViewById(R.id.car_number).setVisibility(View.VISIBLE);
+                            TextView carText = drawer.findViewById(R.id.car_number);
+                            carText.setText(" " + String.valueOf(cars));
+                        } else {
+                            drawer.findViewById(R.id.car_icon).setVisibility(View.INVISIBLE);
+                            drawer.findViewById(R.id.car_number).setVisibility(View.INVISIBLE);
+                        }
+                        if (route.getLocos() > 0) {
+                            drawer.findViewById(R.id.loco_icon).setVisibility(View.VISIBLE);
+                            drawer.findViewById(R.id.loco_number).setVisibility(View.VISIBLE);
+                            TextView locoText = drawer.findViewById(R.id.loco_number);
+                            locoText.setText(" " + String.valueOf(route.getLocos()));
+                        } else {
+                            drawer.findViewById(R.id.loco_icon).setVisibility(View.INVISIBLE);
+                            drawer.findViewById(R.id.loco_number).setVisibility(View.INVISIBLE);
+                        }
+                        if (route.isTunnel()) {
+                            drawer.findViewById(R.id.tunnel_icon).setVisibility(View.VISIBLE);
+                            maxCards += game.getMaxExtraCardsForTunnel();
+                        } else {
+                            drawer.findViewById(R.id.tunnel_icon).setVisibility(View.INVISIBLE);
+                        }
+
+                        TextView lengthText = drawer.findViewById(R.id.length_value);
+                        lengthText.setText(" " + String.valueOf(route.getLength()));
+                        TextView pointsText = drawer.findViewById(R.id.points_value);
+                        pointsText.setText(" " + String.valueOf(game.getScoring().get(route.getLength())));
+
+                        setAvailableCards(route.get_id(), route.getColor());
+
+                        clearCards();
+                        refreshCards();
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
             }
 
             @Override
@@ -331,21 +343,25 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         list.setAdapter(spinnerAdapter);
     }
 
-    private void setAvailableCards(int id, String colors) {
-        if (colors == null) {
-            for (Card card : game.getCards()) {
+    private void setAvailableCards(int id, char color) {
+        for (Card card : game.getCards()) {
+            card.setClickable(0);
+            card.setVisible(0);
+        }
+        for (Card card : game.getCards()) {
+            if(card.getColor() == 'L') {
                 card.setClickable(1);
                 card.setVisible(1);
-            }
-        } else {
-            for (Card card : game.getCards()) {
-                card.setClickable(0);
-                card.setVisible(0);
-                for (char color : colors.toCharArray()) {
-                    if (card.getColor() == color || card.getColor() == 'L') {
+            } else {
+                if (color == '-') {
+                    if(cars > 0) {
                         card.setClickable(1);
                         card.setVisible(1);
-                        break;
+                    }
+                } else {
+                    if (card.getColor() == color) {
+                        card.setClickable(1);
+                        card.setVisible(1);
                     }
                 }
             }

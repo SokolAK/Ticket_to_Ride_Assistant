@@ -48,7 +48,7 @@ class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder>
     public CardImageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         CardView cv = null;
         if(viewType == 1)
-            cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
+            cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_car_view, parent, false);
         if(viewType == 0)
             cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.blank_card_view, parent, false);
         GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) cv.getLayoutParams();

@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,9 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
-
-public class CardsFragment extends Fragment {
+public class CardsCarFragment extends Fragment {
     private int[] cardCounter;
     private int maxCards;
     private int[] cardsNumbers;
@@ -27,16 +23,16 @@ public class CardsFragment extends Fragment {
     private boolean oneColor;
     private int[] maxCardsNumbers;
 
-    public CardsFragment(int[] cardsNumbers) {
+    public CardsCarFragment(int[] cardsNumbers) {
         this.cardsNumbers = cardsNumbers;
     }
 
-    public CardsFragment(int[] cardsNumbers, int[] cardCounter) {
+    public CardsCarFragment(int[] cardsNumbers, int[] cardCounter) {
         this(cardsNumbers);
         this.cardCounter = cardCounter;
     }
 
-    public CardsFragment(int[] cardsNumbers, int[] cardCounter, int maxCards) {
+    public CardsCarFragment(int[] cardsNumbers, int[] cardCounter, int maxCards) {
         this(cardsNumbers,cardCounter);
         this.maxCards = maxCards;
     }
@@ -100,11 +96,11 @@ public class CardsFragment extends Fragment {
 
     private void refreshPage() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        CardsFragment cardsFragment = new CardsFragment(cardsNumbers,cardCounter,maxCards);
-        cardsFragment.setActive(active);
-        cardsFragment.setOneColor(oneColor);
-        cardsFragment.setMaxCardsNumbers(maxCardsNumbers);
-        ft.replace(R.id.cards_container, cardsFragment);
+        CardsCarFragment cardsCarFragment = new CardsCarFragment(cardsNumbers,cardCounter,maxCards);
+        cardsCarFragment.setActive(active);
+        cardsCarFragment.setOneColor(oneColor);
+        cardsCarFragment.setMaxCardsNumbers(maxCardsNumbers);
+        ft.replace(R.id.cards_container, cardsCarFragment);
         ft.commit();
     }
 

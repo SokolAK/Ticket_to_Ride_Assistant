@@ -48,5 +48,9 @@ public class Player implements Serializable {
     public void spendCars(int cars) {
         this.cars -= cars;
     }
+
+    public void addRoute(Route route) {
+        builtRoutes.add(route);
+    }
 }
 

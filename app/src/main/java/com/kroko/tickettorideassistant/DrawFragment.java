@@ -90,10 +90,10 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
     }
     private void refreshCards() {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        CardsFragment cardsFragment = new CardsFragment(cardsNumbers,cardCounter,maxCards);
-        cardsFragment.setActive(true);
-        cardsFragment.setOneColor(false);
-        ft.replace(R.id.cards_container, cardsFragment);
+        CardsCarFragment cardsCarFragment = new CardsCarFragment(cardsNumbers,cardCounter,maxCards);
+        cardsCarFragment.setActive(true);
+        cardsCarFragment.setOneColor(false);
+        ft.replace(R.id.cards_container, cardsCarFragment);
         ft.addToBackStack(null);
         ft.commit();
     }

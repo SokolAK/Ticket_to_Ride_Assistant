@@ -64,7 +64,7 @@ public class Game {
                 cards.add(new Card('W', R.drawable.white));
                 cards.add(new Card('L', R.drawable.loco));
 
-                databaseName = "TtRADatabase_Europe.db";
+                databaseName = "TtRA_Europe.db";
                 databaseVersion = 1;
                 routes = readRoutes(databaseName, databaseVersion);
 
@@ -88,12 +88,31 @@ public class Game {
             int length = cursor.getInt(3);
             int locos = cursor.getInt(4);
             boolean tunnel = cursor.getInt(5) > 0;
-            String colors = cursor.getString(6);
-            routes.add(new Route(id, city1, city2, length, locos, tunnel, colors));
+            char color = cursor.getString(6).charAt(0);
+            routes.add(new Route(id, city1, city2, length, locos, tunnel, color));
         }
         cursor.close();
         database.close();
 
         return routes;
+    }
+
+    public Route getRoute(int id) {
+        for(Route route: routes) {
+            if(route.get_id() == id) {
+                return route;
+            }
+        }
+        return null;
+    }
+
+    public void removeRoute(int id) {
+        int i = 0;
+        for(; i < routes.size(); ++ i) {
+            if(routes.get(i).get_id() == id) {
+                break;
+            }
+        }
+        routes.remove(i);
     }
 }
