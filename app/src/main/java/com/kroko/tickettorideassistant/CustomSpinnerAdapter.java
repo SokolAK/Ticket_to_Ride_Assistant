@@ -30,7 +30,7 @@ class CustomSpinnerAdapter extends ArrayAdapter {
 
     private View initView(int position, View convertView, ViewGroup parent) {
         if(convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_spinner_row, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_spinner_item, parent, false);
         }
 
         ImageView imageView = convertView.findViewById(R.id.image_view);

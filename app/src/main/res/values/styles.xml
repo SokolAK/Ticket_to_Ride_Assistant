@@ -6,6 +6,7 @@
         <item name="android:textSize">22sp</item>
         <item name="android:textColor">@color/colorText</item>
     </style>
+
     <style name="HeaderTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
@@ -16,8 +17,4 @@
         <item name="android:textColor">@color/colorMenu</item>
     </style>
 
-    <style name="spinnerItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
-        <item name="android:textSize">36sp</item>
-        <item name="android:textColor">@color/colorText</item>
-    </style>
 </resources>

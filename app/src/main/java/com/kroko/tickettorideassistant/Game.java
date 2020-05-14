@@ -106,8 +106,9 @@ public class Game {
         return null;
     }
 
-    public void removeRoute(int id) {
+    public void removeRoute(Route route) {
         int i = 0;
+        int id = route.get_id();
         for(; i < routes.size(); ++ i) {
             if(routes.get(i).get_id() == id) {
                 break;

@@ -22,8 +22,27 @@ public class Route {
         this.color = color;
     }
 
+    public int getImageId(Game game) {
+        if(color == '-') {
+            if(length > locos) {
+                return R.drawable.any;
+            }
+            else {
+                return R.drawable.loco;
+            }
+        }
+        else {
+            for (Card card : game.getCards()) {
+                if (card.getColor() == color) {
+                    return card.getImageResourceId();
+                }
+            }
+        }
+        return 0;
+    }
+
     @Override
     public String toString() {
-        return city1 + " - " + city2 + " (" + color + ")";
+        return city1 + " - " + city2;
     }
 }

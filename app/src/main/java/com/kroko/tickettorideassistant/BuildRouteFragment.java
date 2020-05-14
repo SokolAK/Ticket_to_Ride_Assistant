@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -93,8 +94,10 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                             player.spendCars(length);
                             player.spendCards(cardsNumbers);
 
+                            game.removeRoute(route);
+
                             char builtColor = determineRouteColor(cardsNumbers);
-                            game.removeRoute(route.get_id());
+                            route.setColor(builtColor);
                             player.addRoute(route);
 
                             clearCards();
@@ -235,39 +238,26 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
 
                 city1 = (String) listCity1.getSelectedItem();
                 cities2 = new ArrayList<>();
+                ArrayList<Route> routes = new ArrayList<>();
                 for(Route route: game.getRoutes()) {
-                    if(route.getCity1().equals(city1)) {
-                        cities2.add(route.getCity2());
-                    }
-                    if(route.getCity2().equals(city1)) {
-                        cities2.add(route.getCity1());
+                    if(route.getCity1().equals(city1) || route.getCity2().equals(city1)) {
+                        routes.add(route);
                     }
                 }
 
                 ArrayList<CustomSpinnerItem> cityList = new ArrayList<>();
-                for(String city2: cities2) {
-                    for(Route route: game.getRoutes()) {
-                        if((route.getCity1().equals(city1) && route.getCity2().equals(city2) || (route.getCity2().equals(city1) && route.getCity1().equals(city2)))) {
-                            if(route.getColor() == '-') {
-                                if(route.getLength() > route.getLocos()) {
-                                    cityList.add(new CustomSpinnerItem(city2, R.drawable.any, route.get_id()));
-                                }
-                                else {
-                                    cityList.add(new CustomSpinnerItem(city2, R.drawable.loco, route.get_id()));
-                                }
-                            }
-                            else {
-                                for (Card card : game.getCards()) {
-                                    if (card.getColor() == route.getColor()) {
-                                        cityList.add(new CustomSpinnerItem(city2, card.getImageResourceId(), route.get_id()));
-                                    }
-                                }
-                            }
-                        }
+                for(Route route: routes) {
+                    String city2;
+                    if(city1.equals(route.getCity1())) {
+                        city2 = route.getCity2();
+                    } else {
+                        city2 = route.getCity1();
                     }
-                }
-                Collections.sort(cityList, (x, y) -> x.compareTo(y));
 
+                    cityList.add(new CustomSpinnerItem(city2, route.getImageId(game), route.get_id()));
+                }
+
+                Collections.sort(cityList, (x, y) -> x.compareTo(y));
 
                 Spinner spinner = drawer.findViewById(R.id.spinner_city2);
                 CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(), cityList);
@@ -276,8 +266,8 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Spinner spinner3 = drawer.findViewById(R.id.spinner_city2);
-                        routeId = ((CustomSpinnerItem) spinner3.getSelectedItem()).getRouteId();
+                        Spinner spinner2 = drawer.findViewById(R.id.spinner_city2);
+                        routeId = ((CustomSpinnerItem) spinner2.getSelectedItem()).getRouteId();
                         route = game.getRoute(routeId);
 
                         cars = route.getLength() - route.getLocos();
