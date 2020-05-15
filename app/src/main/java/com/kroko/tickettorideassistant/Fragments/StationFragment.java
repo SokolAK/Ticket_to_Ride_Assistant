@@ -1,4 +1,4 @@
-package com.kroko.TicketToRideAssistant;
+package com.kroko.TicketToRideAssistant.Fragments;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,12 +19,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.kroko.TicketToRideAssistant.Logic.DbHelper;
+import com.kroko.TicketToRideAssistant.Logic.Game;
+import com.kroko.TicketToRideAssistant.Logic.Player;
+import com.kroko.TicketToRideAssistant.R;
+import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
+import com.kroko.TicketToRideAssistant.UI.Card;
+import com.kroko.TicketToRideAssistant.UI.CardsCarFragment;
 
 public class StationFragment extends Fragment implements View.OnClickListener {
     private Game game;
     private Player player;
     private SQLiteDatabase database;
-    private final String DB_NAME = "TtRADatabase.db";
     private int[] cardCounter;
     private int[] cardsNumbers;
     private String city1;
@@ -57,7 +63,6 @@ public class StationFragment extends Fragment implements View.OnClickListener {
         resetIcon.setOnClickListener(this);
 
 
-        connectToDatabase();
         manageSpinner1(drawer);
         Spinner listCity2 = drawer.findViewById(R.id.spinner_city2);
         listCity2.setOnItemSelectedListener(new Listener(drawer));
@@ -250,13 +255,6 @@ public class StationFragment extends Fragment implements View.OnClickListener {
         navigationView.getMenu().getItem(0).setChecked(true);
     }
 
-
-    private void connectToDatabase() {
-        DbHelper dbHelper = new DbHelper(getContext(), DB_NAME, 1);
-        dbHelper.checkDatabase();
-        dbHelper.openDatabase();
-        database = dbHelper.getReadableDatabase();
-    }
 
     private void manageSpinner1(View drawer) {
         Cursor cursor = database.rawQuery("SELECT cities, _id FROM (SELECT City1 as cities, _id FROM Routes " +

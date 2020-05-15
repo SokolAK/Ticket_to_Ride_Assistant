@@ -12,14 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".TtRA_Application">
+        android:name=".Logic.TtRA_Application">
 
 
         <activity
-            android:name="com.kroko.TicketToRideAssistant.HelpActivity"
+            android:name="com.kroko.TicketToRideAssistant.Fragments.HelpActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name="com.kroko.TicketToRideAssistant.MainActivity"
+            android:name="com.kroko.TicketToRideAssistant.Fragments.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

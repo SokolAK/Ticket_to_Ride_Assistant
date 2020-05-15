@@ -1,4 +1,4 @@
-package com.kroko.TicketToRideAssistant;
+package com.kroko.TicketToRideAssistant.UI;
 
 import android.graphics.drawable.Drawable;
 import androidx.core.content.ContextCompat;
@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kroko.TicketToRideAssistant.R;
+
 import java.util.ArrayList;
 
-class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder> {
+public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder> {
     private Listener listener;
     private ArrayList<Card> cards;
     private int[] cardsNumbers;

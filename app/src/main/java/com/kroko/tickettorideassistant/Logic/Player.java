@@ -1,4 +1,4 @@
-package com.kroko.TicketToRideAssistant;
+package com.kroko.TicketToRideAssistant.Logic;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,25 +32,33 @@ public class Player implements Serializable {
     public void addPoints(int points) {
         this.points += points;
     }
+    public void spendPoints(int points) {
+        this.points -= points;
+    }
 
     public void addCards(int[] cardsNumbers) {
         for (int i = 0; i < this.cardsNumbers.length; ++i) {
             this.cardsNumbers[i] += cardsNumbers[i];
         }
     }
-
     public void spendCards(int[] cardsNumbers) {
         for (int i = 0; i < this.cardsNumbers.length; ++i) {
             this.cardsNumbers[i] -= cardsNumbers[i];
         }
     }
 
+    public void addCars(int cars) {
+        this.cars += cars;
+    }
     public void spendCars(int cars) {
         this.cars -= cars;
     }
 
     public void addRoute(Route route) {
         builtRoutes.add(route);
+    }
+    public void removeRoute(int i) {
+        builtRoutes.remove(i);
     }
 }
 

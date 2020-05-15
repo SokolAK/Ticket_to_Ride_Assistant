@@ -1,4 +1,4 @@
-package com.kroko.TicketToRideAssistant;
+package com.kroko.TicketToRideAssistant.Logic;
 
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-class DbHelper extends SQLiteOpenHelper {
+public class DbHelper extends SQLiteOpenHelper {
 
     private String DB_NAME;
     private String DB_PATH;

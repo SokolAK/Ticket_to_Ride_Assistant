@@ -1,9 +1,7 @@
-package com.kroko.TicketToRideAssistant;
+package com.kroko.TicketToRideAssistant.Fragments;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -13,6 +11,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
 import com.google.android.material.navigation.NavigationView;
+import com.kroko.TicketToRideAssistant.Logic.Game;
+import com.kroko.TicketToRideAssistant.Logic.Player;
+import com.kroko.TicketToRideAssistant.R;
+import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
 
 import android.view.MenuItem;
 import android.content.Intent;

@@ -1,9 +1,11 @@
-package com.kroko.TicketToRideAssistant;
+package com.kroko.TicketToRideAssistant.Logic;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.kroko.TicketToRideAssistant.R;
+import com.kroko.TicketToRideAssistant.UI.Card;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,6 +108,9 @@ public class Game {
         return null;
     }
 
+    public void addRoute(Route route) {
+        routes.add(route);
+    }
     public void removeRoute(Route route) {
         int i = 0;
         int id = route.get_id();

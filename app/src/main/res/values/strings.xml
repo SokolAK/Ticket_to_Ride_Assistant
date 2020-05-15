@@ -41,6 +41,6 @@
     <string name="station_cost">Number of cards to choose:</string>
 
     <string name="already_built">Route already built</string>
-
-
+    <string name="built_routes_header">Press long to delete a route</string>
+    
 </resources>

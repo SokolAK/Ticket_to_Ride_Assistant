@@ -1,4 +1,4 @@
-package com.kroko.TicketToRideAssistant;
+package com.kroko.TicketToRideAssistant.Fragments;
 
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
@@ -11,6 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.navigation.NavigationView;
+import com.kroko.TicketToRideAssistant.Logic.Game;
+import com.kroko.TicketToRideAssistant.Logic.Player;
+import com.kroko.TicketToRideAssistant.R;
+import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
+import com.kroko.TicketToRideAssistant.UI.CardsCarFragment;
 
 public class DrawFragment extends Fragment implements View.OnClickListener {
     private Game game;

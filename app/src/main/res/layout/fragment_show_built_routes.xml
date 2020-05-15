@@ -4,7 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.kroko.TicketToRideAssistant.MainActivity">
+    tools:context="com.kroko.TicketToRideAssistant.Fragments.MainActivity">
+
+    <TextView
+        android:id="@+id/built_routes_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/built_routes_header" />
+
     <ListView
         android:id="@+id/list_routes"
         android:layout_width="match_parent"

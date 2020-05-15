@@ -1,4 +1,7 @@
-package com.kroko.TicketToRideAssistant;
+package com.kroko.TicketToRideAssistant.Logic;
+
+import com.kroko.TicketToRideAssistant.R;
+import com.kroko.TicketToRideAssistant.UI.Card;
 
 import lombok.Data;
 
@@ -12,6 +15,10 @@ public class Route {
     private boolean tunnel;
     private char color;
 
+    private boolean built;
+    private char builtColor;
+    private int[] builtCardsNumber;
+
     public Route(int _id, String city1, String city2, int length, int locos, boolean tunnel, char color) {
         this._id = _id;
         this.city1 = city1;
@@ -20,9 +27,10 @@ public class Route {
         this.locos = locos;
         this.tunnel = tunnel;
         this.color = color;
+        this.built = false;
     }
 
-    public int getImageId(Game game) {
+    public int getImageId(Game game, char color) {
         if(color == '-') {
             if(length > locos) {
                 return R.drawable.any;

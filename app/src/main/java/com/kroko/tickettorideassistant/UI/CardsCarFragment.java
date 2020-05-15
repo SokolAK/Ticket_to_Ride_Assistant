@@ -1,4 +1,4 @@
-package com.kroko.TicketToRideAssistant;
+package com.kroko.TicketToRideAssistant.UI;
 
 import android.os.Bundle;
 
@@ -13,6 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.google.android.material.navigation.NavigationView;
+import com.kroko.TicketToRideAssistant.Logic.Game;
+import com.kroko.TicketToRideAssistant.Fragments.MainActivity;
+import com.kroko.TicketToRideAssistant.Logic.Player;
+import com.kroko.TicketToRideAssistant.R;
+import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
 
 public class CardsCarFragment extends Fragment {
     private int[] cardCounter;

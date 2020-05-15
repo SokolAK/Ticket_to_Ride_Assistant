@@ -1,8 +1,7 @@
-package com.kroko.TicketToRideAssistant;
+package com.kroko.TicketToRideAssistant.UI;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
 
 @Data
 @AllArgsConstructor

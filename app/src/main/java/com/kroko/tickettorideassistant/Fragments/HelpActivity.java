@@ -1,8 +1,11 @@
-package com.kroko.TicketToRideAssistant;
+package com.kroko.TicketToRideAssistant.Fragments;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+
+import com.kroko.TicketToRideAssistant.R;
+
 public class HelpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

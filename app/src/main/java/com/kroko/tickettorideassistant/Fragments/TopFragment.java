@@ -1,4 +1,4 @@
-package com.kroko.TicketToRideAssistant;
+package com.kroko.TicketToRideAssistant.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,13 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.kroko.TicketToRideAssistant.Logic.Game;
+import com.kroko.TicketToRideAssistant.Logic.Player;
+import com.kroko.TicketToRideAssistant.R;
+import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
+import com.kroko.TicketToRideAssistant.UI.Card;
+import com.kroko.TicketToRideAssistant.UI.CardsCarFragment;
 
 public class TopFragment extends Fragment {
     @Override

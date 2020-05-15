@@ -8,4 +8,4 @@
     android:background="@color/colorBackDark"
     android:text="Already built!"
     android:gravity="center"
-    tools:context=".BlankFragment" />
+    tools:context=".UI.BlankFragment" />

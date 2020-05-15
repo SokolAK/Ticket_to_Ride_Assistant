@@ -1,4 +1,4 @@
-package com.kroko.TicketToRideAssistant;
+package com.kroko.TicketToRideAssistant.UI;
 
 import java.util.ArrayList;
 import android.content.Context;
@@ -12,7 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-class CustomSpinnerAdapter extends ArrayAdapter {
+import com.kroko.TicketToRideAssistant.R;
+import com.kroko.TicketToRideAssistant.UI.CustomSpinnerItem;
+
+public class CustomSpinnerAdapter extends ArrayAdapter {
     public CustomSpinnerAdapter(Context context, ArrayList<CustomSpinnerItem> itemsList) {
         super(context, 0, itemsList);
     }
@@ -30,7 +33,7 @@ class CustomSpinnerAdapter extends ArrayAdapter {
 
     private View initView(int position, View convertView, ViewGroup parent) {
         if(convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_spinner_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_list_item, parent, false);
         }
 
         ImageView imageView = convertView.findViewById(R.id.image_view);

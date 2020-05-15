@@ -1,18 +1,24 @@
-package com.kroko.TicketToRideAssistant;
+package com.kroko.TicketToRideAssistant.Fragments;
 
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import com.kroko.TicketToRideAssistant.Logic.Game;
+import com.kroko.TicketToRideAssistant.Logic.Player;
+import com.kroko.TicketToRideAssistant.R;
+import com.kroko.TicketToRideAssistant.Logic.Route;
+import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
+import com.kroko.TicketToRideAssistant.UI.CustomSpinnerAdapter;
+import com.kroko.TicketToRideAssistant.UI.CustomSpinnerItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,13 +34,28 @@ public class ShowBuiltRoutesFragment extends Fragment {
 
         ArrayList<CustomSpinnerItem> routeList = new ArrayList<>();
         for(Route route: player.getBuiltRoutes()) {
-            routeList.add(new CustomSpinnerItem(route.toString(), route.getImageId(game), route.get_id()));
+            routeList.add(new CustomSpinnerItem(route.toString(), route.getImageId(game,route.getBuiltColor()), route.get_id()));
         }
         Collections.sort(routeList, (x, y) -> x.compareTo(y));
 
         ListView listRoutes = drawer.findViewById(R.id.list_routes);
         CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(), routeList);
         listRoutes.setAdapter(adapter);
+
+        listRoutes.setOnItemLongClickListener((arg0, arg1, position, id) -> {
+            Route route = player.getBuiltRoutes().get(position);
+            int routeId = route.get_id();
+
+            player.addCards(route.getBuiltCardsNumber());
+            player.addCars(route.getLength());
+            player.spendPoints(game.getScoring().get(route.getLength()));
+            player.removeRoute(position);
+            game.getRoute(routeId).setBuilt(false);
+
+            routeList.remove(position);
+            adapter.notifyDataSetChanged();
+            return true;
+        });
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_top);
