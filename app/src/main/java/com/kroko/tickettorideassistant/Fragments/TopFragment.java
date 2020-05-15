@@ -52,11 +52,15 @@ public class TopFragment extends Fragment {
                     cardsCarFragment.setActiveLong(true);
                     FrameLayout cardsContainer = drawer.findViewById(R.id.cards_container);
                     cardsContainer.setBackgroundResource(R.color.cardsUnlocked);
+                    switchControl.setText(R.string.cards_unlocked);
+                    switchControl.setTextColor(getResources().getColor(R.color.cardsUnlocked));
                 } else {
                     cardsCarFragment.setActive(false);
                     cardsCarFragment.setActiveLong(false);
                     FrameLayout cardsContainer = drawer.findViewById(R.id.cards_container);
                     cardsContainer.setBackgroundResource(R.color.colorBackDark);
+                    switchControl.setText(R.string.cards_locked);
+                    switchControl.setTextColor(getResources().getColor(R.color.cardsLocked));
                 }
                 ft.replace(R.id.cards_container, cardsCarFragment);
                 ft.addToBackStack(null);

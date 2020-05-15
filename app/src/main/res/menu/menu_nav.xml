@@ -18,10 +18,6 @@
             android:icon="@drawable/ic_train_black_24dp"
             android:title="@string/nav_buildRoute" />
         <item
-            android:id="@+id/nav_show_routes"
-            android:icon="@drawable/ic_share_black_24dp"
-            android:title="@string/nav_showRoutes" />
-        <item
             android:id="@+id/nav_build_station"
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/nav_buildStation" />

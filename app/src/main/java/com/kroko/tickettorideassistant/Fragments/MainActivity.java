@@ -18,6 +18,8 @@ import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
 
 import android.view.MenuItem;
 import android.content.Intent;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.core.view.GravityCompat;
 
@@ -81,9 +83,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new DrawFragment();
                 break;
             case R.id.nav_build_route:
-                fragment = new BuildRouteFragment();
-                break;
-            case R.id.nav_show_routes:
                 fragment = new ShowBuiltRoutesFragment();
                 break;
             case R.id.nav_build_station:
@@ -118,5 +117,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         onNavigationItemSelected(0);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.getMenu().getItem(0).setChecked(true);
+    }
+
+    public void onClickBuildRoute(View view) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, new BuildRouteFragment());
+        ft.commit();
+
     }
 }

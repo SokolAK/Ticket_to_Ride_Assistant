@@ -41,7 +41,15 @@
     <string name="station_cost">Number of cards to choose:</string>
 
     <string name="already_built">Route already built</string>
-    <string name="built_routes_header">Press and hold to delete a route</string>
+    <string name="built_routes_header">Built routes:</string>
+    <string name="delete_route_comment">Press and hold a route to delete</string>
     <string name="switch_cards">Unlock cards</string>
+    <string name="build_new_route">Build a new route</string>
+    <string name="unlock_delete">Unlock delete option</string>
+    <string name="cards_locked">Cards locked</string>
+    <string name="cards_unlocked">Cards unlocked</string>
+
+    <string name="routes_locked">Routes locked</string>
+    <string name="routes_unlocked">Routes unlocked</string>
 
 </resources>

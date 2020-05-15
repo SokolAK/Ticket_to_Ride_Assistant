@@ -1,19 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorBackDark"
     tools:context="com.kroko.TicketToRideAssistant.Fragments.MainActivity">
+
+    <Button
+        android:id="@+id/accept_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/build_new_route"
+        android:textColor="#80000000"
+        android:background="#4CAF50"
+        android:onClick="onClickBuildRoute"/>
 
     <TextView
         android:id="@+id/built_routes_header"
         android:layout_width="match_parent"
+        android:layout_height="64sp"
+        android:gravity="center|bottom"
+        android:text="@string/built_routes_header"/>
+
+    <Switch
+        android:id="@+id/switch_delete"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/built_routes_header" />
+        android:textColor="@color/reset_color"
+        android:text="@string/routes_locked" />
+
+    <TextView
+        android:id="@+id/delete_route_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_route_comment"
+        android:textColor="@color/reset_color"
+        android:textSize="16sp"
+        android:visibility="invisible" />
 
     <ListView
         android:id="@+id/list_routes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    
 </LinearLayout>
