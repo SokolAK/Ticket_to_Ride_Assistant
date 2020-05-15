@@ -44,13 +44,12 @@ public class ShowBuiltRoutesFragment extends Fragment {
 
         listRoutes.setOnItemLongClickListener((arg0, arg1, position, id) -> {
             Route route = player.getBuiltRoutes().get(position);
-            int routeId = route.get_id();
 
             player.addCards(route.getBuiltCardsNumber());
             player.addCars(route.getLength());
             player.spendPoints(game.getScoring().get(route.getLength()));
             player.removeRoute(position);
-            game.getRoute(routeId).setBuilt(false);
+            game.getRoute(route.get_id()).setBuilt(false);
 
             routeList.remove(position);
             adapter.notifyDataSetChanged();

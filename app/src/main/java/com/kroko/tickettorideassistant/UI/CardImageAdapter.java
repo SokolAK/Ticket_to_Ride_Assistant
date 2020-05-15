@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,11 +17,15 @@ import java.util.ArrayList;
 
 public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder> {
     private Listener listener;
+    private ListenerLong listenerLong;
     private ArrayList<Card> cards;
     private int[] cardsNumbers;
 
     interface Listener {
         void onClick(int position);
+    }
+    interface ListenerLong {
+        void onLongClick(int position);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -81,10 +86,20 @@ public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.View
                 listener.onClick(position);
             }
         });
+
+        cardView.setOnLongClickListener(v -> {
+            if (listenerLong != null) {
+                listenerLong.onLongClick(position);
+            }
+            return true;
+        });
     }
 
     public void setListener(Listener listener){
         this.listener = listener;
+    }
+    public void setListenerLong(ListenerLong listener){
+        this.listenerLong = listener;
     }
 }
 

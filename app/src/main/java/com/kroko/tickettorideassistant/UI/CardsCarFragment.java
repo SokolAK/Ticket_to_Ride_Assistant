@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,10 +26,13 @@ public class CardsCarFragment extends Fragment {
     private int[] cardsNumbers;
 
     private boolean active;
+    private boolean activeLong;
     private boolean oneColor;
     private int[] maxCardsNumbers;
 
     public CardsCarFragment(int[] cardsNumbers) {
+        this.cardCounter = new int[1];
+        this.maxCards = 0;
         this.cardsNumbers = cardsNumbers;
     }
 
@@ -44,6 +48,9 @@ public class CardsCarFragment extends Fragment {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+    public void setActiveLong(boolean active) {
+        this.activeLong = active;
     }
     public void setOneColor(boolean oneColor) {
         this.oneColor = oneColor;
@@ -95,6 +102,14 @@ public class CardsCarFragment extends Fragment {
                 refreshPage();
             }
         });
+        adapter.setListenerLong(position -> {
+            if(activeLong) {
+                if(cardsNumbers[position]>0) {
+                    cardsNumbers[position]--;
+                }
+                refreshPage();
+            }
+        });
 
         return drawer;
     }
@@ -103,6 +118,7 @@ public class CardsCarFragment extends Fragment {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         CardsCarFragment cardsCarFragment = new CardsCarFragment(cardsNumbers,cardCounter,maxCards);
         cardsCarFragment.setActive(active);
+        cardsCarFragment.setActiveLong(activeLong);
         cardsCarFragment.setOneColor(oneColor);
         cardsCarFragment.setMaxCardsNumbers(maxCardsNumbers);
         ft.replace(R.id.cards_container, cardsCarFragment);

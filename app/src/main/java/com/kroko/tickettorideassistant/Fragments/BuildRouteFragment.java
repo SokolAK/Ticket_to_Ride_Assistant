@@ -130,6 +130,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         CardsCarFragment cardsCarFragment = new CardsCarFragment(cardsNumbers, cardCounter, maxCards);
         cardsCarFragment.setActive(true);
+        cardsCarFragment.setActiveLong(false);
         cardsCarFragment.setOneColor(true);
 
         int[] maxCardsNumbers = new int[player.getCardsNumbers().length];

@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.FrameLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -35,16 +38,34 @@ public class TopFragment extends Fragment {
 
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
         for (Card card : game.getCards()) {
-            card.setClickable(0);
+            card.setClickable(1);
             card.setVisible(1);
         }
 
-        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        CardsCarFragment cardsCarFragment = new CardsCarFragment(player.getCardsNumbers());
-        cardsCarFragment.setActive(false);
-        ft.replace(R.id.cards_container, cardsCarFragment);
-        ft.addToBackStack(null);
-        ft.commit();
+        Switch switchControl = drawer.findViewById(R.id.switch_control);
+        if (switchControl != null) {
+            switchControl.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+                CardsCarFragment cardsCarFragment = new CardsCarFragment(player.getCardsNumbers());
+                if(isChecked) {
+                    cardsCarFragment.setActive(true);
+                    cardsCarFragment.setActiveLong(true);
+                    FrameLayout cardsContainer = drawer.findViewById(R.id.cards_container);
+                    cardsContainer.setBackgroundResource(R.color.cardsUnlocked);
+                } else {
+                    cardsCarFragment.setActive(false);
+                    cardsCarFragment.setActiveLong(false);
+                    FrameLayout cardsContainer = drawer.findViewById(R.id.cards_container);
+                    cardsContainer.setBackgroundResource(R.color.colorBackDark);
+                }
+                ft.replace(R.id.cards_container, cardsCarFragment);
+                ft.addToBackStack(null);
+                ft.commit();
+            });
+        }
+
+        switchControl.setChecked(true);
+        switchControl.setChecked(false);
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_top);

@@ -97,6 +97,7 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         CardsCarFragment cardsCarFragment = new CardsCarFragment(cardsNumbers,cardCounter,maxCards);
         cardsCarFragment.setActive(true);
+        cardsCarFragment.setActiveLong(true);
         cardsCarFragment.setOneColor(false);
         ft.replace(R.id.cards_container, cardsCarFragment);
         ft.addToBackStack(null);

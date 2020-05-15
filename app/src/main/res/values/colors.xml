@@ -7,4 +7,5 @@
     <color name="colorText">#FFFFFF</color>
     <color name="colorBackDark">#000000</color>
     <color name="colorBackLight">#424242</color>
+    <color name="cardsUnlocked">#4CAF50</color>
 </resources>

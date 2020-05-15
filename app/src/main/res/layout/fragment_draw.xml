@@ -25,7 +25,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/draw_cards_label" />
-
         <TextView
             android:id="@+id/drawCards_value"
             android:layout_width="wrap_content"
