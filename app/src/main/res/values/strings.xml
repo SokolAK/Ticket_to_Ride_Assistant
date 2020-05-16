@@ -7,6 +7,7 @@
     <string name="nav_buildRoute">Build route</string>
     <string name="nav_showRoutes">Show built routes</string>
     <string name="nav_buildStation">Build station</string>
+    <string name="nav_showStation">Build station</string>
     <string name="nav_drawTickets">Draw tickets</string>
 
     <string name="nav_help">Help</string>
@@ -49,7 +50,13 @@
     <string name="cards_locked">Cards locked</string>
     <string name="cards_unlocked">Cards unlocked</string>
 
-    <string name="routes_locked">Routes locked</string>
-    <string name="routes_unlocked">Routes unlocked</string>
+    <string name="locked">Locked</string>
+    <string name="unlocked">Unlocked</string>
+    <string name="built_stations_header">Built stations:</string>
+    <string name="delete_station_comment">Press and hold a station to delete</string>
+    <string name="build_new_station">Build a new station</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

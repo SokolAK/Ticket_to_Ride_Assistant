@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class Route {
-    private int _id;
+    private int id;
     private String city1;
     private String city2;
     private int length;
@@ -19,8 +19,12 @@ public class Route {
     private char builtColor;
     private int[] builtCardsNumber;
 
-    public Route(int _id, String city1, String city2, int length, int locos, boolean tunnel, char color) {
-        this._id = _id;
+    private boolean builtStation;
+    private char builtStationColor;
+    private int[] builtStationCardsNumber;
+
+    public Route(int id, String city1, String city2, int length, int locos, boolean tunnel, char color) {
+        this.id = id;
         this.city1 = city1;
         this.city2 = city2;
         this.length = length;
@@ -28,6 +32,7 @@ public class Route {
         this.tunnel = tunnel;
         this.color = color;
         this.built = false;
+        this.builtStation = false;
     }
 
     public int getImageId(Game game, char color) {

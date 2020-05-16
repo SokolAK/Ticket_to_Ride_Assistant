@@ -9,20 +9,20 @@
     tools:context="com.kroko.TicketToRideAssistant.Fragments.MainActivity">
 
     <Button
-        android:id="@+id/new_route"
+        android:id="@+id/new_station"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/build_new_route"
+        android:text="@string/build_new_station"
         android:textColor="#80000000"
         android:background="#4CAF50"
-        android:onClick="onClickBuildRoute"/>
+        android:onClick="onClickBuildStation"/>
 
     <TextView
         android:id="@+id/built_routes_header"
         android:layout_width="match_parent"
         android:layout_height="64sp"
         android:gravity="center|bottom"
-        android:text="@string/built_routes_header"/>
+        android:text="@string/built_stations_header"/>
 
     <Switch
         android:id="@+id/switch_delete"
@@ -35,13 +35,13 @@
         android:id="@+id/delete_route_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/delete_route_comment"
+        android:text="@string/delete_station_comment"
         android:textColor="@color/reset_color"
         android:textSize="16sp"
         android:visibility="invisible" />
 
     <ListView
-        android:id="@+id/list_routes"
+        android:id="@+id/list_stations"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     

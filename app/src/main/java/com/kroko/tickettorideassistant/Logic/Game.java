@@ -25,6 +25,8 @@ public class Game {
     private HashMap<Integer, Integer> stationCost = new HashMap<>();
     private ArrayList<Card> cards = new ArrayList<>();
     private ArrayList<Route> routes = new ArrayList<>();
+    private ArrayList<Ticket> ticketsShort = new ArrayList<>();
+    private ArrayList<Ticket> ticketsLong = new ArrayList<>();
     private String databaseName;
     private int databaseVersion;
     private Context context;
@@ -69,9 +71,33 @@ public class Game {
                 databaseName = "TtRA_Europe.db";
                 databaseVersion = 1;
                 routes = readRoutes(databaseName, databaseVersion);
+                ticketsShort = readTickets(databaseName, databaseVersion, "Tickets_Short_Base");
+                ticketsLong = readTickets(databaseName, databaseVersion, "Tickets_Long_Base");
 
                 break;
         }
+    }
+
+    private ArrayList<Ticket> readTickets(String databaseName, int databaseVersion, String tableName) {
+        SQLiteDatabase database;
+        DbHelper dbHelper = new DbHelper(context, databaseName, databaseVersion);
+        dbHelper.checkDatabase();
+        dbHelper.openDatabase();
+        database = dbHelper.getReadableDatabase();
+
+        ArrayList<Ticket> tickets = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + tableName, null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String city1 = cursor.getString(1);
+            String city2 = cursor.getString(2);
+            int points = cursor.getInt(3);
+            tickets.add(new Ticket(id, city1, city2, points));
+        }
+        cursor.close();
+        database.close();
+
+        return tickets;
     }
 
     private ArrayList<Route> readRoutes(String databaseName, int databaseVersion) {
@@ -100,25 +126,40 @@ public class Game {
     }
 
     public Route getRoute(int id) {
-        for(Route route: routes) {
-            if(route.get_id() == id) {
+        for (Route route : routes) {
+            if (route.getId() == id) {
                 return route;
             }
         }
         return null;
     }
 
-    public void addRoute(Route route) {
-        routes.add(route);
-    }
-    public void removeRoute(Route route) {
-        int i = 0;
-        int id = route.get_id();
-        for(; i < routes.size(); ++ i) {
-            if(routes.get(i).get_id() == id) {
-                break;
+    public ArrayList<Route> getRoutes(String city1, boolean checkIfBuilt, boolean checkIfBuiltStation) {
+        ArrayList<Route> result = new ArrayList<>();
+        for (Route route : routes) {
+            if (!route.isBuilt() || !checkIfBuilt) {
+                if (!route.isBuiltStation() || !checkIfBuiltStation) {
+                    if (route.getCity1().equals(city1) || route.getCity2().equals(city1)) {
+                        result.add(route);
+                    }
+                }
             }
         }
-        routes.remove(i);
+        return result;
+    }
+
+    public ArrayList<Route> getRoutes(String city1, String city2, boolean checkIfBuilt, boolean checkIfBuiltStation) {
+        ArrayList<Route> result = new ArrayList<>();
+        for (Route route : routes) {
+            if (!route.isBuilt() || !checkIfBuilt) {
+                if (!route.isBuiltStation() || !checkIfBuiltStation) {
+                    if ((route.getCity1().equals(city1) && route.getCity2().equals(city2)) ||
+                            (route.getCity2().equals(city1) && route.getCity1().equals(city2))) {
+                        result.add(route);
+                    }
+                }
+            }
+        }
+        return result;
     }
 }

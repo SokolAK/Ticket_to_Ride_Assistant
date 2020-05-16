@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new ShowBuiltRoutesFragment();
                 break;
             case R.id.nav_build_station:
-                fragment = new StationFragment();
+                fragment = new ShowBuiltStationsFragment();
                 break;
             case R.id.nav_help:
                 intent = new Intent(this, HelpActivity.class);
@@ -123,6 +123,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, new BuildRouteFragment());
         ft.commit();
-
+    }
+    public void onClickBuildStation(View view) {
+        Game game = ((TtRA_Application) getApplication()).game;
+        Player player = ((TtRA_Application) getApplication()).player;
+        if(player.getNumberOfStations() > 0) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, new BuildStationFragment());
+            ft.commit();
+        }
     }
 }

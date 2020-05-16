@@ -23,37 +23,39 @@ import com.kroko.TicketToRideAssistant.UI.CustomSpinnerItem;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ShowBuiltRoutesFragment extends Fragment {
+public class ShowBuiltStationsFragment extends Fragment {
     private boolean unlockDelete;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View drawer = inflater.inflate(R.layout.fragment_show_built_routes, container, false);
+        View drawer = inflater.inflate(R.layout.fragment_show_built_stations, container, false);
         Player player = ((TtRA_Application) getActivity().getApplication()).player;
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
 
 
-        ArrayList<CustomSpinnerItem> routeList = new ArrayList<>();
-        for(Route route: player.getBuiltRoutes()) {
-            routeList.add(new CustomSpinnerItem(route.toString(), route.getImageId(game,route.getBuiltColor()), route.getId()));
+        ArrayList<CustomSpinnerItem> stationList = new ArrayList<>();
+        for(Route route: player.getBuiltStations()) {
+            stationList.add(new CustomSpinnerItem(route.toString(), route.getImageId(game,route.getBuiltStationColor()), route.getId()));
         }
-        Collections.sort(routeList, (x, y) -> x.compareTo(y));
+        Collections.sort(stationList, (x, y) -> x.compareTo(y));
 
-        ListView listRoutes = drawer.findViewById(R.id.list_routes);
-        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(), routeList);
-        listRoutes.setAdapter(adapter);
+        ListView listStations = drawer.findViewById(R.id.list_stations);
+        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(), stationList);
+        listStations.setAdapter(adapter);
 
-        listRoutes.setOnItemLongClickListener((arg0, arg1, position, id) -> {
+        listStations.setOnItemLongClickListener((arg0, arg1, position, id) -> {
             if(unlockDelete) {
-                Route route = player.getBuiltRoutes().get(position);
+                Route route = player.getBuiltStations().get(position);
 
-                player.addCards(route.getBuiltCardsNumber());
-                player.addCars(route.getLength());
-                player.spendPoints(game.getScoring().get(route.getLength()));
-                player.removeRoute(position);
-                game.getRoute(route.getId()).setBuilt(false);
+                player.addCards(route.getBuiltStationCardsNumber());
+                player.addPoints(game.getStationPoints());
+                player.removeRouteStation(position);
+                for (Route rout : game.getRoutes(route.getCity1(), route.getCity2(),false,false)) {
+                    rout.setBuiltStation(false);
+                }
+                player.addStation(1);
 
-                routeList.remove(position);
+                stationList.remove(position);
                 adapter.notifyDataSetChanged();
             }
             return true;
@@ -79,7 +81,7 @@ public class ShowBuiltRoutesFragment extends Fragment {
         }
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.nav_showRoutes);
+        toolbar.setTitle(R.string.nav_showStation);
 
         return drawer;
     }

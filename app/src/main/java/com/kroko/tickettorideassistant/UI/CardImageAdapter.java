@@ -71,6 +71,7 @@ public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.View
         CardView cardView = holder.cardView;
         switch (holder.getItemViewType()) {
             case 1:
+                cardView.setRadius(24); //to avoid ghosts
                 ImageView imageView = cardView.findViewById(R.id.card_image);
                 Drawable drawable = ContextCompat.getDrawable(cardView.getContext(), cards.get(position).getImageResourceId());
                 imageView.setImageDrawable(drawable);
@@ -78,6 +79,7 @@ public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.View
                 textView.setText(String.valueOf(cardsNumbers[position]));
                 break;
             case 0:
+                cardView.setRadius(0); //to avoid ghosts
                 break;
         }
 

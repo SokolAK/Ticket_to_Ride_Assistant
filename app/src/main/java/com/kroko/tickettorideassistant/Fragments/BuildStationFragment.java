@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -30,14 +29,13 @@ import com.kroko.TicketToRideAssistant.UI.CustomSpinnerItem;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class BuildRouteFragment extends Fragment implements View.OnClickListener {
+public class BuildStationFragment extends Fragment implements View.OnClickListener {
     private Game game;
     private Player player;
     private int[] cardCounter;
     private int[] cardsNumbers;
     private int maxCards;
     private Route route;
-    int cars;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +44,8 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         player = ((TtRA_Application) getActivity().getApplication()).player;
         cardCounter = new int[1];
         cardsNumbers = new int[game.getCards().size()];
+        int numberOfStation = game.getNumberOfStations() - player.getNumberOfStations() + 1;
+        maxCards = game.getStationCost().get(numberOfStation);
 
         for (int i = 0; i < game.getCards().size(); ++i) {
             game.getCards().get(i).setClickable(1);
@@ -53,7 +53,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
             cardsNumbers[i] = 0;
         }
 
-        View drawer = inflater.inflate(R.layout.fragment_build_route, container, false);
+        View drawer = inflater.inflate(R.layout.fragment_build_station, container, false);
 
         ImageView acceptIcon = drawer.findViewById(R.id.accept_icon);
         acceptIcon.setOnClickListener(this);
@@ -64,7 +64,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         manageSpinner2(drawer);
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.nav_buildRoute);
+        toolbar.setTitle(R.string.nav_buildStation);
 
         return drawer;
     }
@@ -74,38 +74,24 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         switch (v.getId()) {
 
             case R.id.accept_icon:
-                int length = route.getLength();
-                int locos = route.getLocos();
-                if (length <= player.getNumberOfCars()) {
-                    if (cardCounter[0] >= length) {
-                        int selectedLocos = 0;
-                        for (int i = 0; i < game.getCards().size(); ++i) {
-                            if (game.getCards().get(i).getColor() == 'L') {
-                                selectedLocos = cardsNumbers[i];
-                            }
-                        }
-                        if (selectedLocos >= locos) {
-                            player.addPoints(game.getScoring().get(length));
-                            player.spendCars(length);
-                            player.spendCards(cardsNumbers);
-                            //game.removeRoute(route);
-                            game.getRoute(route.getId()).setBuilt(true);
-                            char builtColor = determineRouteColor(cardsNumbers);
-                            route.setBuiltColor(builtColor);
-                            route.setBuiltCardsNumber(cardsNumbers.clone());
-                            player.addRoute(route);
 
-                            clearCards();
-                            refreshCards();
-                            returnToTopPage();
-                        } else {
-                            Toast.makeText(getContext(), R.string.too_little_locos, Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(getContext(), R.string.too_little_cards, Toast.LENGTH_SHORT).show();
+                if (cardCounter[0] >= maxCards) {
+                    player.spendPoints(game.getStationPoints());
+                    player.spendCards(cardsNumbers);
+                    for (Route rout : game.getRoutes(route.getCity1(), route.getCity2(),false,false)) {
+                        rout.setBuiltStation(true);
                     }
+                    char builtColor = determineRouteColor(cardsNumbers);
+                    route.setBuiltStationColor(builtColor);
+                    route.setBuiltStationCardsNumber(cardsNumbers.clone());
+                    player.addRouteStation(route);
+                    player.spendStation(1);
+
+                    clearCards();
+                    refreshCards();
+                    returnToTopPage();
                 } else {
-                    Toast.makeText(getContext(), R.string.too_little_cars, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.too_little_cards, Toast.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -123,7 +109,10 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         for (int i = 0; i < game.getCards().size(); ++i) {
             cardsNumbers[i] = 0;
         }
-        setAvailableCards(route.getColor());
+        for (Card card : game.getCards()) {
+            card.setClickable(1);
+            card.setVisible(1);
+        }
     }
 
     private void refreshCards() {
@@ -135,23 +124,17 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
 
         int[] maxCardsNumbers = new int[player.getCardsNumbers().length];
         for (int i = 0; i < player.getCardsNumbers().length; ++i) {
-            if (player.getCardsNumbers()[i] < route.getLength()) {
+            if (player.getCardsNumbers()[i] < maxCards) {
                 maxCardsNumbers[i] = player.getCardsNumbers()[i];
             } else {
-                maxCardsNumbers[i] = route.getLength();
-                if (route.isTunnel()) {
-                    maxCardsNumbers[i] += game.getMaxExtraCardsForTunnel();
-                }
-                if (game.getCards().get(i).getColor() != 'L') {
-                    maxCardsNumbers[i] -= route.getLocos();
-                }
+                maxCardsNumbers[i] = maxCards;
             }
         }
         cardsCarFragment.setMaxCardsNumbers(maxCardsNumbers);
         ft.replace(R.id.cards_container, cardsCarFragment);
         ft.addToBackStack(null);
         ft.commit();
-        getActivity().findViewById(R.id.buttons_panel).setVisibility(View.VISIBLE);
+        //getActivity().findViewById(R.id.buttons_panel).setVisibility(View.VISIBLE);
     }
 
     private void returnToTopPage() {
@@ -163,7 +146,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
     private void manageSpinner1(View drawer) {
         ArrayList<String> cities1 = new ArrayList<>();
         for (Route route : game.getRoutes()) {
-            if(!route.isBuilt()) {
+            if (!route.isBuiltStation()) {
                 boolean flag = true;
                 for (String city : cities1) {
                     if (city.equals(route.getCity1())) {
@@ -211,7 +194,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
 
             Spinner listCity1 = drawer.findViewById(R.id.spinner_city1);
             String city1 = (String) listCity1.getSelectedItem();
-            ArrayList<Route> routes = game.getRoutes(city1,true,false);
+            ArrayList<Route> routes = game.getRoutes(city1, false, true);
 
             ArrayList<CustomSpinnerItem> cityList = new ArrayList<>();
             for (Route route : routes) {
@@ -221,8 +204,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                 } else {
                     city2 = route.getCity1();
                 }
-
-                cityList.add(new CustomSpinnerItem(city2, route.getImageId(game,route.getColor()), route.getId()));
+                cityList.add(new CustomSpinnerItem(city2, route.getImageId(game, route.getColor()), route.getId()));
             }
 
             Collections.sort(cityList, (x, y) -> x.compareTo(y));
@@ -250,73 +232,12 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
             Spinner spinner2 = drawer.findViewById(R.id.spinner_city2);
             int routeId = ((CustomSpinnerItem) spinner2.getSelectedItem()).getRouteId();
             route = game.getRoute(routeId);
-
-            cars = route.getLength() - route.getLocos();
-            maxCards = route.getLength();
-
-            if (cars > 0) {
-                drawer.findViewById(R.id.car_icon).setVisibility(View.VISIBLE);
-                drawer.findViewById(R.id.car_number).setVisibility(View.VISIBLE);
-                TextView carText = drawer.findViewById(R.id.car_number);
-                carText.setText(" " + String.valueOf(cars));
-            } else {
-                drawer.findViewById(R.id.car_icon).setVisibility(View.INVISIBLE);
-                drawer.findViewById(R.id.car_number).setVisibility(View.INVISIBLE);
-            }
-            if (route.getLocos() > 0) {
-                drawer.findViewById(R.id.loco_icon).setVisibility(View.VISIBLE);
-                drawer.findViewById(R.id.loco_number).setVisibility(View.VISIBLE);
-                TextView locoText = drawer.findViewById(R.id.loco_number);
-                locoText.setText(" " + String.valueOf(route.getLocos()));
-            } else {
-                drawer.findViewById(R.id.loco_icon).setVisibility(View.INVISIBLE);
-                drawer.findViewById(R.id.loco_number).setVisibility(View.INVISIBLE);
-            }
-            if (route.isTunnel()) {
-                drawer.findViewById(R.id.tunnel_icon).setVisibility(View.VISIBLE);
-                maxCards += game.getMaxExtraCardsForTunnel();
-            } else {
-                drawer.findViewById(R.id.tunnel_icon).setVisibility(View.INVISIBLE);
-            }
-
-            TextView lengthText = drawer.findViewById(R.id.length_value);
-            lengthText.setText(" " + String.valueOf(route.getLength()));
-            TextView pointsText = drawer.findViewById(R.id.points_value);
-            pointsText.setText(" " + String.valueOf(game.getScoring().get(route.getLength())));
-
-            setAvailableCards(route.getColor());
-
             clearCards();
             refreshCards();
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
-        }
-    }
-
-    private void setAvailableCards(char color) {
-        for (Card card : game.getCards()) {
-            card.setClickable(0);
-            card.setVisible(0);
-        }
-        for (Card card : game.getCards()) {
-            if (card.getColor() == 'L') {
-                card.setClickable(1);
-                card.setVisible(1);
-            } else {
-                if (color == '-') {
-                    if (cars > 0) {
-                        card.setClickable(1);
-                        card.setVisible(1);
-                    }
-                } else {
-                    if (card.getColor() == color) {
-                        card.setClickable(1);
-                        card.setVisible(1);
-                    }
-                }
-            }
         }
     }
 

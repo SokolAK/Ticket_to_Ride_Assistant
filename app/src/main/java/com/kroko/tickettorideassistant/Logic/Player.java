@@ -10,19 +10,22 @@ public class Player implements Serializable {
     private Game game;
 
     private int points;
-    private int stations;
-    private int cars;
+    private int numberOfStations;
+    private int numberOfCars;
     private int[] cardsNumbers;
     private ArrayList<Route> builtRoutes = new ArrayList<>();
+    private ArrayList<Route> builtStations = new ArrayList<>();
+    private ArrayList<Ticket> ticketsShort = new ArrayList<>();
+    private ArrayList<Ticket> ticketsLong = new ArrayList<>();
 
     public void setGame(Game game) {
         this.game = game;
     }
 
     public void prepare() {
-        cars = game.getNumberOfCars();
-        stations = game.getNumberOfStations();
-        points = stations * game.getStationPoints();
+        numberOfCars = game.getNumberOfCars();
+        numberOfStations = game.getNumberOfStations();
+        points = numberOfStations * game.getStationPoints();
         cardsNumbers = new int[game.getCards().size()];
         for (int i = 0; i < game.getCards().size(); ++i) {
             cardsNumbers[i] = 0;
@@ -46,12 +49,18 @@ public class Player implements Serializable {
             this.cardsNumbers[i] -= cardsNumbers[i];
         }
     }
+    public void addStation(int stations) {
+        this.numberOfStations += stations;
+    }
+    public void spendStation(int stations) {
+        this.numberOfStations -= stations;
+    }
 
     public void addCars(int cars) {
-        this.cars += cars;
+        this.numberOfCars += cars;
     }
     public void spendCars(int cars) {
-        this.cars -= cars;
+        this.numberOfCars -= cars;
     }
 
     public void addRoute(Route route) {
@@ -59,6 +68,13 @@ public class Player implements Serializable {
     }
     public void removeRoute(int i) {
         builtRoutes.remove(i);
+    }
+
+    public void addRouteStation(Route route) {
+        builtStations.add(route);
+    }
+    public void removeRouteStation(int i) {
+        builtStations.remove(i);
     }
 }
 

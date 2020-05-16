@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackDark"
+    android:orientation="vertical"
+    android:id="@+id/build_route_frag">
+
+    <Spinner
+        android:id="@+id/spinner_city1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Spinner
+        android:id="@+id/spinner_city2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cards_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="17"
+        app:layout_constraintBottom_toTopOf="@+id/draw_buttons_panel"
+        app:layout_constraintTop_toBottomOf="@+id/details_panel"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <LinearLayout
+        android:id="@+id/buttons_panel"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/reset_icon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/reset_color"
+            app:srcCompat="@drawable/ic_cached_black_24dp" />
+
+        <ImageView
+            android:id="@+id/accept_icon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/accept_color"
+            app:srcCompat="@drawable/ic_check_circle_black_24dp" />
+    </LinearLayout>
+
+
+</LinearLayout>

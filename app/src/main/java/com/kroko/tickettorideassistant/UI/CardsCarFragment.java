@@ -78,15 +78,15 @@ public class CardsCarFragment extends Fragment {
 
         adapter.setListener(position -> {
             if(active) {
-                if (maxCardsNumbers != null) {
-                    if (cardsNumbers[position] == maxCardsNumbers[position]) {
-                        game.getCards().get(position).setClickable(0);
-                    }
-                }
                 if(game.getCards().get(position).getClickable() == 1) {
                     if (cardCounter[0] < maxCards || maxCards == 0) {
                         cardCounter[0]++;
                         cardsNumbers[position]++;
+                        if (maxCardsNumbers != null) {
+                            if (cardsNumbers[position] == maxCardsNumbers[position]) {
+                                game.getCards().get(position).setClickable(0);
+                            }
+                        }
                     }
                     if(oneColor) {
                         if (game.getCards().get(position).getColor() != 'L') {

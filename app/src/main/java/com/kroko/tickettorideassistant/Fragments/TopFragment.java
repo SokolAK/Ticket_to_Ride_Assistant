@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -32,9 +31,9 @@ public class TopFragment extends Fragment {
         TextView points = drawer.findViewById(R.id.points_value);
         points.setText(String.valueOf(player.getPoints()));
         TextView cars = drawer.findViewById(R.id.cars_value);
-        cars.setText(String.valueOf(player.getCars()));
+        cars.setText(String.valueOf(player.getNumberOfCars()));
         TextView stations = drawer.findViewById(R.id.stations_value);
-        stations.setText(String.valueOf(player.getStations()));
+        stations.setText(String.valueOf(player.getNumberOfStations()));
 
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
         for (Card card : game.getCards()) {
