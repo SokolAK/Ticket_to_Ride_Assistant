@@ -19,7 +19,6 @@ import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.core.view.GravityCompat;
 

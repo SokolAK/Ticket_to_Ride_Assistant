@@ -9,10 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -23,19 +20,18 @@ import com.kroko.TicketToRideAssistant.Logic.Route;
 import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
 import com.kroko.TicketToRideAssistant.UI.Card;
 import com.kroko.TicketToRideAssistant.UI.CardsCarFragment;
-import com.kroko.TicketToRideAssistant.UI.CustomSpinnerAdapter;
 import com.kroko.TicketToRideAssistant.UI.CustomSpinnerItem;
+import com.kroko.TicketToRideAssistant.UI.SpinnerListenerInterface;
+import com.kroko.TicketToRideAssistant.UI.SpinnerRouteFragment;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
-public class BuildStationFragment extends Fragment implements View.OnClickListener {
+public class BuildStationFragment extends Fragment implements View.OnClickListener, SpinnerListenerInterface {
     private Game game;
     private Player player;
     private int[] cardCounter;
     private int[] cardsNumbers;
     private int maxCards;
     private Route route;
+    private View drawer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,15 +49,16 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
             cardsNumbers[i] = 0;
         }
 
-        View drawer = inflater.inflate(R.layout.fragment_build_station, container, false);
-
+        drawer = inflater.inflate(R.layout.fragment_build_station, container, false);
         ImageView acceptIcon = drawer.findViewById(R.id.accept_icon);
         acceptIcon.setOnClickListener(this);
         ImageView resetIcon = drawer.findViewById(R.id.reset_icon);
         resetIcon.setOnClickListener(this);
 
-        manageSpinner1(drawer);
-        manageSpinner2(drawer);
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        SpinnerRouteFragment spinnerRouteFragment = new SpinnerRouteFragment('S');
+        ft.replace(R.id.spinners_container, spinnerRouteFragment);
+        ft.commit();
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_buildStation);
@@ -105,6 +102,14 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    @Override
+    public void onSpinnerItemSelected(CustomSpinnerItem spinnerItem) {
+        int routeId = spinnerItem.getItemId();
+        route = game.getRoute(routeId);
+        clearCards();
+        refreshCards();
+    }
+
     private void clearCards() {
         cardCounter[0] = 0;
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
@@ -143,106 +148,6 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
         ((MainActivity) getActivity()).onNavigationItemSelected(0);
         NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
         navigationView.getMenu().getItem(0).setChecked(true);
-    }
-
-    private void manageSpinner1(View drawer) {
-        ArrayList<String> cities1 = new ArrayList<>();
-        for (Route route : game.getRoutes()) {
-            if (!route.isBuiltStation()) {
-                boolean flag = true;
-                for (String city : cities1) {
-                    if (city.equals(route.getCity1())) {
-                        flag = false;
-                    }
-                }
-                if (flag) {
-                    cities1.add(route.getCity1());
-                }
-                flag = true;
-                for (String city : cities1) {
-                    if (city.equals(route.getCity2())) {
-                        flag = false;
-                    }
-                }
-                if (flag) {
-                    cities1.add(route.getCity2());
-                }
-            }
-        }
-        Collections.sort(cities1, (x, y) -> x.compareTo(y));
-
-        ArrayList<CustomSpinnerItem> cityList = new ArrayList<>();
-        for (String city1: cities1) {
-            cityList.add(new CustomSpinnerItem(city1, 0, 0));
-        }
-        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(), cityList);
-        Spinner spinner = drawer.findViewById(R.id.spinner_city1);
-        spinner.setAdapter(adapter);
-    }
-
-    public void manageSpinner2(View drawer) {
-        Spinner listCity1 = drawer.findViewById(R.id.spinner_city1);
-        listCity1.setOnItemSelectedListener(new listenerCity1(drawer));
-    }
-
-    private class listenerCity1 implements AdapterView.OnItemSelectedListener {
-        private View drawer;
-
-        private listenerCity1(View drawer) {
-            this.drawer = drawer;
-        }
-
-        @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view,
-                                   int position, long id) {
-
-            Spinner listCity1 = drawer.findViewById(R.id.spinner_city1);
-            String city1 = ((CustomSpinnerItem) listCity1.getSelectedItem()).getText();
-            ArrayList<Route> routes = game.getRoutes(city1, false, true);
-
-            ArrayList<CustomSpinnerItem> cityList = new ArrayList<>();
-            for (Route route : routes) {
-                String city2;
-                if (city1.equals(route.getCity1())) {
-                    city2 = route.getCity2();
-                } else {
-                    city2 = route.getCity1();
-                }
-                cityList.add(new CustomSpinnerItem(city2, route.getImageId(game, route.getColor()), route.getId()));
-            }
-
-            Collections.sort(cityList, (x, y) -> x.compareTo(y));
-
-            Spinner spinner = drawer.findViewById(R.id.spinner_city2);
-            CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(), cityList);
-            spinner.setAdapter(adapter);
-            spinner.setOnItemSelectedListener(new listenerCity2(drawer));
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-        }
-    }
-
-    private class listenerCity2 implements AdapterView.OnItemSelectedListener {
-        private View drawer;
-
-        private listenerCity2(View drawer) {
-            this.drawer = drawer;
-        }
-
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Spinner spinner2 = drawer.findViewById(R.id.spinner_city2);
-            int routeId = ((CustomSpinnerItem) spinner2.getSelectedItem()).getItemId();
-            route = game.getRoute(routeId);
-            clearCards();
-            refreshCards();
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-        }
     }
 
     private char determineRouteColor(int[] cardsNumbers) {

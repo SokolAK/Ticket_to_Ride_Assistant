@@ -31,13 +31,6 @@ public class Player implements Serializable {
         }
     }
 
-    //public void addPoints(int points) {
-    //   this.points += points;
-    //}
-    //public void spendPoints(int points) {
-      //  this.points -= points;
-    //}
-
     public void addCards(int[] cardsNumbers) {
         for (int i = 0; i < this.cardsNumbers.length; ++i) {
             this.cardsNumbers[i] += cardsNumbers[i];

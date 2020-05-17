@@ -10,18 +10,26 @@
     android:orientation="vertical"
     android:id="@+id/build_route_frag">
 
-    <Spinner
-        android:id="@+id/spinner_city1"
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/spinners_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"/>
-    <Spinner
-        android:id="@+id/spinner_city2"
+        app:layout_constraintBottom_toTopOf="@+id/draw_buttons_panel"
+        app:layout_constraintTop_toBottomOf="@+id/details_panel"
+        app:layout_constraintVertical_bias="1.0" />
+
+
+    <TextView
+        android:id="@+id/ticket_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_city1"/>
-
-
+        android:text="@string/ticket_details"
+        android:layout_marginVertical="16dp"
+        android:gravity="center_vertical"
+        android:background="@color/colorBackLight"
+        app:layout_constraintEnd_toStartOf="@+id/points_value"
+        app:layout_constraintTop_toBottomOf="@+id/spinners_container"/>
     <TextView
         android:id="@+id/points_label"
         android:layout_width="match_parent"
@@ -30,7 +38,7 @@
         android:layout_marginVertical="16dp"
         android:gravity="center_vertical"
         app:layout_constraintEnd_toStartOf="@+id/points_value"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_city2"/>
+        app:layout_constraintTop_toBottomOf="@+id/ticket_details"/>
     <TextView
         android:id="@+id/points_value"
         android:layout_width="wrap_content"
@@ -48,11 +56,10 @@
         android:layout_marginVertical="16dp"
         android:gravity="center_vertical"
         app:layout_constraintTop_toBottomOf="@+id/points_label"/>
-    <TextView
+    <ImageView
         android:id="@+id/realized_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="---"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/realized_label" />
 

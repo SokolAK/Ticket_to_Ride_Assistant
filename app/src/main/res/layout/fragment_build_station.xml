@@ -10,15 +10,14 @@
     android:orientation="vertical"
     android:id="@+id/build_route_frag">
 
-    <Spinner
-        android:id="@+id/spinner_city1"
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/spinners_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Spinner
-        android:id="@+id/spinner_city2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/draw_buttons_panel"
+        app:layout_constraintTop_toBottomOf="@+id/details_panel"
+        app:layout_constraintVertical_bias="1.0" />
 
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

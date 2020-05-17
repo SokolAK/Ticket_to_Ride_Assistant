@@ -15,6 +15,7 @@ public class Ticket {
     private String city1;
     private String city2;
     private int points;
+    private boolean inHand;
     private boolean realized;
 
     public Ticket(int id, String city1, String city2, int points) {
@@ -23,6 +24,7 @@ public class Ticket {
         this.city2 = city2;
         this.points = points;
         this.realized = false;
+        this.inHand = false;
     }
     public Ticket(Ticket ticket) {
         this.id = ticket.id;
@@ -30,6 +32,7 @@ public class Ticket {
         this.city2 = ticket.city2;
         this.points = ticket.points;
         this.realized = ticket.realized;
+        this.inHand = ticket.inHand;
     }
 
     @Override
