@@ -41,8 +41,8 @@ public class CustomSpinnerAdapter extends ArrayAdapter {
 
         CustomSpinnerItem customSpinnerItem = (CustomSpinnerItem)getItem(position);
         if(customSpinnerItem != null) {
-            imageView.setImageResource(customSpinnerItem.getImage());
-            textView.setText(customSpinnerItem.getCity());
+            imageView.setImageResource(customSpinnerItem.getImageResource());
+            textView.setText(customSpinnerItem.getText());
         }
         return convertView;
     }

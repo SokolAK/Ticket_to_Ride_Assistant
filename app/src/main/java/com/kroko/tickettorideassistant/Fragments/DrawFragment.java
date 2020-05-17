@@ -42,7 +42,7 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         Player player = ((TtRA_Application) getActivity().getApplication()).player;
         maxCards = game.getMaxNoOfCardsToDraw();
 
-        View drawer = inflater.inflate(R.layout.fragment_draw, container, false);
+        View drawer = inflater.inflate(R.layout.fragment_draw_cards, container, false);
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_drawCards);
@@ -100,7 +100,7 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         cardsCarFragment.setActiveLong(true);
         cardsCarFragment.setOneColor(false);
         ft.replace(R.id.cards_container, cardsCarFragment);
-        ft.addToBackStack(null);
+        //ft.addToBackStack(null);
         ft.commit();
     }
 

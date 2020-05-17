@@ -6,17 +6,17 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class CustomSpinnerItem {
-    private String city;
-    private int image;
-    private int routeId;
+    private String text;
+    private int imageResource;
+    private int itemId;
 
     public int compareTo(CustomSpinnerItem y) {
-        int comp = city.compareTo(y.getCity());
+        int comp = text.compareTo(y.getText());
         if(comp != 0) {
             return comp;
         }
         else {
-            return image - y.getImage();
+            return imageResource - y.getImageResource();
         }
     }
 }

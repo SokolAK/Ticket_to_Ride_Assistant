@@ -48,14 +48,16 @@ public class ShowBuiltStationsFragment extends Fragment {
                 Route route = player.getBuiltStations().get(position);
 
                 player.addCards(route.getBuiltStationCardsNumber());
-                player.addPoints(game.getStationPoints());
+                //player.addPoints(game.getStationPoints());
                 player.removeRouteStation(position);
                 for (Route rout : game.getRoutes(route.getCity1(), route.getCity2(),false,false)) {
                     rout.setBuiltStation(false);
                 }
-                player.addStation(1);
+                //player.addStation(1);
 
                 stationList.remove(position);
+                player.checkIfTicketsRealized();
+
                 adapter.notifyDataSetChanged();
             }
             return true;
@@ -81,7 +83,7 @@ public class ShowBuiltStationsFragment extends Fragment {
         }
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.nav_showStation);
+        toolbar.setTitle(R.string.nav_showStations);
 
         return drawer;
     }

@@ -25,8 +25,7 @@ public class Game {
     private HashMap<Integer, Integer> stationCost = new HashMap<>();
     private ArrayList<Card> cards = new ArrayList<>();
     private ArrayList<Route> routes = new ArrayList<>();
-    private ArrayList<Ticket> ticketsShort = new ArrayList<>();
-    private ArrayList<Ticket> ticketsLong = new ArrayList<>();
+    private ArrayList<Ticket> tickets = new ArrayList<>();
     private String databaseName;
     private int databaseVersion;
     private Context context;
@@ -71,8 +70,8 @@ public class Game {
                 databaseName = "TtRA_Europe.db";
                 databaseVersion = 1;
                 routes = readRoutes(databaseName, databaseVersion);
-                ticketsShort = readTickets(databaseName, databaseVersion, "Tickets_Short_Base");
-                ticketsLong = readTickets(databaseName, databaseVersion, "Tickets_Long_Base");
+                tickets.addAll(readTickets(databaseName, databaseVersion, "Tickets_Short_Base"));
+                tickets.addAll(readTickets(databaseName, databaseVersion, "Tickets_Long_Base"));
 
                 break;
         }
@@ -98,6 +97,23 @@ public class Game {
         database.close();
 
         return tickets;
+    }
+    public ArrayList<Ticket> getTickets(String city1) {
+        ArrayList<Ticket> result = new ArrayList<>();
+        for (Ticket ticket: tickets) {
+            if (ticket.getCity1().equals(city1) || ticket.getCity2().equals(city1)) {
+                result.add(ticket);
+            }
+        }
+        return result;
+    }
+    public Ticket getTicket(int id) {
+        for (Ticket ticket: tickets) {
+            if (ticket.getId() == id) {
+                return ticket;
+            }
+        }
+        return null;
     }
 
     private ArrayList<Route> readRoutes(String databaseName, int databaseVersion) {

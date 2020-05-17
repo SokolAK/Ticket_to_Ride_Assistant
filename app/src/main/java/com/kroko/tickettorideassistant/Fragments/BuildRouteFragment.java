@@ -85,7 +85,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                             }
                         }
                         if (selectedLocos >= locos) {
-                            player.addPoints(game.getScoring().get(length));
+                            //player.addPoints(game.getScoring().get(length));
                             player.spendCars(length);
                             player.spendCards(cardsNumbers);
                             //game.removeRoute(route);
@@ -94,6 +94,8 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                             route.setBuiltColor(builtColor);
                             route.setBuiltCardsNumber(cardsNumbers.clone());
                             player.addRoute(route);
+
+                            player.checkIfTicketsRealized();
 
                             clearCards();
                             refreshCards();
@@ -149,7 +151,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         }
         cardsCarFragment.setMaxCardsNumbers(maxCardsNumbers);
         ft.replace(R.id.cards_container, cardsCarFragment);
-        ft.addToBackStack(null);
+        //ft.addToBackStack(null);
         ft.commit();
         getActivity().findViewById(R.id.buttons_panel).setVisibility(View.VISIBLE);
     }
@@ -185,10 +187,12 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
             }
         }
         Collections.sort(cities1, (x, y) -> x.compareTo(y));
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                getActivity(),
-                android.R.layout.simple_list_item_1,
-                cities1);
+
+        ArrayList<CustomSpinnerItem> cityList = new ArrayList<>();
+        for (String city1: cities1) {
+            cityList.add(new CustomSpinnerItem(city1, 0, 0));
+        }
+        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(), cityList);
         Spinner spinner = drawer.findViewById(R.id.spinner_city1);
         spinner.setAdapter(adapter);
     }
@@ -210,7 +214,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                                    int position, long id) {
 
             Spinner listCity1 = drawer.findViewById(R.id.spinner_city1);
-            String city1 = (String) listCity1.getSelectedItem();
+            String city1 = ((CustomSpinnerItem) listCity1.getSelectedItem()).getText();
             ArrayList<Route> routes = game.getRoutes(city1,true,false);
 
             ArrayList<CustomSpinnerItem> cityList = new ArrayList<>();
@@ -248,7 +252,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Spinner spinner2 = drawer.findViewById(R.id.spinner_city2);
-            int routeId = ((CustomSpinnerItem) spinner2.getSelectedItem()).getRouteId();
+            int routeId = ((CustomSpinnerItem) spinner2.getSelectedItem()).getItemId();
             route = game.getRoute(routeId);
 
             cars = route.getLength() - route.getLocos();

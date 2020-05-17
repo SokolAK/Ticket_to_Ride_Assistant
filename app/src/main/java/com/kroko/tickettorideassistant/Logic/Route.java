@@ -56,6 +56,6 @@ public class Route {
 
     @Override
     public String toString() {
-        return city1 + " - " + city2;
+        return city1 + "-" + city2;
     }
 }

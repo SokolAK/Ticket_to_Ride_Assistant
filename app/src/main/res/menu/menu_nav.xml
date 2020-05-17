@@ -14,17 +14,17 @@
             android:icon="@drawable/ic_content_copy_black_24dp"
             android:title="@string/nav_drawCards" />
         <item
-            android:id="@+id/nav_build_route"
+            android:id="@+id/nav_show_routes"
             android:icon="@drawable/ic_train_black_24dp"
-            android:title="@string/nav_buildRoute" />
+            android:title="@string/nav_showRoutes" />
         <item
-            android:id="@+id/nav_build_station"
+            android:id="@+id/nav_show_stations"
             android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/nav_buildStation" />
+            android:title="@string/nav_showStations" />
         <item
-            android:id="@+id/nav_draw_tickets"
+            android:id="@+id/nav_show_tickets"
             android:icon="@drawable/ic_local_play_black_24dp"
-            android:title="@string/nav_drawTickets" />
+            android:title="@string/nav_showTickets" />
     </group>
 
     <group

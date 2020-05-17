@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.kroko.TicketToRideAssistant.Logic.Game;
 import com.kroko.TicketToRideAssistant.Logic.Player;
+import com.kroko.TicketToRideAssistant.Logic.Ticket;
 import com.kroko.TicketToRideAssistant.R;
 import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
 import com.kroko.TicketToRideAssistant.UI.Card;
@@ -34,6 +35,20 @@ public class TopFragment extends Fragment {
         cars.setText(String.valueOf(player.getNumberOfCars()));
         TextView stations = drawer.findViewById(R.id.stations_value);
         stations.setText(String.valueOf(player.getNumberOfStations()));
+
+        int realizedTicketsNumber = 0;
+        int unrealizedTicketsNumber = 0;
+        for(Ticket ticket: player.getTickets()) {
+            if(ticket.isRealized()) {
+                realizedTicketsNumber++;
+            } else {
+                unrealizedTicketsNumber++;
+            }
+        }
+        TextView realizedTickets = drawer.findViewById(R.id.realized_tickets_value);
+        realizedTickets.setText(String.valueOf(realizedTicketsNumber));
+        TextView unrealizedTickets = drawer.findViewById(R.id.unrealized_tickets_value);
+        unrealizedTickets.setText(String.valueOf(unrealizedTicketsNumber));
 
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
         for (Card card : game.getCards()) {
@@ -62,7 +77,7 @@ public class TopFragment extends Fragment {
                     switchControl.setTextColor(getResources().getColor(R.color.cardsLocked));
                 }
                 ft.replace(R.id.cards_container, cardsCarFragment);
-                ft.addToBackStack(null);
+                //ft.addToBackStack(null);
                 ft.commit();
             });
         }

@@ -3,12 +3,13 @@
     <string name="app_name">Ticket to Ride Assistant</string>
     <string name="user_name">KrokoPL</string>
     <string name="nav_top">Status</string>
-    <string name="nav_drawCards">Draw train car cards</string>
+    <string name="nav_drawCards">Drawing cards</string>
+    <string name="nav_showRoutes">Routes</string>
+    <string name="nav_showStations">Stations</string>
+    <string name="nav_showTickets">Tickets</string>
     <string name="nav_buildRoute">Build route</string>
-    <string name="nav_showRoutes">Show built routes</string>
     <string name="nav_buildStation">Build station</string>
-    <string name="nav_showStation">Build station</string>
-    <string name="nav_drawTickets">Draw tickets</string>
+    <string name="nav_drawTicket">Draw ticket</string>
 
     <string name="nav_help">Help</string>
     <string name="nav_open_drawer">Open Navigation View</string>
@@ -56,7 +57,11 @@
     <string name="delete_station_comment">Press and hold a station to delete</string>
     <string name="build_new_station">Build a new station</string>
 
+    <string name="draw_ticket">Draw a ticket</string>
+    <string name="tickets_header">Your tickets:</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="realized">Realized</string>
 
 </resources>

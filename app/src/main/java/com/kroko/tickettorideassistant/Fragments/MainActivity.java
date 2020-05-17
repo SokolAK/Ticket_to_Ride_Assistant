@@ -82,11 +82,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_draw_cards:
                 fragment = new DrawFragment();
                 break;
-            case R.id.nav_build_route:
+            case R.id.nav_show_routes:
                 fragment = new ShowBuiltRoutesFragment();
                 break;
-            case R.id.nav_build_station:
+            case R.id.nav_show_stations:
                 fragment = new ShowBuiltStationsFragment();
+                break;
+            case R.id.nav_show_tickets:
+                fragment = new ShowTicketsFragment();
                 break;
             case R.id.nav_help:
                 intent = new Intent(this, HelpActivity.class);
@@ -132,5 +135,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ft.replace(R.id.content_frame, new BuildStationFragment());
             ft.commit();
         }
+    }
+    public void onClickDrawTicket(View view) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, new DrawTicketFragment());
+        ft.commit();
     }
 }

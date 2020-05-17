@@ -38,7 +38,6 @@
         app:layout_constraintEnd_toStartOf="@+id/cars_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/points_label" />
-
     <TextView
         android:id="@+id/cars_value"
         android:layout_width="0dp"
@@ -74,16 +73,33 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/tickets"
-        app:layout_constraintEnd_toStartOf="@+id/tickets_value"
+        app:layout_constraintEnd_toStartOf="@+id/realized_tickets_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stations_label" />
-
     <TextView
-        android:id="@+id/tickets_value"
+        android:id="@+id/realized_tickets_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="0"
+        android:textColor="@color/accept_color"
+        app:layout_constraintEnd_toStartOf="@+id/slash"
+        app:layout_constraintTop_toBottomOf="@+id/stations_value" />
+    <TextView
+        android:id="@+id/slash"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="/"
+        app:layout_constraintEnd_toStartOf="@+id/unrealized_tickets_value"
+        app:layout_constraintTop_toBottomOf="@+id/stations_value" />
+    <TextView
+        android:id="@+id/unrealized_tickets_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="0"
+        android:textColor="@color/reset_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stations_value" />
 
