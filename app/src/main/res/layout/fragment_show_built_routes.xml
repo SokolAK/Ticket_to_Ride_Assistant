@@ -29,14 +29,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/reset_color"
+        android:layout_marginStart="6dp"
         android:text="@string/locked" />
 
     <TextView
-        android:id="@+id/delete_route_comment"
+        android:id="@+id/delete_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/delete_route_comment"
+        android:text="@string/delete_comment"
         android:textColor="@color/reset_color"
+        android:layout_marginStart="6dp"
         android:textSize="16sp"
         android:visibility="invisible" />
 

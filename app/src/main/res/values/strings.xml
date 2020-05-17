@@ -1,68 +1,74 @@
 <resources>
 
+    <!-- Main -->
     <string name="app_name">Ticket to Ride Assistant</string>
     <string name="user_name">KrokoPL</string>
     <string name="nav_top">Status</string>
-    <string name="nav_drawCards">Drawing cards</string>
+    <string name="nav_drawCards">Draw cards</string>
     <string name="nav_showRoutes">Routes</string>
     <string name="nav_showStations">Stations</string>
     <string name="nav_showTickets">Tickets</string>
     <string name="nav_buildRoute">Build route</string>
     <string name="nav_buildStation">Build station</string>
     <string name="nav_drawTicket">Draw ticket</string>
-
     <string name="nav_help">Help</string>
     <string name="nav_open_drawer">Open Navigation View</string>
     <string name="nav_close_drawer">Close Navigation View</string>
 
-    <string name="mainActivity_name">Status</string>
+    <!-- Status -->
     <string name="points">Points</string>
     <string name="cars">Cars</string>
     <string name="stations">Stations</string>
     <string name="tickets">Tickets</string>
 
-
-    <string name="choose_game">Choose game</string>
-
-    <string-array name="games">
-        <item>Ticket to Ride. Europe.</item>
-    </string-array>
-
-    <string name="top_tab">Status</string>
-
-    <string name="draw_tab">Draw cards</string>
-    <string name="accept_button">OK</string>
-    <string name="reset_button">Reset</string>
-    <string name="draw_cards_label">Number of cards to draw:</string>
+    <!-- Cards panel -->
     <string name="too_much_cards">Too much cards</string>
     <string name="too_little_cards">To little cards</string>
     <string name="too_little_locos">To little locomotives</string>
     <string name="too_little_cars">To little cars</string>
     <string name="not_enough_cards">Not enough cards</string>
 
-    <string name="station_cost">Number of cards to choose:</string>
+    <!-- Buttons -->
+    <string name="accept_button">OK</string>
+    <string name="reset_button">Reset</string>
 
-    <string name="already_built">Route already built</string>
-    <string name="built_routes_header">Built routes:</string>
-    <string name="delete_route_comment">Press and hold a route to delete</string>
-    <string name="switch_cards">Unlock cards</string>
+    <!-- Draw cards -->
+    <string name="draw_cards_label">Number of cards to draw:</string>
+
+    <!-- Routes -->
     <string name="build_new_route">Build a new route</string>
-    <string name="unlock_delete">Unlock delete option</string>
-    <string name="cards_locked">Cards locked</string>
-    <string name="cards_unlocked">Cards unlocked</string>
+    <string name="built_routes_header">Built routes:</string>
 
-    <string name="locked">Locked</string>
-    <string name="unlocked">Unlocked</string>
-    <string name="built_stations_header">Built stations:</string>
-    <string name="delete_station_comment">Press and hold a station to delete</string>
+    <!-- Stations -->
     <string name="build_new_station">Build a new station</string>
+    <string name="station_cost">Number of cards to choose:</string>
+    <string name="built_stations_header">Built stations:</string>
 
+    <!-- Tickets -->
     <string name="draw_ticket">Draw a ticket</string>
     <string name="tickets_header">Your tickets:</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="realized">Realized</string>
     <string name="ticket_details">Ticket details:</string>
+
+    <!-- Lock switch -->
+    <string name="cards_locked">Cards locked</string>
+    <string name="cards_unlocked">Cards unlocked</string>
+    <string name="locked">Locked</string>
+    <string name="unlocked">Unlocked</string>
+    <string name="delete_comment">Press and hold to delete</string>
+
+    <!-- Help Activity -->
+    <string name="help_status">Show player points, number of cars and stations left, number of realized/unrealized tickets.
+    You can unlock the cards panel and add the card by pressing it or remove it by pressing and holding.</string>
+    <string name="help_draw">You can draw new car cards here. Add card by pressing it or remove by pressing and holding.
+    Accept your choice by pressing "accept" button or reset the cards set by pressing "reset" button.</string>
+    <string name="help_route">Show built routes. You can unlock the routes list and remove the route by pressing and holding it.
+    To build a new one press the "Build a new route" button. First choose cities names. Then select proper car cards.
+    Build the route by pressing "accept" button or reset the cards set by pressing "reset" button.</string>
+    <string name="help_station">Show drawn tickets. You can unlock the ticket list and remove the ticket by pressing and holding it.
+    To draw a new ticket press "Draw a ticket" button. First choose cities names. Then draw a ticket by pressing the "accept" button.</string>
+    <string name="help_ticket">Show built stations. You can unlock the station list and remove the station by pressing and holding it.
+    To build a new one press the "Build a new station" button. First choose cities names. Then select proper car cards.
+    Build the station by pressing "accept" button or reset the cards set by pressing "reset" button.</string>
 
 </resources>

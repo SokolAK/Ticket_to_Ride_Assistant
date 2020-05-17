@@ -70,13 +70,13 @@ public class ShowBuiltStationsFragment extends Fragment {
                     unlockDelete = true;
                     switchControl.setText(R.string.unlocked);
                     switchControl.setTextColor(getResources().getColor(R.color.cardsUnlocked));
-                    TextView deleteComment = drawer.findViewById(R.id.delete_route_comment);
+                    TextView deleteComment = drawer.findViewById(R.id.delete_comment);
                     deleteComment.setVisibility(View.VISIBLE);
                 } else {
                     unlockDelete = false;
                     switchControl.setText(R.string.locked);
                     switchControl.setTextColor(getResources().getColor(R.color.cardsLocked));
-                    TextView deleteComment = drawer.findViewById(R.id.delete_route_comment);
+                    TextView deleteComment = drawer.findViewById(R.id.delete_comment);
                     deleteComment.setVisibility(View.INVISIBLE);
                 }
             });

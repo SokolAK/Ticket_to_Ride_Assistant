@@ -1,15 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.kroko.TicketToRideAssistant.Fragments.HelpActivity">
-    <include
-        layout="@layout/toolbar_main"
-        android:id="@+id/toolbar" />
-    <TextView
+    android:fillViewport="true">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Pomoc" />
-</LinearLayout>
+        android:orientation="vertical"
+        tools:context="com.kroko.TicketToRideAssistant.Fragments.HelpActivity">
+
+        <include
+            layout="@layout/toolbar_main"
+            android:id="@+id/toolbar" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/HelpHeader"
+            android:text="@string/nav_top" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/HelpText"
+            android:text="@string/help_status" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/HelpHeader"
+            android:text="@string/nav_drawCards" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/HelpText"
+            android:text="@string/help_draw" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/HelpHeader"
+            android:text="@string/nav_showRoutes" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/HelpText"
+            android:text="@string/help_route" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/HelpHeader"
+            android:text="@string/nav_showStations" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/HelpText"
+            android:text="@string/help_station"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/HelpHeader"
+            android:text="@string/nav_showTickets" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/HelpText"
+            android:text="@string/help_ticket" />
+    </LinearLayout>
+</ScrollView>
