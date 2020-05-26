@@ -2,6 +2,10 @@ package com.kroko.TicketToRideAssistant.Logic;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 import lombok.Data;
 
@@ -12,6 +16,7 @@ public class Player implements Serializable {
     private int points;
     private int numberOfStations;
     private int numberOfCars;
+    private int longestPathLength;
     private int[] cardsNumbers;
     private ArrayList<Route> builtRoutes = new ArrayList<>();
     private ArrayList<Route> builtStations = new ArrayList<>();
@@ -50,30 +55,36 @@ public class Player implements Serializable {
     }
 
     public void addRoute(Route route) {
-        builtRoutes.add(route);
+        builtRoutes.add(0, route);
         updatePoints();
+        //findLongestPath();
     }
     public void removeRoute(int i) {
         builtRoutes.remove(i);
         updatePoints();
+        //findLongestPath();
     }
 
     public void addRouteStation(Route route) {
-        builtStations.add(route);
+        builtStations.add(0, route);
         numberOfStations--;
         updatePoints();
+        //findLongestPath();
     }
     public void removeRouteStation(int i) {
         builtStations.remove(i);
         numberOfStations++;
         updatePoints();
+        //findLongestPath();
     }
 
     public void addTicket(Ticket ticket) {
-        tickets.add(ticket);
+        tickets.add(0, ticket);
+        ticket.setInHand(true);
         updatePoints();
     }
     public void removeTicket(int i) {
+        tickets.get(i).setInHand(false);
         tickets.remove(i);
         updatePoints();
     }
@@ -99,6 +110,34 @@ public class Player implements Serializable {
             points += game.getScoring().get(route.getLength());
         }
         points += numberOfStations*game.getStationPoints();
+    }
+
+    public void findLongestPath() {
+        int length = 0;
+        HashSet<Route> segments = new HashSet<>(builtRoutes);
+        segments.addAll(builtStations);
+        HashSet<String> citiesSet = new HashSet<>();
+        for(Route segment: segments) {
+            citiesSet.add(segment.getCity1());
+            citiesSet.add(segment.getCity2());
+        }
+
+        List<String> cities = new ArrayList<>(citiesSet);
+        List<String> usedCities = new ArrayList<>();
+        while(cities.size() > 0) {
+            String city1 = cities.get(0);
+
+
+
+
+            usedCities.add(city1);
+
+
+
+            cities.removeAll(usedCities);
+        }
+
+        longestPathLength = length;
     }
 }
 

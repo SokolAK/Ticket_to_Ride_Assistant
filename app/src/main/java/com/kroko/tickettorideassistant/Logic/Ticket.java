@@ -1,6 +1,7 @@
 package com.kroko.TicketToRideAssistant.Logic;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,10 +42,9 @@ public class Ticket {
     }
 
     public boolean checkIfRealized(Player player) {
-        realized = false;
-        Set<Route> set = new LinkedHashSet<>(player.getBuiltRoutes());
-        set.addAll(player.getBuiltStations());
-        List<Route> connectionList = new ArrayList<>(set);
+        HashSet<Route> connectionList = new HashSet<>(player.getBuiltRoutes());
+        connectionList.addAll(player.getBuiltStations());
+        //List<Route> connectionList = new ArrayList<>(set);
 
         boolean ifCity1IsInBuiltRoutes = false;
         boolean ifCity2IsInBuiltRoutes = false;
@@ -58,14 +58,13 @@ public class Ticket {
             }
         }
         if (!ifCity1IsInBuiltRoutes || !ifCity2IsInBuiltRoutes) {
-            return realized;
+            return false;
         }
 
-        realized = checkIfConnected(connectionList, city1, "", city2);
-        return realized;
+        return checkIfConnected(connectionList, city1, "", city2);
     }
 
-    private boolean checkIfConnected(List<Route> connectionList, String cityStart, String cityPrevious, String cityDestination) {
+    private boolean checkIfConnected(HashSet<Route> connectionList, String cityStart, String cityPrevious, String cityDestination) {
         ArrayList<String> cities2 = new ArrayList<>();
         for (Route playerRoute : connectionList) {
             if (cityStart.equals(playerRoute.getCity1()) && !cityPrevious.equals(playerRoute.getCity2())) {

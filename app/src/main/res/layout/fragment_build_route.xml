@@ -31,6 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:adjustViewBounds="true"
             app:srcCompat="@drawable/ic_carriage" />
         <TextView
             android:id="@+id/car_number"
@@ -44,6 +45,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/ic_loco"
+            android:adjustViewBounds="true"
             android:layout_weight="1" />
         <TextView
             android:id="@+id/loco_number"
@@ -72,6 +74,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:adjustViewBounds="true"
             app:srcCompat="@drawable/ic_length" />
         <TextView
             android:id="@+id/length_value"
@@ -85,6 +88,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:adjustViewBounds="true"
             app:srcCompat="@drawable/ic_points" />
         <TextView
             android:id="@+id/points_value"
@@ -119,7 +123,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/reset_color"
+            android:background="@color/colorReset"
             app:srcCompat="@drawable/ic_cached_black_24dp" />
 
         <ImageView
@@ -127,7 +131,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/accept_color"
+            android:background="@color/colorAccept"
             app:srcCompat="@drawable/ic_check_circle_black_24dp" />
     </LinearLayout>
 

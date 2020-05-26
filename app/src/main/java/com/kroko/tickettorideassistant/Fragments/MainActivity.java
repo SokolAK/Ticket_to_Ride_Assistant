@@ -2,6 +2,9 @@ package com.kroko.TicketToRideAssistant.Fragments;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -16,11 +19,14 @@ import com.kroko.TicketToRideAssistant.Logic.Player;
 import com.kroko.TicketToRideAssistant.R;
 import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
 
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.view.View;
 
 import androidx.core.view.GravityCompat;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     //private Game game = ((TtRA_Application) getApplication()).game;
@@ -48,20 +54,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         game.prepare((int) 0);
         player.setGame(game);
         player.prepare();
-
-        /*
-        DbHelper dbHelper = new DbHelper(this, "TtRADatabase.db", 1);
-        dbHelper.checkDatabase();
-        dbHelper.openDatabase();
-
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT Length FROM Routes WHERE City1='Moskwa'", null);
-        if (cursor.moveToFirst()) {
-            player.setStations(cursor.getInt(0));
-        }
-        cursor.close();
-        db.close();
-         */
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.content_frame, new TopFragment());
@@ -99,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_frame, fragment);
+            ft.addToBackStack(null);
             ft.commit();
         } else {
             startActivity(intent);
@@ -111,6 +104,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
+        getSupportFragmentManager().popBackStack();
+        /*
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -119,25 +114,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         onNavigationItemSelected(0);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.getMenu().getItem(0).setChecked(true);
+        */
     }
 
     public void onClickBuildRoute(View view) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, new BuildRouteFragment());
+        ft.addToBackStack(null);
         ft.commit();
     }
     public void onClickBuildStation(View view) {
-        Game game = ((TtRA_Application) getApplication()).game;
         Player player = ((TtRA_Application) getApplication()).player;
         if(player.getNumberOfStations() > 0) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_frame, new BuildStationFragment());
+            ft.addToBackStack(null);
             ft.commit();
         }
     }
     public void onClickDrawTicket(View view) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, new DrawTicketFragment());
+        ft.addToBackStack(null);
         ft.commit();
     }
 }

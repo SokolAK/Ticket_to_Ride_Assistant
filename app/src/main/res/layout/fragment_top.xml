@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="0"
-        android:textColor="@color/accept_color"
+        android:textColor="@color/colorAccept"
         app:layout_constraintEnd_toStartOf="@+id/slash"
         app:layout_constraintTop_toBottomOf="@+id/stations_value" />
     <TextView
@@ -99,9 +99,29 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="0"
-        android:textColor="@color/reset_color"
+        android:textColor="@color/colorReset"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stations_value" />
+
+    <TextView
+        android:id="@+id/longest_path_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/longestPath"
+        android:background="@color/colorBackLight"
+        app:layout_constraintEnd_toStartOf="@+id/longest_path_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tickets_label" />
+    <TextView
+        android:id="@+id/longest_path_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="0"
+        android:background="@color/colorBackLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tickets_label" />
 
     <FrameLayout
         android:id="@+id/cards_container"
@@ -109,7 +129,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toTopOf="@+id/switch_control"
-        app:layout_constraintTop_toBottomOf="@+id/tickets_label"
+        app:layout_constraintTop_toBottomOf="@+id/longest_path_label"
         app:layout_constraintVertical_bias="1.0" >
     </FrameLayout>
 
@@ -118,7 +138,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/cards_locked"
-        android:textColor="@color/reset_color"
+        android:textColor="@color/colorReset"
         android:layout_marginStart="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cards_container" />

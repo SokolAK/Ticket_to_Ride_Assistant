@@ -6,26 +6,29 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".Logic.TtRA_Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".Logic.TtRA_Application">
+        android:theme="@style/AppTheme">
 
+        <activity android:name=".Fragments.MenuActivity" />
 
-        <activity
-            android:name="com.kroko.TicketToRideAssistant.Fragments.HelpActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.kroko.TicketToRideAssistant.Fragments.MainActivity"
+        <activity android:name=".Fragments.IntroActivity" />
+
+        <activity android:name=".Fragments.HelpActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".Fragments.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

@@ -45,10 +45,14 @@ public class TopFragment extends Fragment {
                 unrealizedTicketsNumber++;
             }
         }
+
         TextView realizedTickets = drawer.findViewById(R.id.realized_tickets_value);
         realizedTickets.setText(String.valueOf(realizedTicketsNumber));
         TextView unrealizedTickets = drawer.findViewById(R.id.unrealized_tickets_value);
         unrealizedTickets.setText(String.valueOf(unrealizedTicketsNumber));
+
+        TextView longestPathLength = drawer.findViewById(R.id.longest_path_value);
+        longestPathLength.setText(String.valueOf(player.getLongestPathLength()));
 
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
         for (Card card : game.getCards()) {
@@ -58,25 +62,28 @@ public class TopFragment extends Fragment {
 
         Switch switchControl = drawer.findViewById(R.id.switch_control);
         if (switchControl != null) {
+            switchControl.setChecked(false);
             switchControl.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-                CardsCarFragment cardsCarFragment = new CardsCarFragment(player.getCardsNumbers());
                 if(isChecked) {
-                    cardsCarFragment.setActive(true);
-                    cardsCarFragment.setActiveLong(true);
+                    CardsCarFragment cardsCarFragment = new CardsCarFragment.Builder(player.getCardsNumbers()).
+                            active(true).activeLong(true).
+                            build();
+
                     FrameLayout cardsContainer = drawer.findViewById(R.id.cards_container);
                     cardsContainer.setBackgroundResource(R.color.cardsUnlocked);
                     switchControl.setText(R.string.cards_unlocked);
                     switchControl.setTextColor(getResources().getColor(R.color.cardsUnlocked));
+                    ft.replace(R.id.cards_container, cardsCarFragment);
                 } else {
-                    cardsCarFragment.setActive(false);
-                    cardsCarFragment.setActiveLong(false);
+                    CardsCarFragment cardsCarFragment = new CardsCarFragment.Builder(player.getCardsNumbers()).build();
+
                     FrameLayout cardsContainer = drawer.findViewById(R.id.cards_container);
                     cardsContainer.setBackgroundResource(R.color.colorBackDark);
                     switchControl.setText(R.string.cards_locked);
                     switchControl.setTextColor(getResources().getColor(R.color.cardsLocked));
+                    ft.replace(R.id.cards_container, cardsCarFragment);
                 }
-                ft.replace(R.id.cards_container, cardsCarFragment);
                 //ft.addToBackStack(null);
                 ft.commit();
             });

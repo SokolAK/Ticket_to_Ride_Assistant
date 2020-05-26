@@ -67,7 +67,7 @@
         android:id="@+id/accept_icon"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/accept_color"
+        android:background="@color/colorAccept"
         app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/ic_check_circle_black_24dp" />
 

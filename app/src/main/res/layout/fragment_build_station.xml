@@ -44,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/reset_color"
+            android:background="@color/colorReset"
             app:srcCompat="@drawable/ic_cached_black_24dp" />
 
         <ImageView
@@ -52,7 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/accept_color"
+            android:background="@color/colorAccept"
             app:srcCompat="@drawable/ic_check_circle_black_24dp" />
     </LinearLayout>
 

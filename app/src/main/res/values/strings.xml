@@ -20,17 +20,14 @@
     <string name="cars">Cars</string>
     <string name="stations">Stations</string>
     <string name="tickets">Tickets</string>
+    <string name="longestPath">Longest path</string>
 
     <!-- Cards panel -->
     <string name="too_much_cards">Too much cards</string>
-    <string name="too_little_cards">To little cards</string>
-    <string name="too_little_locos">To little locomotives</string>
-    <string name="too_little_cars">To little cars</string>
+    <string name="too_little_cards">Too little cards</string>
+    <string name="too_little_locos">Too little locomotives</string>
+    <string name="too_little_cars">Too little cars</string>
     <string name="not_enough_cards">Not enough cards</string>
-
-    <!-- Buttons -->
-    <string name="accept_button">OK</string>
-    <string name="reset_button">Reset</string>
 
     <!-- Draw cards -->
     <string name="draw_cards_label">Number of cards to draw:</string>
@@ -41,13 +38,13 @@
 
     <!-- Stations -->
     <string name="build_new_station">Build a new station</string>
-    <string name="station_cost">Number of cards to choose:</string>
+    <string name="station_cost">Station cost:</string>
     <string name="built_stations_header">Built stations:</string>
 
     <!-- Tickets -->
     <string name="draw_ticket">Draw a ticket</string>
     <string name="tickets_header">Your tickets:</string>
-    <string name="realized">Realized</string>
+    <string name="realized">Realized?</string>
     <string name="ticket_details">Ticket details:</string>
 
     <!-- Lock switch -->
@@ -70,5 +67,8 @@
     <string name="help_ticket">Show built stations. You can unlock the station list and remove the station by pressing and holding it.
     To build a new one press the "Build a new station" button. First choose cities names. Then select proper car cards.
     Build the station by pressing "accept" button or reset the cards set by pressing "reset" button.</string>
+
+    <string name="presents">KrokoPL presents</string>
+
 
 </resources>

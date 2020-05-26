@@ -24,40 +24,69 @@ public class CardsCarFragment extends Fragment {
     private int[] cardCounter;
     private int maxCards;
     private int[] cardsNumbers;
-
     private boolean active;
     private boolean activeLong;
     private boolean oneColor;
     private int[] maxCardsNumbers;
 
-    public CardsCarFragment(int[] cardsNumbers) {
-        this.cardCounter = new int[1];
-        this.maxCards = 0;
-        this.cardsNumbers = cardsNumbers;
+    public static class Builder {
+        private final int[] cardsNumbers;
+        private int[] cardCounter = new int[1];
+        private int[] maxCardsNumbers;
+        private int maxCards = 0;
+        private boolean active = false;
+        private boolean activeLong = false;
+        private boolean oneColor = false;
+
+        public Builder(int[] cardsNumbers) {
+            this.cardsNumbers = cardsNumbers;
+        }
+
+        public Builder cardCounter(int[] cardCounter) {
+            this.cardCounter = cardCounter;
+            return this;
+        }
+
+        public Builder maxCardsNumbers(int[] maxCardsNumbers) {
+            this.maxCardsNumbers = maxCardsNumbers;
+            return this;
+        }
+
+        public Builder maxCards(int maxCards) {
+            this.maxCards = maxCards;
+            return this;
+        }
+
+        public Builder active(boolean active) {
+            this.active = active;
+            return this;
+        }
+
+        public Builder activeLong(boolean activeLong) {
+            this.activeLong = activeLong;
+            return this;
+        }
+
+        public Builder oneColor(boolean oneColor) {
+            this.oneColor = oneColor;
+            return this;
+        }
+
+        public CardsCarFragment build() {
+            return new CardsCarFragment(this);
+        }
     }
 
-    public CardsCarFragment(int[] cardsNumbers, int[] cardCounter) {
-        this(cardsNumbers);
-        this.cardCounter = cardCounter;
+    private CardsCarFragment(Builder builder) {
+        cardsNumbers = builder.cardsNumbers;
+        cardCounter = builder.cardCounter;
+        maxCardsNumbers = builder.maxCardsNumbers;
+        maxCards = builder.maxCards;
+        active = builder.active;
+        activeLong = builder.activeLong;
+        oneColor = builder.oneColor;
     }
 
-    public CardsCarFragment(int[] cardsNumbers, int[] cardCounter, int maxCards) {
-        this(cardsNumbers,cardCounter);
-        this.maxCards = maxCards;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-    public void setActiveLong(boolean active) {
-        this.activeLong = active;
-    }
-    public void setOneColor(boolean oneColor) {
-        this.oneColor = oneColor;
-    }
-    public void setMaxCardsNumbers(int[] maxCardsNumbers) {
-        this.maxCardsNumbers = maxCardsNumbers;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,18 +106,18 @@ public class CardsCarFragment extends Fragment {
         cardRecycler.setLayoutManager(layoutManager);
 
         adapter.setListener(position -> {
-            if(active) {
+            if (active) {
                 if (maxCardsNumbers != null) {
                     if (cardsNumbers[position] == maxCardsNumbers[position]) {
                         game.getCards().get(position).setClickable(0);
                     }
                 }
-                if(game.getCards().get(position).getClickable() == 1) {
+                if (game.getCards().get(position).getClickable() == 1) {
                     if (cardCounter[0] < maxCards || maxCards == 0) {
                         cardCounter[0]++;
                         cardsNumbers[position]++;
                     }
-                    if(oneColor) {
+                    if (oneColor) {
                         if (game.getCards().get(position).getColor() != 'L') {
                             for (int i = 0; i < game.getCards().size(); ++i) {
                                 if (i != position && game.getCards().get(i).getColor() != 'L') {
@@ -103,9 +132,12 @@ public class CardsCarFragment extends Fragment {
             }
         });
         adapter.setListenerLong(position -> {
-            if(activeLong) {
-                if(cardsNumbers[position]>0) {
+            if (activeLong) {
+                if (cardsNumbers[position] > 0) {
                     cardsNumbers[position]--;
+                }
+                if (cardCounter[0] > 0) {
+                    cardCounter[0]--;
                 }
                 refreshPage();
             }
@@ -116,11 +148,11 @@ public class CardsCarFragment extends Fragment {
 
     private void refreshPage() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        CardsCarFragment cardsCarFragment = new CardsCarFragment(cardsNumbers,cardCounter,maxCards);
-        cardsCarFragment.setActive(active);
-        cardsCarFragment.setActiveLong(activeLong);
-        cardsCarFragment.setOneColor(oneColor);
-        cardsCarFragment.setMaxCardsNumbers(maxCardsNumbers);
+
+        CardsCarFragment cardsCarFragment = new Builder(cardsNumbers).
+                cardCounter(cardCounter).maxCards(maxCards).maxCardsNumbers(maxCardsNumbers).
+                active(active).activeLong(activeLong).oneColor(oneColor).
+                build();
         ft.replace(R.id.cards_container, cardsCarFragment);
         ft.commit();
     }

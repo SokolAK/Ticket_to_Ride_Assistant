@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="@string/draw_ticket"
         android:textColor="#80000000"
-        android:background="#4CAF50"
+        android:background="@drawable/button"
         android:onClick="onClickDrawTicket"/>
 
     <TextView
@@ -27,7 +27,7 @@
         android:id="@+id/switch_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/reset_color"
+        android:textColor="@color/colorReset"
         android:layout_marginStart="6dp"
         android:text="@string/locked" />
 
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/delete_comment"
-        android:textColor="@color/reset_color"
+        android:textColor="@color/colorReset"
         android:layout_marginStart="6dp"
         android:textSize="16sp"
         android:visibility="invisible" />

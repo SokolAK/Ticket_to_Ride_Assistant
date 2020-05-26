@@ -9,6 +9,6 @@
     <color name="colorBackLight">#424242</color>
     <color name="cardsLocked">#B71C1C</color>
     <color name="cardsUnlocked">#4CAF50</color>
-    <color name="reset_color">#B71C1C</color>
-    <color name="accept_color">#4CAF50</color>
+    <color name="colorReset">#B71C1C</color>
+    <color name="colorAccept">#4CAF50</color>
 </resources>

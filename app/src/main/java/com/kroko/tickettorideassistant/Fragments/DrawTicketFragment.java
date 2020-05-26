@@ -1,5 +1,6 @@
 package com.kroko.TicketToRideAssistant.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -55,17 +58,21 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.accept_icon:
-                ticket.setInHand(true);
-                player.addTicket(new Ticket(ticket));
+                //ticket.setInHand(true);
+                //player.addTicket(new Ticket(ticket));
+                player.addTicket(ticket);
                 returnToTopPage();
                 break;
         }
     }
 
     private void returnToTopPage() {
-        ((MainActivity) getActivity()).onNavigationItemSelected(0);
-        NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
-        navigationView.getMenu().getItem(0).setChecked(true);
+        //((MainActivity) getActivity()).onNavigationItemSelected(0);
+        //NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+        //navigationView.getMenu().getItem(0).setChecked(true);
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, new ShowTicketsFragment());
+        ft.commit();
     }
 
 

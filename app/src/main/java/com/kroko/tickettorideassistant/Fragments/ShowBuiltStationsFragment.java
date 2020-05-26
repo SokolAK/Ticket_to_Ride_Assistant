@@ -37,7 +37,7 @@ public class ShowBuiltStationsFragment extends Fragment {
         for(Route route: player.getBuiltStations()) {
             stationList.add(new CustomSpinnerItem(route.toString(), route.getImageId(game,route.getBuiltStationColor()), route.getId()));
         }
-        Collections.sort(stationList, (x, y) -> x.compareTo(y));
+        //Collections.sort(stationList, (x, y) -> x.compareTo(y));
 
         ListView listStations = drawer.findViewById(R.id.list_stations);
         CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(), stationList);
@@ -65,6 +65,7 @@ public class ShowBuiltStationsFragment extends Fragment {
 
         Switch switchControl = drawer.findViewById(R.id.switch_delete);
         if (switchControl != null) {
+            switchControl.setChecked(false);
             switchControl.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if(isChecked) {
                     unlockDelete = true;

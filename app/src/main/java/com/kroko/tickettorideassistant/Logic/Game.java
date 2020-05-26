@@ -95,7 +95,6 @@ public class Game {
         }
         cursor.close();
         database.close();
-
         return tickets;
     }
     public ArrayList<Ticket> getTickets(String city1) {
@@ -137,7 +136,6 @@ public class Game {
         }
         cursor.close();
         database.close();
-
         return routes;
     }
 

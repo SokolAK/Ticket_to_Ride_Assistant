@@ -29,6 +29,7 @@ public class ShowTicketsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View drawer = inflater.inflate(R.layout.fragment_show_tickets, container, false);
+
         Player player = ((TtRA_Application) getActivity().getApplication()).player;
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
 
@@ -42,7 +43,7 @@ public class ShowTicketsFragment extends Fragment {
             }
             ticketList.add(new CustomSpinnerItem(ticket.toString(), imageResource, ticket.getId()));
         }
-        Collections.sort(ticketList, (x, y) -> x.compareTo(y));
+        //Collections.sort(ticketList, (x, y) -> x.compareTo(y));
 
         ListView listTickets = drawer.findViewById(R.id.list_tickets);
         CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(), ticketList);
@@ -60,6 +61,7 @@ public class ShowTicketsFragment extends Fragment {
 
         Switch switchControl = drawer.findViewById(R.id.switch_delete);
         if (switchControl != null) {
+            switchControl.setChecked(false);
             switchControl.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if(isChecked) {
                     unlockDelete = true;

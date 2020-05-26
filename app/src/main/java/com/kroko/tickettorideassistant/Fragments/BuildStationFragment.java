@@ -24,6 +24,8 @@ import com.kroko.TicketToRideAssistant.UI.CustomSpinnerItem;
 import com.kroko.TicketToRideAssistant.UI.SpinnerListenerInterface;
 import com.kroko.TicketToRideAssistant.UI.SpinnerRouteFragment;
 
+import java.util.Objects;
+
 public class BuildStationFragment extends Fragment implements View.OnClickListener, SpinnerListenerInterface {
     private Game game;
     private Player player;
@@ -123,12 +125,6 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
     }
 
     private void refreshCards() {
-        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        CardsCarFragment cardsCarFragment = new CardsCarFragment(cardsNumbers, cardCounter, maxCards);
-        cardsCarFragment.setActive(true);
-        cardsCarFragment.setActiveLong(true);
-        cardsCarFragment.setOneColor(true);
-
         int[] maxCardsNumbers = new int[player.getCardsNumbers().length];
         for (int i = 0; i < player.getCardsNumbers().length; ++i) {
             if (player.getCardsNumbers()[i] < maxCards) {
@@ -137,7 +133,11 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
                 maxCardsNumbers[i] = maxCards;
             }
         }
-        cardsCarFragment.setMaxCardsNumbers(maxCardsNumbers);
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        CardsCarFragment cardsCarFragment = new CardsCarFragment.Builder(cardsNumbers).
+                cardCounter(cardCounter).maxCards(maxCards).maxCardsNumbers(maxCardsNumbers).
+                active(true).activeLong(true).oneColor(true).
+                build();
         ft.replace(R.id.cards_container, cardsCarFragment);
         //ft.addToBackStack(null);
         ft.commit();
@@ -145,9 +145,12 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
     }
 
     private void returnToTopPage() {
-        ((MainActivity) getActivity()).onNavigationItemSelected(0);
-        NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
-        navigationView.getMenu().getItem(0).setChecked(true);
+        //((MainActivity) getActivity()).onNavigationItemSelected(0);
+        //NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+        //navigationView.getMenu().getItem(0).setChecked(true);
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, new ShowBuiltStationsFragment());
+        ft.commit();
     }
 
     private char determineRouteColor(int[] cardsNumbers) {
