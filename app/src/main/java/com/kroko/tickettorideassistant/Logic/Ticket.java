@@ -42,47 +42,11 @@ public class Ticket {
     }
 
     public boolean checkIfRealized(Player player) {
-        HashSet<Route> connectionList = new HashSet<>(player.getBuiltRoutes());
-        connectionList.addAll(player.getBuiltStations());
-        //List<Route> connectionList = new ArrayList<>(set);
+        ConnectionCalculator connectionCalc = new ConnectionCalculator(player);
 
-        boolean ifCity1IsInBuiltRoutes = false;
-        boolean ifCity2IsInBuiltRoutes = false;
-
-        for (Route routes : connectionList) {
-            if (city1.equals(routes.getCity1()) || city1.equals(routes.getCity2())) {
-                ifCity1IsInBuiltRoutes = true;
-            }
-            if (city2.equals(routes.getCity1()) || city2.equals(routes.getCity2())) {
-                ifCity2IsInBuiltRoutes = true;
-            }
-        }
-        if (!ifCity1IsInBuiltRoutes || !ifCity2IsInBuiltRoutes) {
+        if(!connectionCalc.checkIfCityIsOnPlayersList(city1) && !connectionCalc.checkIfCityIsOnPlayersList(city2))
             return false;
-        }
 
-        return checkIfConnected(connectionList, city1, "", city2);
-    }
-
-    private boolean checkIfConnected(HashSet<Route> connectionList, String cityStart, String cityPrevious, String cityDestination) {
-        ArrayList<String> cities2 = new ArrayList<>();
-        for (Route playerRoute : connectionList) {
-            if (cityStart.equals(playerRoute.getCity1()) && !cityPrevious.equals(playerRoute.getCity2())) {
-                cities2.add(playerRoute.getCity2());
-            }
-            if (cityStart.equals(playerRoute.getCity2()) && !cityPrevious.equals(playerRoute.getCity1())) {
-                cities2.add(playerRoute.getCity1());
-            }
-        }
-
-        for (String city2 : cities2) {
-            if (city2.equals(cityDestination)) {
-                return true;
-            }
-            if (checkIfConnected(connectionList, city2, cityStart, cityDestination)) {
-                return true;
-            }
-        }
-        return false;
+        return connectionCalc.checkIfConnected(city1, "", city2);
     }
 }

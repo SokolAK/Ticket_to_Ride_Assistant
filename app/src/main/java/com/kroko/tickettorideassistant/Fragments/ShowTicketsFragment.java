@@ -31,7 +31,6 @@ public class ShowTicketsFragment extends Fragment {
         View drawer = inflater.inflate(R.layout.fragment_show_tickets, container, false);
 
         Player player = ((TtRA_Application) getActivity().getApplication()).player;
-        Game game = ((TtRA_Application) getActivity().getApplication()).game;
 
         ArrayList<CustomSpinnerItem> ticketList = new ArrayList<>();
         for(Ticket ticket: player.getTickets()) {

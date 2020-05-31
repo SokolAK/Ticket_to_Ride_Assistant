@@ -95,7 +95,7 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
     }
     private void refreshCards() {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        CardsCarFragment cardsCarFragment = new CardsCarFragment.Builder(cardsNumbers).
+        CardsCarFragment cardsCarFragment = CardsCarFragment.builder().cardsNumbers(cardsNumbers).
                 cardCounter(cardCounter).maxCards(maxCards).
                 active(true).activeLong(true).
                 build();

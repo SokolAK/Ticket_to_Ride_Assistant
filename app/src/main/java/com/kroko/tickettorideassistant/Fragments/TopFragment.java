@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.kroko.TicketToRideAssistant.Logic.ConnectionCalculator;
 import com.kroko.TicketToRideAssistant.Logic.Game;
 import com.kroko.TicketToRideAssistant.Logic.Player;
 import com.kroko.TicketToRideAssistant.Logic.Ticket;
@@ -51,8 +52,8 @@ public class TopFragment extends Fragment {
         TextView unrealizedTickets = drawer.findViewById(R.id.unrealized_tickets_value);
         unrealizedTickets.setText(String.valueOf(unrealizedTicketsNumber));
 
-        TextView longestPathLength = drawer.findViewById(R.id.longest_path_value);
-        longestPathLength.setText(String.valueOf(player.getLongestPathLength()));
+        TextView longestPath = drawer.findViewById(R.id.longest_path_value);
+        longestPath.setText(String.valueOf(player.getLongestPathLength()));
 
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
         for (Card card : game.getCards()) {
@@ -66,7 +67,7 @@ public class TopFragment extends Fragment {
             switchControl.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 FragmentTransaction ft = getChildFragmentManager().beginTransaction();
                 if(isChecked) {
-                    CardsCarFragment cardsCarFragment = new CardsCarFragment.Builder(player.getCardsNumbers()).
+                    CardsCarFragment cardsCarFragment = CardsCarFragment.builder().cardsNumbers(player.getCardsNumbers()).
                             active(true).activeLong(true).
                             build();
 
@@ -76,7 +77,7 @@ public class TopFragment extends Fragment {
                     switchControl.setTextColor(getResources().getColor(R.color.cardsUnlocked));
                     ft.replace(R.id.cards_container, cardsCarFragment);
                 } else {
-                    CardsCarFragment cardsCarFragment = new CardsCarFragment.Builder(player.getCardsNumbers()).build();
+                    CardsCarFragment cardsCarFragment = CardsCarFragment.builder().cardsNumbers(player.getCardsNumbers()).build();
 
                     FrameLayout cardsContainer = drawer.findViewById(R.id.cards_container);
                     cardsContainer.setBackgroundResource(R.color.colorBackDark);

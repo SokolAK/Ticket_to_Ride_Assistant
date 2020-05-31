@@ -143,7 +143,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
             }
         }
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        CardsCarFragment cardsCarFragment = new CardsCarFragment.Builder(cardsNumbers).
+        CardsCarFragment cardsCarFragment = CardsCarFragment.builder().cardsNumbers(cardsNumbers).
                 cardCounter(cardCounter).maxCards(maxCards).maxCardsNumbers(maxCardsNumbers).
                 active(true).activeLong(true).oneColor(true).
                 build();

@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Game game = ((TtRA_Application) getApplication()).game;
         Player player = ((TtRA_Application) getApplication()).player;
-        game.prepare((int) 0);
+        game.prepare(0);
         player.setGame(game);
         player.prepare();
 

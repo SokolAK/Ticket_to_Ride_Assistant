@@ -39,7 +39,7 @@ public class Game {
             case 0:
                 title = "Ticket to Ride. Europe";
 
-                numberOfCars = 20;
+                numberOfCars = 45;
                 startCards = 4;
                 maxNoOfCardsToDraw = 10;
                 numberOfStations = 3;
@@ -69,34 +69,14 @@ public class Game {
 
                 databaseName = "TtRA_Europe.db";
                 databaseVersion = 1;
-                routes = readRoutes(databaseName, databaseVersion);
-                tickets.addAll(readTickets(databaseName, databaseVersion, "Tickets_Short_Base"));
-                tickets.addAll(readTickets(databaseName, databaseVersion, "Tickets_Long_Base"));
+                routes = DbReader.readRoutes(context, databaseName, databaseVersion);
+                tickets.addAll(DbReader.readTickets(context, databaseName, databaseVersion, "Tickets_Short_Base"));
+                tickets.addAll(DbReader.readTickets(context, databaseName, databaseVersion, "Tickets_Long_Base"));
 
                 break;
         }
     }
 
-    private ArrayList<Ticket> readTickets(String databaseName, int databaseVersion, String tableName) {
-        SQLiteDatabase database;
-        DbHelper dbHelper = new DbHelper(context, databaseName, databaseVersion);
-        dbHelper.checkDatabase();
-        dbHelper.openDatabase();
-        database = dbHelper.getReadableDatabase();
-
-        ArrayList<Ticket> tickets = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM " + tableName, null);
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(0);
-            String city1 = cursor.getString(1);
-            String city2 = cursor.getString(2);
-            int points = cursor.getInt(3);
-            tickets.add(new Ticket(id, city1, city2, points));
-        }
-        cursor.close();
-        database.close();
-        return tickets;
-    }
     public ArrayList<Ticket> getTickets(String city1) {
         ArrayList<Ticket> result = new ArrayList<>();
         for (Ticket ticket: tickets) {
@@ -114,29 +94,10 @@ public class Game {
         }
         return null;
     }
-
-    private ArrayList<Route> readRoutes(String databaseName, int databaseVersion) {
-        SQLiteDatabase database;
-        DbHelper dbHelper = new DbHelper(context, databaseName, databaseVersion);
-        dbHelper.checkDatabase();
-        dbHelper.openDatabase();
-        database = dbHelper.getReadableDatabase();
-
-        ArrayList<Route> routes = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM Routes", null);
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(0);
-            String city1 = cursor.getString(1);
-            String city2 = cursor.getString(2);
-            int length = cursor.getInt(3);
-            int locos = cursor.getInt(4);
-            boolean tunnel = cursor.getInt(5) > 0;
-            char color = cursor.getString(6).charAt(0);
-            routes.add(new Route(id, city1, city2, length, locos, tunnel, color));
-        }
-        cursor.close();
-        database.close();
-        return routes;
+    public void removeTicket(int id) {
+        for(int i =0; i<tickets.size(); ++i)
+            if(tickets.get(i).getId() == id)
+                tickets.remove(i);
     }
 
     public Route getRoute(int id) {

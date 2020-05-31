@@ -20,8 +20,12 @@ import com.kroko.TicketToRideAssistant.Logic.Player;
 import com.kroko.TicketToRideAssistant.R;
 import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
 
+import lombok.Builder;
+import lombok.Value;
+
+@Builder
 public class CardsCarFragment extends Fragment {
-    private int[] cardCounter;
+    @Builder.Default private int[] cardCounter = new int[1];
     private int maxCards;
     private int[] cardsNumbers;
     private boolean active;
@@ -29,69 +33,9 @@ public class CardsCarFragment extends Fragment {
     private boolean oneColor;
     private int[] maxCardsNumbers;
 
-    public static class Builder {
-        private final int[] cardsNumbers;
-        private int[] cardCounter = new int[1];
-        private int[] maxCardsNumbers;
-        private int maxCards = 0;
-        private boolean active = false;
-        private boolean activeLong = false;
-        private boolean oneColor = false;
-
-        public Builder(int[] cardsNumbers) {
-            this.cardsNumbers = cardsNumbers;
-        }
-
-        public Builder cardCounter(int[] cardCounter) {
-            this.cardCounter = cardCounter;
-            return this;
-        }
-
-        public Builder maxCardsNumbers(int[] maxCardsNumbers) {
-            this.maxCardsNumbers = maxCardsNumbers;
-            return this;
-        }
-
-        public Builder maxCards(int maxCards) {
-            this.maxCards = maxCards;
-            return this;
-        }
-
-        public Builder active(boolean active) {
-            this.active = active;
-            return this;
-        }
-
-        public Builder activeLong(boolean activeLong) {
-            this.activeLong = activeLong;
-            return this;
-        }
-
-        public Builder oneColor(boolean oneColor) {
-            this.oneColor = oneColor;
-            return this;
-        }
-
-        public CardsCarFragment build() {
-            return new CardsCarFragment(this);
-        }
-    }
-
-    private CardsCarFragment(Builder builder) {
-        cardsNumbers = builder.cardsNumbers;
-        cardCounter = builder.cardCounter;
-        maxCardsNumbers = builder.maxCardsNumbers;
-        maxCards = builder.maxCards;
-        active = builder.active;
-        activeLong = builder.activeLong;
-        oneColor = builder.oneColor;
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
-        Player player = ((TtRA_Application) getActivity().getApplication()).player;
         View drawer = inflater.inflate(R.layout.fragment_cards, container, false);
         RecyclerView cardRecycler = drawer.findViewById(R.id.card_recycler);
 
@@ -148,20 +92,11 @@ public class CardsCarFragment extends Fragment {
 
     private void refreshPage() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-
-        CardsCarFragment cardsCarFragment = new Builder(cardsNumbers).
+        CardsCarFragment cardsCarFragment = CardsCarFragment.builder().cardsNumbers(cardsNumbers).
                 cardCounter(cardCounter).maxCards(maxCards).maxCardsNumbers(maxCardsNumbers).
                 active(active).activeLong(activeLong).oneColor(oneColor).
                 build();
         ft.replace(R.id.cards_container, cardsCarFragment);
         ft.commit();
     }
-
-    private void returnToTopPage() {
-        ((MainActivity) getActivity()).onNavigationItemSelected(0);
-        NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
-        navigationView.getMenu().getItem(0).setChecked(true);
-    }
-
-
 }

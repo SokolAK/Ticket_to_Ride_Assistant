@@ -41,6 +41,7 @@ public class Player implements Serializable {
             this.cardsNumbers[i] += cardsNumbers[i];
         }
     }
+
     public void spendCards(int[] cardsNumbers) {
         for (int i = 0; i < this.cardsNumbers.length; ++i) {
             this.cardsNumbers[i] -= cardsNumbers[i];
@@ -50,6 +51,7 @@ public class Player implements Serializable {
     public void addCars(int cars) {
         this.numberOfCars += cars;
     }
+
     public void spendCars(int cars) {
         this.numberOfCars -= cars;
     }
@@ -57,25 +59,27 @@ public class Player implements Serializable {
     public void addRoute(Route route) {
         builtRoutes.add(0, route);
         updatePoints();
-        //findLongestPath();
+        longestPathLength = findLongestPath();
     }
+
     public void removeRoute(int i) {
         builtRoutes.remove(i);
         updatePoints();
-        //findLongestPath();
+        longestPathLength = findLongestPath();
     }
 
     public void addRouteStation(Route route) {
         builtStations.add(0, route);
         numberOfStations--;
         updatePoints();
-        //findLongestPath();
+        longestPathLength = findLongestPath();
     }
+
     public void removeRouteStation(int i) {
         builtStations.remove(i);
         numberOfStations++;
         updatePoints();
-        //findLongestPath();
+        longestPathLength = findLongestPath();
     }
 
     public void addTicket(Ticket ticket) {
@@ -83,13 +87,15 @@ public class Player implements Serializable {
         ticket.setInHand(true);
         updatePoints();
     }
+
     public void removeTicket(int i) {
         tickets.get(i).setInHand(false);
         tickets.remove(i);
         updatePoints();
     }
+
     public void checkIfTicketsRealized() {
-        for(Ticket ticket: tickets) {
+        for (Ticket ticket : tickets) {
             boolean realized = ticket.checkIfRealized(this);
             ticket.setRealized(realized);
         }
@@ -99,45 +105,22 @@ public class Player implements Serializable {
     @SuppressWarnings("ConstantConditions")
     public void updatePoints() {
         points = 0;
-        for(Ticket ticket: tickets) {
-            if(ticket.isRealized()) {
+        for (Ticket ticket : tickets) {
+            if (ticket.isRealized()) {
                 points += ticket.getPoints();
             } else {
                 points -= ticket.getPoints();
             }
         }
-        for(Route route: builtRoutes) {
+        for (Route route : builtRoutes) {
             points += game.getScoring().get(route.getLength());
         }
-        points += numberOfStations*game.getStationPoints();
+        points += numberOfStations * game.getStationPoints();
     }
 
-    public void findLongestPath() {
-        int length = 0;
-        HashSet<Route> segments = new HashSet<>(builtRoutes);
-        segments.addAll(builtStations);
-        HashSet<String> citiesSet = new HashSet<>();
-        for(Route segment: segments) {
-            citiesSet.add(segment.getCity1());
-            citiesSet.add(segment.getCity2());
-        }
-
-        List<String> cities = new ArrayList<>(citiesSet);
-        List<String> usedCities = new ArrayList<>();
-        while(cities.size() > 0) {
-            String city1 = cities.get(0);
-
-
-
-
-            usedCities.add(city1);
-
-
-
-            cities.removeAll(usedCities);
-        }
-
-        longestPathLength = length;
+    private int findLongestPath() {
+        ConnectionCalculator connectionCalc = new ConnectionCalculator(this);
+        return connectionCalc.findLongestPath();
     }
 }
 

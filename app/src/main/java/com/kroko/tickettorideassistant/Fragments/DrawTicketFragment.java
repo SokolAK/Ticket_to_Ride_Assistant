@@ -31,6 +31,7 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
     private Player player;
     private Ticket ticket;
     private View drawer;
+    private int ticketId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onSpinnerItemSelected(CustomSpinnerItem spinnerItem) {
-        int ticketId = spinnerItem.getItemId();
+        ticketId = spinnerItem.getItemId();
         ticket = game.getTicket(ticketId);
         TextView pointsValue = drawer.findViewById(R.id.points_value);
         pointsValue.setText(String.valueOf(ticket.getPoints()));
