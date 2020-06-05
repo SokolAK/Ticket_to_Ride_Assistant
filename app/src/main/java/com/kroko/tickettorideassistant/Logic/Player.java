@@ -1,5 +1,7 @@
 package com.kroko.TicketToRideAssistant.Logic;
 
+import com.kroko.TicketToRideAssistant.Util.Triplet;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -92,6 +94,19 @@ public class Player implements Serializable {
         tickets.get(i).setInHand(false);
         tickets.remove(i);
         updatePoints();
+    }
+
+    public void updateTickets() {
+        for(int i = 0; i < tickets.size(); ++i) {
+            for(Triplet deck: game.getTicketsDecks()) {
+                if(tickets.get(i).getDeckName().equals(deck.first)) {
+                    if(!(Boolean)deck.third) {
+                        removeTicket(i);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public void checkIfTicketsRealized() {

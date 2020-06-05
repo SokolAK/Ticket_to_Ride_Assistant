@@ -9,12 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import com.kroko.TicketToRideAssistant.Fragments.DrawTicketFragment;
 import com.kroko.TicketToRideAssistant.Logic.Game;
 import com.kroko.TicketToRideAssistant.Logic.Player;
-import com.kroko.TicketToRideAssistant.Logic.Route;
 import com.kroko.TicketToRideAssistant.Logic.Ticket;
 import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
 import com.kroko.TicketToRideAssistant.R;
@@ -68,11 +65,11 @@ public class SpinnerTicketFragment extends Fragment {
         }
         Collections.sort(cities1, (x, y) -> x.compareTo(y));
 
-        ArrayList<CustomSpinnerItem> cityList = new ArrayList<>();
+        ArrayList<CustomItem> cityList = new ArrayList<>();
         for (String city1: cities1) {
-            cityList.add(new CustomSpinnerItem(city1, 0, 0));
+            cityList.add(new CustomItem(city1, 0, 0));
         }
-        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(), cityList);
+        CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList);
         Spinner spinner = drawer.findViewById(R.id.spinner1);
         spinner.setAdapter(adapter);
     }
@@ -94,10 +91,10 @@ public class SpinnerTicketFragment extends Fragment {
                                    int position, long id) {
 
             Spinner listCity1 = drawer.findViewById(R.id.spinner1);
-            String city1 = ((CustomSpinnerItem) listCity1.getSelectedItem()).getText();
+            String city1 = ((CustomItem) listCity1.getSelectedItem()).getText();
             ArrayList<Ticket> tickets = game.getTickets(city1);
 
-            ArrayList<CustomSpinnerItem> cityList = new ArrayList<>();
+            ArrayList<CustomItem> cityList = new ArrayList<>();
             for (Ticket ticket: tickets) {
                 if (!ticket.isInHand()) {
                     String city2;
@@ -106,14 +103,14 @@ public class SpinnerTicketFragment extends Fragment {
                     } else {
                         city2 = ticket.getCity1();
                     }
-                    cityList.add(new CustomSpinnerItem(city2, 0, ticket.getId()));
+                    cityList.add(new CustomItem(city2, 0, ticket.getId()));
                 }
             }
 
             Collections.sort(cityList, (x, y) -> x.compareTo(y));
 
             Spinner spinner = drawer.findViewById(R.id.spinner2);
-            CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(), cityList);
+            CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList);
             spinner.setAdapter(adapter);
             spinner.setOnItemSelectedListener(new SpinnerTicketFragment.listenerCity2(drawer));
         }
@@ -134,7 +131,7 @@ public class SpinnerTicketFragment extends Fragment {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Spinner spinner2 = drawer.findViewById(R.id.spinner2);
             SpinnerListenerInterface parentFragment = (SpinnerListenerInterface) getParentFragment();
-            parentFragment.onSpinnerItemSelected((CustomSpinnerItem) spinner2.getSelectedItem());
+            parentFragment.onSpinnerItemSelected((CustomItem) spinner2.getSelectedItem());
         }
 
         @Override

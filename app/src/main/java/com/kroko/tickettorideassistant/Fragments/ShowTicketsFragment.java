@@ -12,16 +12,14 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.kroko.TicketToRideAssistant.Logic.Game;
 import com.kroko.TicketToRideAssistant.Logic.Player;
 import com.kroko.TicketToRideAssistant.Logic.Ticket;
 import com.kroko.TicketToRideAssistant.R;
 import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
-import com.kroko.TicketToRideAssistant.UI.CustomSpinnerAdapter;
-import com.kroko.TicketToRideAssistant.UI.CustomSpinnerItem;
+import com.kroko.TicketToRideAssistant.UI.CustomItemAdapter;
+import com.kroko.TicketToRideAssistant.UI.CustomItem;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class ShowTicketsFragment extends Fragment {
     private boolean unlockDelete;
@@ -32,7 +30,7 @@ public class ShowTicketsFragment extends Fragment {
 
         Player player = ((TtRA_Application) getActivity().getApplication()).player;
 
-        ArrayList<CustomSpinnerItem> ticketList = new ArrayList<>();
+        ArrayList<CustomItem> ticketList = new ArrayList<>();
         for(Ticket ticket: player.getTickets()) {
             int imageResource = 0;
             if(ticket.isRealized()) {
@@ -40,12 +38,11 @@ public class ShowTicketsFragment extends Fragment {
             } else {
                 imageResource = R.drawable.ic_close_black_24dp;
             }
-            ticketList.add(new CustomSpinnerItem(ticket.toString(), imageResource, ticket.getId()));
+            ticketList.add(new CustomItem(ticket.toString(), imageResource, ticket.getId()));
         }
-        //Collections.sort(ticketList, (x, y) -> x.compareTo(y));
 
         ListView listTickets = drawer.findViewById(R.id.list_tickets);
-        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(), ticketList);
+        CustomItemAdapter adapter = new CustomItemAdapter(getContext(), ticketList);
         listTickets.setAdapter(adapter);
 
         listTickets.setOnItemLongClickListener((arg0, arg1, position, id) -> {

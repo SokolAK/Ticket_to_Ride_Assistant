@@ -13,18 +13,25 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class DbHelper extends SQLiteOpenHelper {
-
+    private static DbHelper mInstance = null;
     private String DB_NAME;
     private String DB_PATH;
     private int DB_VERSION;
     private Context mContext;
 
-    public DbHelper(Context mContext, String DB_NAME, int DB_VERSION) {
+    private DbHelper(Context mContext, String DB_NAME, int DB_VERSION) {
         super(mContext, DB_NAME, null, DB_VERSION);
         this.mContext = mContext;
         this.DB_NAME = DB_NAME;
         this.DB_VERSION = DB_VERSION;
         this.DB_PATH = "/data/data/" + mContext.getPackageName() + "/databases/";
+    }
+
+    public static DbHelper getInstance(Context mContext, String DB_NAME, int DB_VERSION) {
+        if (mInstance == null) {
+            mInstance = new DbHelper(mContext, DB_NAME, DB_VERSION);
+        }
+        return mInstance;
     }
 
     @Override

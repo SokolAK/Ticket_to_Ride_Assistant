@@ -10,10 +10,12 @@ import java.util.Set;
 
 public final class ConnectionCalculator {
     private Set<Route> builtSegments;
+    private Set<Route> builtRoutes;
     private int maxLength = 0;
 
     public ConnectionCalculator(Player player) {
-        builtSegments = new HashSet<>(player.getBuiltRoutes());
+        builtRoutes = new HashSet<>(player.getBuiltRoutes());
+        builtSegments = new HashSet<>(builtRoutes);
         builtSegments.addAll(player.getBuiltStations());
     }
 
@@ -57,32 +59,31 @@ public final class ConnectionCalculator {
         maxLength = 0;
         int length = 0;
         Set<String> citiesSet = new HashSet<>();
-        for (Route segment : builtSegments) {
-            citiesSet.add(segment.getCity1());
-            citiesSet.add(segment.getCity2());
+        for (Route route : builtRoutes) {
+            citiesSet.add(route.getCity1());
+            citiesSet.add(route.getCity2());
         }
 
         List<String> cities = new ArrayList<>(citiesSet);
         for (String cityStart : cities) {
-            findLongestPathFromCity(cityStart, builtSegments, length);
+            findLongestPathFromCity(cityStart, builtRoutes, length);
         }
         return maxLength;
     }
 
-
-    private void findLongestPathFromCity(String cityStart, Set<Route> segments, int length) {
-        for (Route segment : segments) {
+    private void findLongestPathFromCity(String cityStart, Set<Route> routes, int length) {
+        for (Route route : routes) {
             String cityNext = null;
-            if (cityStart.equals(segment.getCity1())) {
-                cityNext = segment.getCity2();
+            if (cityStart.equals(route.getCity1())) {
+                cityNext = route.getCity2();
             }
-            if (cityStart.equals(segment.getCity2())) {
-                cityNext = segment.getCity1();
+            if (cityStart.equals(route.getCity2())) {
+                cityNext = route.getCity1();
             }
             if (cityNext != null) {
-                Set<Route> segmentsWithoutSegment = new HashSet<>(segments);
-                segmentsWithoutSegment.remove(segment);
-                findLongestPathFromCity(cityNext, segmentsWithoutSegment, length + segment.getLength());
+                Set<Route> routesWithoutRoute = new HashSet<>(routes);
+                routesWithoutRoute.remove(route);
+                findLongestPathFromCity(cityNext, routesWithoutRoute, length + route.getLength());
             }
         }
         if(length > maxLength) {

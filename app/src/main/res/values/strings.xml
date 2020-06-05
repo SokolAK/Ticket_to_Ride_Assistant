@@ -70,5 +70,15 @@
 
     <string name="presents">KrokoPL presents</string>
 
+    <string name="choose_decks_of_tickets">Choose decks of tickets:</string>
+    <string name="accept">Accept</string>
+    <string name="nav_tickets_decks">Decks of tickets</string>
+    <string name="TtRA_Europe_Tickets_Short_Base">Europe base. Short</string>
+    <string name="TtRA_Europe_Tickets_Long_Base">Europe base. Long</string>
+    <string name="choose_game">Choose game:</string>
+
+    <string-array name="games">
+        <item>Europe</item>
+    </string-array>
 
 </resources>

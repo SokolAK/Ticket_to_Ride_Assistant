@@ -12,12 +12,10 @@ import java.util.ArrayList;
 public final class DbReader {
 
     public static ArrayList<Ticket> readTickets(Context context, String databaseName, int databaseVersion, String tableName) {
-        SQLiteDatabase database;
-
-        DbHelper dbHelper = new DbHelper(context, databaseName, databaseVersion);
+        DbHelper dbHelper = DbHelper.getInstance(context, databaseName, databaseVersion);
         dbHelper.checkDatabase();
-        dbHelper.openDatabase();
-        database = dbHelper.getReadableDatabase();
+        //dbHelper.openDatabase();
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
 
         ArrayList<Ticket> tickets = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT * FROM " + tableName, null);
@@ -26,19 +24,19 @@ public final class DbReader {
             String city1 = cursor.getString(1);
             String city2 = cursor.getString(2);
             int points = cursor.getInt(3);
-            tickets.add(new Ticket(id, city1, city2, points));
+            tickets.add(new Ticket(id, city1, city2, points, tableName));
         }
         cursor.close();
         database.close();
+        dbHelper.close();
         return tickets;
     }
 
     public static ArrayList<Route> readRoutes(Context context, String databaseName, int databaseVersion) {
-        SQLiteDatabase database;
-        DbHelper dbHelper = new DbHelper(context, databaseName, databaseVersion);
+        DbHelper dbHelper = DbHelper.getInstance(context, databaseName, databaseVersion);
         dbHelper.checkDatabase();
-        dbHelper.openDatabase();
-        database = dbHelper.getReadableDatabase();
+        //dbHelper.openDatabase();
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
 
         ArrayList<Route> routes = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT * FROM Routes", null);

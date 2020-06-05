@@ -17,11 +17,10 @@ import com.kroko.TicketToRideAssistant.Logic.Player;
 import com.kroko.TicketToRideAssistant.R;
 import com.kroko.TicketToRideAssistant.Logic.Route;
 import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
-import com.kroko.TicketToRideAssistant.UI.CustomSpinnerAdapter;
-import com.kroko.TicketToRideAssistant.UI.CustomSpinnerItem;
+import com.kroko.TicketToRideAssistant.UI.CustomItemAdapter;
+import com.kroko.TicketToRideAssistant.UI.CustomItem;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class ShowBuiltRoutesFragment extends Fragment {
     private boolean unlockDelete;
@@ -33,14 +32,13 @@ public class ShowBuiltRoutesFragment extends Fragment {
         Game game = ((TtRA_Application) getActivity().getApplication()).game;
 
 
-        ArrayList<CustomSpinnerItem> routeList = new ArrayList<>();
+        ArrayList<CustomItem> routeList = new ArrayList<>();
         for(Route route: player.getBuiltRoutes()) {
-            routeList.add(new CustomSpinnerItem(route.toString(), route.getImageId(game,route.getBuiltColor()), route.getId()));
+            routeList.add(new CustomItem(route.toString(), route.getImageId(game,route.getBuiltColor()), route.getId()));
         }
-        //Collections.sort(routeList, (x, y) -> x.compareTo(y));
 
         ListView listRoutes = drawer.findViewById(R.id.list_routes);
-        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(), routeList);
+        CustomItemAdapter adapter = new CustomItemAdapter(getContext(), routeList);
         listRoutes.setAdapter(adapter);
 
         listRoutes.setOnItemLongClickListener((arg0, arg1, position, id) -> {

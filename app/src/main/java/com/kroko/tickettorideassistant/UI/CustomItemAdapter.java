@@ -13,10 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.kroko.TicketToRideAssistant.R;
-import com.kroko.TicketToRideAssistant.UI.CustomSpinnerItem;
 
-public class CustomSpinnerAdapter extends ArrayAdapter {
-    public CustomSpinnerAdapter(Context context, ArrayList<CustomSpinnerItem> itemsList) {
+public class CustomItemAdapter extends ArrayAdapter {
+    public CustomItemAdapter(Context context, ArrayList<CustomItem> itemsList) {
         super(context, 0, itemsList);
     }
 
@@ -39,10 +38,10 @@ public class CustomSpinnerAdapter extends ArrayAdapter {
         ImageView imageView = convertView.findViewById(R.id.image_view);
         TextView textView = convertView.findViewById(R.id.text_view);
 
-        CustomSpinnerItem customSpinnerItem = (CustomSpinnerItem)getItem(position);
-        if(customSpinnerItem != null) {
-            imageView.setImageResource(customSpinnerItem.getImageResource());
-            textView.setText(customSpinnerItem.getText());
+        CustomItem customItem = (CustomItem)getItem(position);
+        if(customItem != null) {
+            imageView.setImageResource(customItem.getImageResource());
+            textView.setText(customItem.getText());
         }
         return convertView;
     }

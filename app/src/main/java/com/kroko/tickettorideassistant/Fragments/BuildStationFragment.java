@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
 import com.kroko.TicketToRideAssistant.Logic.Game;
 import com.kroko.TicketToRideAssistant.Logic.Player;
 import com.kroko.TicketToRideAssistant.R;
@@ -20,11 +19,9 @@ import com.kroko.TicketToRideAssistant.Logic.Route;
 import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
 import com.kroko.TicketToRideAssistant.UI.Card;
 import com.kroko.TicketToRideAssistant.UI.CardsCarFragment;
-import com.kroko.TicketToRideAssistant.UI.CustomSpinnerItem;
+import com.kroko.TicketToRideAssistant.UI.CustomItem;
 import com.kroko.TicketToRideAssistant.UI.SpinnerListenerInterface;
 import com.kroko.TicketToRideAssistant.UI.SpinnerRouteFragment;
-
-import java.util.Objects;
 
 public class BuildStationFragment extends Fragment implements View.OnClickListener, SpinnerListenerInterface {
     private Game game;
@@ -105,7 +102,7 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public void onSpinnerItemSelected(CustomSpinnerItem spinnerItem) {
+    public void onSpinnerItemSelected(CustomItem spinnerItem) {
         int routeId = spinnerItem.getItemId();
         route = game.getRoute(routeId);
         clearCards();

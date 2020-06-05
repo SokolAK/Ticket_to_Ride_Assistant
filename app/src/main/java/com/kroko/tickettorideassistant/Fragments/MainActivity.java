@@ -2,9 +2,6 @@ package com.kroko.TicketToRideAssistant.Fragments;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -19,14 +16,13 @@ import com.kroko.TicketToRideAssistant.Logic.Player;
 import com.kroko.TicketToRideAssistant.R;
 import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
 
-import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.core.view.GravityCompat;
-
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     //private Game game = ((TtRA_Application) getApplication()).game;
@@ -36,8 +32,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        int gameId = intent.getIntExtra("gameId", 0);
+        String gameTitle = getResources().getStringArray(R.array.games)[gameId];
+
+        Game game = ((TtRA_Application) getApplication()).game;
+        Player player = ((TtRA_Application) getApplication()).player;
+        game.prepare(gameId, gameTitle);
+        player.setGame(game);
+        player.prepare();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.nav_top);
         setSupportActionBar(toolbar);
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                 drawer,
@@ -46,14 +55,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.nav_close_drawer);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Game game = ((TtRA_Application) getApplication()).game;
-        Player player = ((TtRA_Application) getApplication()).player;
-        game.prepare(0);
-        player.setGame(game);
-        player.prepare();
+        View header = LayoutInflater.from(this).inflate(R.layout.header_nav, null);
+        navigationView.removeHeaderView(navigationView.getHeaderView(0));
+        navigationView.addHeaderView(header);
+        TextView text = header.findViewById(R.id.nav_header_game_text);
+        text.setText(game.getTitle());
+
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.content_frame, new TopFragment());
@@ -81,6 +93,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_show_tickets:
                 fragment = new ShowTicketsFragment();
+                break;
+            case R.id.nav_tickets_decks:
+                fragment = new ChooseDecksOfTicketsFragment();
                 break;
             case R.id.nav_help:
                 intent = new Intent(this, HelpActivity.class);
@@ -137,5 +152,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ft.replace(R.id.content_frame, new DrawTicketFragment());
         ft.addToBackStack(null);
         ft.commit();
+    }
+
+    public void onTicketsDecksAccept(View view) {
+        Game game = ((TtRA_Application) getApplication()).game;
+        Player player = ((TtRA_Application) getApplication()).player;
+        game.updateTickets();
+        player.updateTickets();
+        onBackPressed();
+        //FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        //ft.replace(R.id.content_frame, new TopFragment());
+        //ft.addToBackStack(null);
+        //ft.commit();
     }
 }

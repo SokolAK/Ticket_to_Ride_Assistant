@@ -22,13 +22,10 @@ import com.kroko.TicketToRideAssistant.UI.Card;
 import com.kroko.TicketToRideAssistant.UI.CardsCarFragment;
 
 public class TopFragment extends Fragment {
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_top, container, false);
-    }
 
     @Override
-    public void onViewCreated(View drawer, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View drawer = inflater.inflate(R.layout.fragment_top, container, false);
         Player player = ((TtRA_Application) getActivity().getApplication()).player;
         TextView points = drawer.findViewById(R.id.points_value);
         points.setText(String.valueOf(player.getPoints()));
@@ -95,5 +92,7 @@ public class TopFragment extends Fragment {
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_top);
+
+        return drawer;
     }
 }

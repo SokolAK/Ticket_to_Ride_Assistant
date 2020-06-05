@@ -1,17 +1,17 @@
 package com.kroko.TicketToRideAssistant.Logic;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.kroko.TicketToRideAssistant.R;
 import com.kroko.TicketToRideAssistant.UI.Card;
+import com.kroko.TicketToRideAssistant.Util.Triplet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import lombok.Data;
 
+@SuppressWarnings("unchecked")
 @Data
 public class Game {
     private String title;
@@ -29,15 +29,17 @@ public class Game {
     private String databaseName;
     private int databaseVersion;
     private Context context;
+    private ArrayList<Triplet<String,String,Boolean>> ticketsDecks = new ArrayList<>();
+    private long ticketHash = 0;
 
     public Game(Context context) {
         this.context = context;
     }
 
-    public void prepare(int gameId) {
+    public void prepare(int gameId, String title) {
         switch (gameId) {
             case 0:
-                title = "Ticket to Ride. Europe";
+                this.title = title;
 
                 numberOfCars = 45;
                 startCards = 4;
@@ -67,14 +69,45 @@ public class Game {
                 cards.add(new Card('W', R.drawable.white));
                 cards.add(new Card('L', R.drawable.loco));
 
+
                 databaseName = "TtRA_Europe.db";
                 databaseVersion = 1;
                 routes = DbReader.readRoutes(context, databaseName, databaseVersion);
-                tickets.addAll(DbReader.readTickets(context, databaseName, databaseVersion, "Tickets_Short_Base"));
-                tickets.addAll(DbReader.readTickets(context, databaseName, databaseVersion, "Tickets_Long_Base"));
+
+                ticketsDecks.add(Triplet.create
+                                ("Tickets_Long_Base",
+                                context.getString(R.string.TtRA_Europe_Tickets_Long_Base),
+                                true));
+                ticketsDecks.add(Triplet.create
+                                ("Tickets_Short_Base",
+                                context.getString(R.string.TtRA_Europe_Tickets_Short_Base),
+                                true));
+                updateTickets();
 
                 break;
         }
+    }
+
+    public void updateTickets() {
+        long newTicketHash = calculateTicketsHash();
+        if(ticketHash != newTicketHash) {
+            ticketHash = newTicketHash;
+            tickets.clear();
+            for (Triplet deck : ticketsDecks) {
+                if ((Boolean) deck.third) {
+                    tickets.addAll(DbReader.readTickets(context, databaseName, databaseVersion, (String) deck.first));
+                }
+            }
+        }
+    }
+
+    private long calculateTicketsHash() {
+        long hash = 0;
+        for(Triplet deck: ticketsDecks) {
+            int c = (Boolean)deck.third ? 1 : 0;
+            hash = 31 * hash + c;
+        }
+        return hash;
     }
 
     public ArrayList<Ticket> getTickets(String city1) {

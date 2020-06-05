@@ -1,29 +1,23 @@
 package com.kroko.TicketToRideAssistant.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.navigation.NavigationView;
 import com.kroko.TicketToRideAssistant.Logic.Game;
 import com.kroko.TicketToRideAssistant.Logic.Player;
 import com.kroko.TicketToRideAssistant.Logic.Ticket;
 import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
 import com.kroko.TicketToRideAssistant.R;
-import com.kroko.TicketToRideAssistant.UI.CustomSpinnerItem;
+import com.kroko.TicketToRideAssistant.UI.CustomItem;
 import com.kroko.TicketToRideAssistant.UI.SpinnerListenerInterface;
-import com.kroko.TicketToRideAssistant.UI.SpinnerRouteFragment;
 import com.kroko.TicketToRideAssistant.UI.SpinnerTicketFragment;
 
 public class DrawTicketFragment extends Fragment implements View.OnClickListener, SpinnerListenerInterface {
@@ -59,10 +53,12 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.accept_icon:
-                //ticket.setInHand(true);
-                //player.addTicket(new Ticket(ticket));
-                player.addTicket(ticket);
-                returnToTopPage();
+                if(ticket != null) {
+                    //ticket.setInHand(true);
+                    //player.addTicket(new Ticket(ticket));
+                    player.addTicket(ticket);
+                    returnToTopPage();
+                }
                 break;
         }
     }
@@ -78,7 +74,7 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
 
 
     @Override
-    public void onSpinnerItemSelected(CustomSpinnerItem spinnerItem) {
+    public void onSpinnerItemSelected(CustomItem spinnerItem) {
         ticketId = spinnerItem.getItemId();
         ticket = game.getTicket(ticketId);
         TextView pointsValue = drawer.findViewById(R.id.points_value);
