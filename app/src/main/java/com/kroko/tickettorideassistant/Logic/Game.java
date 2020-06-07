@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 import lombok.Data;
 
-@SuppressWarnings("unchecked")
+
 @Data
 public class Game {
     private String title;
@@ -43,7 +43,7 @@ public class Game {
 
                 numberOfCars = 45;
                 startCards = 4;
-                maxNoOfCardsToDraw = 10;
+                maxNoOfCardsToDraw = 2;
                 numberOfStations = 3;
                 stationPoints = 4;
                 maxExtraCardsForTunnel = 3;

@@ -5,7 +5,7 @@ public class Triplet<F,S,T> {
     public S second;
     public T third;
 
-    public static <F,S,T> Triplet create(F first, S second, T third) {
+    public static <F,S,T> Triplet<F,S,T> create(F first, S second, T third) {
         return new Triplet<F,S,T>(first,second,third);
     }
 

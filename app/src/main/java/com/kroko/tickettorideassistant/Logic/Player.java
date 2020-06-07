@@ -102,6 +102,7 @@ public class Player implements Serializable {
                 if(tickets.get(i).getDeckName().equals(deck.first)) {
                     if(!(Boolean)deck.third) {
                         removeTicket(i);
+                        --i;
                         break;
                     }
                 }
@@ -118,7 +119,7 @@ public class Player implements Serializable {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public void updatePoints() {
+    private void updatePoints() {
         points = 0;
         for (Ticket ticket : tickets) {
             if (ticket.isRealized()) {
@@ -128,7 +129,9 @@ public class Player implements Serializable {
             }
         }
         for (Route route : builtRoutes) {
-            points += game.getScoring().get(route.getLength());
+            if(game.getScoring().containsKey(route.getLength())) {
+                points += game.getScoring().get(route.getLength());
+            }
         }
         points += numberOfStations * game.getStationPoints();
     }

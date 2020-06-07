@@ -38,4 +38,12 @@
             android:icon="@drawable/ic_help_black_24dp"
             android:title="@string/nav_help" />
     </group>
+    <group
+        android:id="@+id/menu_exit"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="@string/exit" />
+    </group>
 </menu>

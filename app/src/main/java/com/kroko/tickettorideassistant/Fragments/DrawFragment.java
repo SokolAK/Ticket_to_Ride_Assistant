@@ -105,8 +105,9 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
     }
 
     private void returnToTopPage() {
-        ((MainActivity)getActivity()).onNavigationItemSelected(0);
-        NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
-        navigationView.getMenu().getItem(0).setChecked(true);
+        //((MainActivity)getActivity()).onNavigationItemSelected(0);
+        //NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+        //navigationView.getMenu().getItem(0).setChecked(true);
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 }

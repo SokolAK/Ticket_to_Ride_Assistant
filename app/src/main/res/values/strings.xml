@@ -75,7 +75,11 @@
     <string name="nav_tickets_decks">Decks of tickets</string>
     <string name="TtRA_Europe_Tickets_Short_Base">Europe base. Short</string>
     <string name="TtRA_Europe_Tickets_Long_Base">Europe base. Long</string>
-    <string name="choose_game">Choose game:</string>
+    <string name="choose_game">Choose your game</string>
+    <string name="exit">Exit</string>
+    <string name="exit_message">Do you want to exit?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string-array name="games">
         <item>Europe</item>

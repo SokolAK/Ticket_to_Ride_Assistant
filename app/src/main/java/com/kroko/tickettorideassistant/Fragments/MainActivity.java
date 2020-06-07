@@ -1,7 +1,9 @@
 package com.kroko.TicketToRideAssistant.Fragments;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -100,6 +102,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_help:
                 intent = new Intent(this, HelpActivity.class);
                 break;
+            case R.id.nav_exit:
+                exitMessageBox();
+                break;
             default:
                 fragment = new TopFragment();
         }
@@ -115,6 +120,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+    //To prevent java.lang.NullPointerException:
+    //Attempt to invoke virtual method 'boolean android.content.Intent.migrateExtraStreamToClipData()' on a null object reference
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        if(intent != null)
+            super.startActivityForResult(intent,requestCode);
     }
 
     @Override
@@ -164,5 +177,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //ft.replace(R.id.content_frame, new TopFragment());
         //ft.addToBackStack(null);
         //ft.commit();
+    }
+
+    private void exitMessageBox() {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setMessage(R.string.exit_message);
+        dlgAlert.setTitle(R.string.app_name);
+        dlgAlert.setPositiveButton(R.string.no, null);
+        dlgAlert.setNegativeButton(R.string.yes, (dialog, which) -> {
+            finishAffinity();
+        });;
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
     }
 }
