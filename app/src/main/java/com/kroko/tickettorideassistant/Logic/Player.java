@@ -118,7 +118,6 @@ public class Player implements Serializable {
         updatePoints();
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void updatePoints() {
         points = 0;
         for (Ticket ticket : tickets) {
@@ -130,7 +129,8 @@ public class Player implements Serializable {
         }
         for (Route route : builtRoutes) {
             if(game.getScoring().containsKey(route.getLength())) {
-                points += game.getScoring().get(route.getLength());
+                @SuppressWarnings("ConstantConditions") int routePoints = game.getScoring().get(route.getLength());
+                points += routePoints;
             }
         }
         points += numberOfStations * game.getStationPoints();

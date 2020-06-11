@@ -2,9 +2,11 @@ package com.kroko.TicketToRideAssistant.Logic;
 
 import android.content.Context;
 
+import com.kroko.TicketToRideAssistant.Games.Europe;
+import com.kroko.TicketToRideAssistant.Games.USA;
 import com.kroko.TicketToRideAssistant.R;
 import com.kroko.TicketToRideAssistant.UI.Card;
-import com.kroko.TicketToRideAssistant.Util.Triplet;
+import com.kroko.TicketToRideAssistant.Util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,78 +16,50 @@ import lombok.Data;
 
 @Data
 public class Game {
-    private String title;
-    private int startCards;
-    private int maxNoOfCardsToDraw;
-    private int numberOfStations;
-    private int stationPoints;
-    private int numberOfCars;
-    private int maxExtraCardsForTunnel;
-    private HashMap<Integer, Integer> scoring = new HashMap<>();
-    private HashMap<Integer, Integer> stationCost = new HashMap<>();
-    private ArrayList<Card> cards = new ArrayList<>();
-    private ArrayList<Route> routes = new ArrayList<>();
-    private ArrayList<Ticket> tickets = new ArrayList<>();
-    private String databaseName;
-    private int databaseVersion;
-    private Context context;
-    private ArrayList<Triplet<String,String,Boolean>> ticketsDecks = new ArrayList<>();
-    private long ticketHash = 0;
+    protected String title;
+    protected int startCards;
+    protected int maxNoOfCardsToDraw;
+    protected int numberOfStations;
+    protected int stationPoints;
+    protected int numberOfCars;
+    protected int maxExtraCardsForTunnel;
+    protected HashMap<Integer, Integer> scoring = new HashMap<>();
+    protected HashMap<Integer, Integer> stationCost = new HashMap<>();
+    protected ArrayList<Card> cards = new ArrayList<>();
+    protected ArrayList<Route> routes = new ArrayList<>();
+    protected ArrayList<Ticket> tickets = new ArrayList<>();
+    protected String databaseName;
+    protected int databaseVersion;
+    protected Context context;
+    protected ArrayList<Triplet<String,String,Boolean>> ticketsDecks = new ArrayList<>();
+    protected long ticketHash = 0;
 
-    public Game(Context context) {
+    public Game(Context context, String title) {
         this.context = context;
+        this.title = title;
+        setCards();
     }
 
-    public void prepare(int gameId, String title) {
+    public static Game create(Context context, int gameId, String title) {
         switch (gameId) {
             case 0:
-                this.title = title;
-
-                numberOfCars = 45;
-                startCards = 4;
-                maxNoOfCardsToDraw = 2;
-                numberOfStations = 3;
-                stationPoints = 4;
-                maxExtraCardsForTunnel = 3;
-
-                scoring.put(1, 1);
-                scoring.put(2, 2);
-                scoring.put(3, 4);
-                scoring.put(4, 7);
-                scoring.put(6, 15);
-                scoring.put(8, 21);
-
-                stationCost.put(1, 1);
-                stationCost.put(2, 2);
-                stationCost.put(3, 3);
-
-                cards.add(new Card('V', R.drawable.violet));
-                cards.add(new Card('O', R.drawable.orange));
-                cards.add(new Card('B', R.drawable.blue));
-                cards.add(new Card('Y', R.drawable.yellow));
-                cards.add(new Card('A', R.drawable.black));
-                cards.add(new Card('G', R.drawable.green));
-                cards.add(new Card('R', R.drawable.red));
-                cards.add(new Card('W', R.drawable.white));
-                cards.add(new Card('L', R.drawable.loco));
-
-
-                databaseName = "TtRA_Europe.db";
-                databaseVersion = 1;
-                routes = DbReader.readRoutes(context, databaseName, databaseVersion);
-
-                ticketsDecks.add(Triplet.create
-                                ("Tickets_Long_Base",
-                                context.getString(R.string.TtRA_Europe_Tickets_Long_Base),
-                                true));
-                ticketsDecks.add(Triplet.create
-                                ("Tickets_Short_Base",
-                                context.getString(R.string.TtRA_Europe_Tickets_Short_Base),
-                                true));
-                updateTickets();
-
-                break;
+                return new USA(context, title);
+            case 1:
+                return new Europe(context, title);
         }
+        return null;
+    }
+
+    private void setCards() {
+        cards.add(new Card('V', R.drawable.violet));
+        cards.add(new Card('O', R.drawable.orange));
+        cards.add(new Card('B', R.drawable.blue));
+        cards.add(new Card('Y', R.drawable.yellow));
+        cards.add(new Card('A', R.drawable.black));
+        cards.add(new Card('G', R.drawable.green));
+        cards.add(new Card('R', R.drawable.red));
+        cards.add(new Card('W', R.drawable.white));
+        cards.add(new Card('L', R.drawable.loco));
     }
 
     public void updateTickets() {

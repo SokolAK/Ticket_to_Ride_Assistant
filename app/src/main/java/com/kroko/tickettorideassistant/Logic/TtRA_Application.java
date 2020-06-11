@@ -7,6 +7,6 @@ import com.kroko.TicketToRideAssistant.Logic.Player;
 
 public class TtRA_Application extends Application {
 
-    public Game game = new Game(this);
+    public Game game = null;
     public Player player = new Player();
 }

@@ -24,6 +24,10 @@
             android:id="@+id/nav_show_tickets"
             android:icon="@drawable/ic_local_play_black_24dp"
             android:title="@string/nav_showTickets" />
+        <item
+            android:id="@+id/nav_draw_cards_warehouse"
+            android:icon="@drawable/ic_widgets_black_24dp"
+            android:title="@string/nav_pickCardsFromWarehouse" />
     </group>
 
     <group

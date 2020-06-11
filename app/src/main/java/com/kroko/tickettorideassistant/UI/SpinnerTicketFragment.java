@@ -28,7 +28,7 @@ public class SpinnerTicketFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View drawer =  inflater.inflate(R.layout.fragment_spinner, container, false);
+        View drawer =  inflater.inflate(R.layout.custom_spinner, container, false);
 
         game = ((TtRA_Application) getActivity().getApplication()).game;
         player = ((TtRA_Application) getActivity().getApplication()).player;

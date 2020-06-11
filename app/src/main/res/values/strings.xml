@@ -5,6 +5,7 @@
     <string name="user_name">KrokoPL</string>
     <string name="nav_top">Status</string>
     <string name="nav_drawCards">Draw cards</string>
+    <string name="nav_pickCardsFromWarehouse">Break the warehouse</string>
     <string name="nav_showRoutes">Routes</string>
     <string name="nav_showStations">Stations</string>
     <string name="nav_showTickets">Tickets</string>
@@ -46,13 +47,14 @@
     <string name="tickets_header">Your tickets:</string>
     <string name="realized">Realized?</string>
     <string name="ticket_details">Ticket details:</string>
+    <string name="add_new_ticket">Define a new ticket</string>
 
     <!-- Lock switch -->
     <string name="cards_locked">Cards locked</string>
     <string name="cards_unlocked">Cards unlocked</string>
     <string name="locked">Locked</string>
     <string name="unlocked">Unlocked</string>
-    <string name="delete_comment">Press and hold to delete</string>
+    <string name="delete_comment">Press and hold to remove</string>
 
     <!-- Help Activity -->
     <string name="help_status">Show player points, number of cars and stations left, number of realized/unrealized tickets.
@@ -73,15 +75,25 @@
     <string name="choose_decks_of_tickets">Choose decks of tickets:</string>
     <string name="accept">Accept</string>
     <string name="nav_tickets_decks">Decks of tickets</string>
-    <string name="TtRA_Europe_Tickets_Short_Base">Europe base. Short</string>
-    <string name="TtRA_Europe_Tickets_Long_Base">Europe base. Long</string>
+
+    <string name="TtRA_Europe_Tickets_Base_Short">Europe Base. Short</string>
+    <string name="TtRA_Europe_Tickets_Base_Long">Europe Base. Long</string>
+    <string name="TtRA_Europe_Tickets_Base_BigCities">Europe Base. Big cities</string>
+    <string name="TtRA_Europe_Tickets_1912_Short">Europe 1912. Short</string>
+    <string name="TtRA_Europe_Tickets_1912_Long">Europe 1912. Long</string>
+    <string name="TtRA_Europe_Tickets_1912_BigCities">Europe 1912. Big cities</string>
+    <string name="TtRA_USA_Tickets_Base">USA Base</string>
+
+
     <string name="choose_game">Choose your game</string>
     <string name="exit">Exit</string>
     <string name="exit_message">Do you want to exit?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+
     <string-array name="games">
+        <item>USA</item>
         <item>Europe</item>
     </string-array>
 

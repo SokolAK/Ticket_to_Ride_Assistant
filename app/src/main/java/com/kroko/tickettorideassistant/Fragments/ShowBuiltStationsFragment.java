@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -23,7 +24,7 @@ import com.kroko.TicketToRideAssistant.UI.CustomItem;
 
 import java.util.ArrayList;
 
-public class ShowBuiltStationsFragment extends Fragment {
+public class ShowBuiltStationsFragment extends Fragment implements View.OnClickListener {
     private boolean unlockDelete;
 
     @Override
@@ -85,6 +86,21 @@ public class ShowBuiltStationsFragment extends Fragment {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_showStations);
 
+        Button buttonNewStation = drawer.findViewById(R.id.new_station);
+        buttonNewStation.setOnClickListener(this);
+
         return drawer;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.new_station:
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.content_frame, new BuildStationFragment());
+                ft.addToBackStack(null);
+                ft.commit();
+                break;
+        }
     }
 }

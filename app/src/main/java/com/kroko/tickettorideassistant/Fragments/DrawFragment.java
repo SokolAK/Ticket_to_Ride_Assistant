@@ -2,6 +2,7 @@ package com.kroko.TicketToRideAssistant.Fragments;
 
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,13 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
     private int[] cardCounter;
     private int[] cardsNumbers;
     private int maxCards;
+    private String title;
+
+    public DrawFragment() {}
+    public DrawFragment(int maxCards, String title) {
+        this.maxCards = maxCards;
+        this.title = title;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,22 +46,29 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
             cardsNumbers[i] = 0;
         }
 
-        Game game = ((TtRA_Application) getActivity().getApplication()).game;
-        Player player = ((TtRA_Application) getActivity().getApplication()).player;
-        maxCards = game.getMaxNoOfCardsToDraw();
+        game = ((TtRA_Application) getActivity().getApplication()).game;
+        player = ((TtRA_Application) getActivity().getApplication()).player;
 
         View drawer = inflater.inflate(R.layout.fragment_draw_cards, container, false);
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.nav_drawCards);
+        toolbar.setTitle(title);
 
         ImageView acceptIcon = drawer.findViewById(R.id.accept_icon);
         acceptIcon.setOnClickListener(this);
         ImageView resetIcon = drawer.findViewById(R.id.reset_icon);
         resetIcon.setOnClickListener(this);
 
+        TextView drawCardsLabel = drawer.findViewById(R.id.drawCards_label);
         TextView drawCardsValue = drawer.findViewById(R.id.drawCards_value);
-        drawCardsValue.setText(String.valueOf(maxCards));
+        if(maxCards != 0) {
+            drawCardsValue.setText(String.valueOf(maxCards));
+            drawCardsLabel.setText(R.string.draw_cards_label);
+        }
+        else {
+            drawCardsValue.setText("");
+            drawCardsLabel.setText("");
+        }
 
         refreshCards();
         return drawer;
@@ -69,7 +84,6 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Player player = ((TtRA_Application) getActivity().getApplication()).player;
                     player.addCards(cardsNumbers);
                     clearDrawCards();
                     refreshCards();
@@ -86,7 +100,6 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
 
     private void clearDrawCards() {
         cardCounter[0] = 0;
-        Game game = ((TtRA_Application) getActivity().getApplication()).game;
         for(int i = 0; i < game.getCards().size(); ++i) {
             game.getCards().get(i).setClickable(1);
             game.getCards().get(i).setVisible(1);

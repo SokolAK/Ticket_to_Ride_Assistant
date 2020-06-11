@@ -4,10 +4,12 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -22,7 +24,7 @@ import com.kroko.TicketToRideAssistant.UI.CustomItem;
 
 import java.util.ArrayList;
 
-public class ShowBuiltRoutesFragment extends Fragment {
+public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickListener {
     private boolean unlockDelete;
 
     @Override
@@ -82,7 +84,21 @@ public class ShowBuiltRoutesFragment extends Fragment {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_showRoutes);
 
+        Button buttonNewRoute = drawer.findViewById(R.id.new_route);
+        buttonNewRoute.setOnClickListener(this);
+
         return drawer;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.new_route:
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.content_frame, new BuildRouteFragment());
+                ft.addToBackStack(null);
+                ft.commit();
+                break;
+        }
+    }
 }

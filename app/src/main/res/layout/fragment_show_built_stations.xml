@@ -14,8 +14,7 @@
         android:layout_height="wrap_content"
         android:text="@string/build_new_station"
         android:textColor="#80000000"
-        android:background="@drawable/button"
-        android:onClick="onClickBuildStation"/>
+        android:background="@drawable/button" />
 
     <TextView
         android:id="@+id/built_routes_header"
@@ -44,6 +43,7 @@
 
     <ListView
         android:id="@+id/list_stations"
+        android:background="@color/colorBackLight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     

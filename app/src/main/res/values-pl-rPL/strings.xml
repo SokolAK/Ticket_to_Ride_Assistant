@@ -5,6 +5,7 @@
     <string name="user_name">KrokoPL</string>
     <string name="nav_top">Status</string>
     <string name="nav_drawCards">Dobierz karty</string>
+    <string name="nav_pickCardsFromWarehouse">Rozbij magazyn</string>
     <string name="nav_showRoutes">Trasy</string>
     <string name="nav_showStations">Dworce</string>
     <string name="nav_showTickets">Bilety</string>
@@ -46,6 +47,7 @@
     <string name="tickets_header">Twoje bilety:</string>
     <string name="realized">Zrealizowany?</string>
     <string name="ticket_details">Szczegóły biletu:</string>
+    <string name="add_new_ticket">Zdefiniuj nowy bilet</string>
 
     <!-- Lock switch -->
     <string name="cards_locked">Karty zablokowane</string>
@@ -73,8 +75,15 @@
     <string name="choose_decks_of_tickets">Talie biletów:</string>
     <string name="accept">Akceptuj</string>
     <string name="nav_tickets_decks">Talie biletów</string>
-    <string name="TtRA_Europe_Tickets_Short_Base">Europa podstawowa. Krótkie</string>
-    <string name="TtRA_Europe_Tickets_Long_Base">Europa podstawowa. Długie</string>
+
+    <string name="TtRA_Europe_Tickets_Base_Short">Europa podstawowa. Krótkie</string>
+    <string name="TtRA_Europe_Tickets_Base_Long">Europa podstawowa. Długie</string>
+    <string name="TtRA_Europe_Tickets_Base_BigCities">Europea podstawowa. Metropolie</string>
+    <string name="TtRA_Europe_Tickets_1912_Short">Europa 1912. Krótkie</string>
+    <string name="TtRA_Europe_Tickets_1912_Long">Europa 1912. Długie</string>
+    <string name="TtRA_Europe_Tickets_1912_BigCities">Europa 1912. Metropolie</string>
+    <string name="TtRA_USA_Tickets_Base">USA podstawowe</string>
+
     <string name="choose_game">Proszę wybrać grę</string>
     <string name="exit">Wyjście</string>
     <string name="exit_message">Zamknąć aplikację?</string>
@@ -82,6 +91,7 @@
     <string name="no">Nie</string>
 
     <string-array name="games">
+        <item>USA</item>
         <item>Europa</item>
     </string-array>
 

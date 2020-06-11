@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.kroko.TicketToRideAssistant.R;
 
-public class CustomItemAdapter extends ArrayAdapter {
+public class CustomItemAdapter extends ArrayAdapter<CustomItem> {
     public CustomItemAdapter(Context context, ArrayList<CustomItem> itemsList) {
         super(context, 0, itemsList);
     }

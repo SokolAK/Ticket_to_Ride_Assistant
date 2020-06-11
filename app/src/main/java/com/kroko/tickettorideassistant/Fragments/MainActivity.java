@@ -27,8 +27,8 @@ import android.widget.TextView;
 import androidx.core.view.GravityCompat;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    //private Game game = ((TtRA_Application) getApplication()).game;
-    //private Player player = ((TtRA_Application) getApplication()).player;
+    private Game game;
+    private Player player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +39,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int gameId = intent.getIntExtra("gameId", 0);
         String gameTitle = getResources().getStringArray(R.array.games)[gameId];
 
-        Game game = ((TtRA_Application) getApplication()).game;
-        Player player = ((TtRA_Application) getApplication()).player;
-        game.prepare(gameId, gameTitle);
+        player = ((TtRA_Application) getApplication()).player;
+        game = Game.create(this, gameId, gameTitle);
+        ((TtRA_Application) getApplication()).game = game;
+
         player.setGame(game);
         player.prepare();
 
@@ -85,7 +86,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = null;
         switch (id) {
             case R.id.nav_draw_cards:
-                fragment = new DrawFragment();
+                fragment = new DrawFragment(game.getMaxNoOfCardsToDraw(), getString(R.string.nav_drawCards));
+                break;
+            case R.id.nav_draw_cards_warehouse:
+                fragment = new DrawFragment(0, getString(R.string.nav_pickCardsFromWarehouse));
                 break;
             case R.id.nav_show_routes:
                 fragment = new ShowBuiltRoutesFragment();
@@ -126,67 +130,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //Attempt to invoke virtual method 'boolean android.content.Intent.migrateExtraStreamToClipData()' on a null object reference
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
-        if(intent != null)
-            super.startActivityForResult(intent,requestCode);
+        if (intent != null)
+            super.startActivityForResult(intent, requestCode);
     }
 
     @Override
     public void onBackPressed() {
         getSupportFragmentManager().popBackStack();
-        /*
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        }
-
-        onNavigationItemSelected(0);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.getMenu().getItem(0).setChecked(true);
-        */
-    }
-
-    public void onClickBuildRoute(View view) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, new BuildRouteFragment());
-        ft.addToBackStack(null);
-        ft.commit();
-    }
-    public void onClickBuildStation(View view) {
-        Player player = ((TtRA_Application) getApplication()).player;
-        if(player.getNumberOfStations() > 0) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, new BuildStationFragment());
-            ft.addToBackStack(null);
-            ft.commit();
-        }
-    }
-    public void onClickDrawTicket(View view) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, new DrawTicketFragment());
-        ft.addToBackStack(null);
-        ft.commit();
-    }
-
-    public void onTicketsDecksAccept(View view) {
-        Game game = ((TtRA_Application) getApplication()).game;
-        Player player = ((TtRA_Application) getApplication()).player;
-        game.updateTickets();
-        player.updateTickets();
-        onBackPressed();
-        //FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //ft.replace(R.id.content_frame, new TopFragment());
-        //ft.addToBackStack(null);
-        //ft.commit();
     }
 
     private void exitMessageBox() {
-        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
         dlgAlert.setMessage(R.string.exit_message);
         dlgAlert.setTitle(R.string.app_name);
         dlgAlert.setPositiveButton(R.string.no, null);
         dlgAlert.setNegativeButton(R.string.yes, (dialog, which) -> {
             finishAffinity();
-        });;
+        });
+        ;
         dlgAlert.setCancelable(true);
         dlgAlert.create().show();
     }

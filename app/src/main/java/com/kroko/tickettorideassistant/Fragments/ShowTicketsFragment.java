@@ -4,10 +4,12 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -21,7 +23,7 @@ import com.kroko.TicketToRideAssistant.UI.CustomItem;
 
 import java.util.ArrayList;
 
-public class ShowTicketsFragment extends Fragment {
+public class ShowTicketsFragment extends Fragment implements View.OnClickListener {
     private boolean unlockDelete;
 
     @Override
@@ -31,9 +33,9 @@ public class ShowTicketsFragment extends Fragment {
         Player player = ((TtRA_Application) getActivity().getApplication()).player;
 
         ArrayList<CustomItem> ticketList = new ArrayList<>();
-        for(Ticket ticket: player.getTickets()) {
+        for (Ticket ticket : player.getTickets()) {
             int imageResource = 0;
-            if(ticket.isRealized()) {
+            if (ticket.isRealized()) {
                 imageResource = R.drawable.ic_done_black_24dp;
             } else {
                 imageResource = R.drawable.ic_close_black_24dp;
@@ -46,7 +48,7 @@ public class ShowTicketsFragment extends Fragment {
         listTickets.setAdapter(adapter);
 
         listTickets.setOnItemLongClickListener((arg0, arg1, position, id) -> {
-            if(unlockDelete) {
+            if (unlockDelete) {
                 //Ticket ticket = player.getTickets().get(position);
                 player.removeTicket(position);
                 ticketList.remove(position);
@@ -59,7 +61,7 @@ public class ShowTicketsFragment extends Fragment {
         if (switchControl != null) {
             switchControl.setChecked(false);
             switchControl.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if(isChecked) {
+                if (isChecked) {
                     unlockDelete = true;
                     switchControl.setText(R.string.unlocked);
                     switchControl.setTextColor(getResources().getColor(R.color.cardsUnlocked));
@@ -78,7 +80,21 @@ public class ShowTicketsFragment extends Fragment {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_showTickets);
 
+        Button buttonDrawTicket = drawer.findViewById(R.id.draw_ticket);
+        buttonDrawTicket.setOnClickListener(this);
+
         return drawer;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.draw_ticket:
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.content_frame, new DrawTicketFragment());
+                ft.addToBackStack(null);
+                ft.commit();
+                break;
+        }
+    }
 }

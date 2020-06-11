@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:text="@string/draw_ticket"
         android:textColor="#80000000"
-        android:background="@drawable/button"
-        android:onClick="onClickDrawTicket"/>
+        android:background="@drawable/button" />
 
     <TextView
         android:id="@+id/tickets_header"
@@ -43,6 +42,7 @@
 
     <ListView
         android:id="@+id/list_tickets"
+        android:background="@color/colorBackLight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

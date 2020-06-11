@@ -4,16 +4,19 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kroko.TicketToRideAssistant.Logic.Game;
+import com.kroko.TicketToRideAssistant.Logic.Player;
 import com.kroko.TicketToRideAssistant.Logic.TtRA_Application;
 import com.kroko.TicketToRideAssistant.R;
 import com.kroko.TicketToRideAssistant.Util.Pair;
@@ -26,7 +29,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChooseDecksOfTicketsFragment extends Fragment {
+public class ChooseDecksOfTicketsFragment extends Fragment implements View.OnClickListener {
 
     ArrayList<String> selectedItems = new ArrayList<>();
 
@@ -61,6 +64,22 @@ public class ChooseDecksOfTicketsFragment extends Fragment {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_tickets_decks);
 
+        Button buttonAccept = drawer.findViewById(R.id.accept_button);
+        buttonAccept.setOnClickListener(this);
+
         return drawer;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.accept_button:
+                Game game = ((TtRA_Application) getActivity().getApplication()).game;
+                Player player = ((TtRA_Application) getActivity().getApplication()).player;
+                game.updateTickets();
+                player.updateTickets();
+                getActivity().getSupportFragmentManager().popBackStack();
+                break;
+        }
     }
 }

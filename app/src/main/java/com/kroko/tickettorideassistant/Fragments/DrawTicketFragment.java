@@ -60,6 +60,12 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
                     returnToTopPage();
                 }
                 break;
+            case R.id.add_ticket:
+                FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+                ft.replace(R.id.content_frame, new AddTicketFragment());
+                ft.addToBackStack(null);
+                ft.commit();
+                break;
         }
     }
 
