@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,21 +31,23 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        game = ((TtRA_Application) getActivity().getApplication()).game;
-        player = ((TtRA_Application) getActivity().getApplication()).player;
+        game = ((TtRA_Application) requireActivity().getApplication()).game;
+        player = ((TtRA_Application) requireActivity().getApplication()).player;
 
         drawer = inflater.inflate(R.layout.fragment_draw_ticket, container, false);
-
-        ImageView acceptIcon = drawer.findViewById(R.id.accept_icon);
-        acceptIcon.setOnClickListener(this);
 
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         SpinnerTicketFragment spinnerTicketFragment = new SpinnerTicketFragment();
         ft.replace(R.id.spinners_container, spinnerTicketFragment);
         ft.commit();
 
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_drawTicket);
+
+        Button buttonAddTicket = drawer.findViewById(R.id.add_ticket);
+        buttonAddTicket.setOnClickListener(this);
+        ImageView acceptIcon = drawer.findViewById(R.id.accept_button);
+        acceptIcon.setOnClickListener(this);
 
         return drawer;
     }
@@ -52,7 +55,7 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.accept_icon:
+            case R.id.accept_button:
                 if(ticket != null) {
                     //ticket.setInHand(true);
                     //player.addTicket(new Ticket(ticket));
@@ -61,7 +64,7 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
                 }
                 break;
             case R.id.add_ticket:
-                FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+                FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.content_frame, new AddTicketFragment());
                 ft.addToBackStack(null);
                 ft.commit();
@@ -70,30 +73,32 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
     }
 
     private void returnToTopPage() {
-        //((MainActivity) getActivity()).onNavigationItemSelected(0);
-        //NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+        //((MainActivity) requireActivity()).onNavigationItemSelected(0);
+        //NavigationView navigationView = requireActivity().findViewById(R.id.nav_view);
         //navigationView.getMenu().getItem(0).setChecked(true);
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, new ShowTicketsFragment());
         ft.commit();
     }
 
 
     @Override
-    public void onSpinnerItemSelected(CustomItem spinnerItem) {
-        ticketId = spinnerItem.getItemId();
-        ticket = game.getTicket(ticketId);
-        TextView pointsValue = drawer.findViewById(R.id.points_value);
-        pointsValue.setText(String.valueOf(ticket.getPoints()));
+    public void onSpinnerItemSelected(CustomItem... items) {
+        if(items.length == 1) {
+            ticketId = items[0].getItemId();
+            ticket = game.getTicket(ticketId);
+            TextView pointsValue = drawer.findViewById(R.id.points_value);
+            pointsValue.setText(String.valueOf(ticket.getPoints()));
 
-        ticket.checkIfRealized(player);
-        int imageResource = 0;
-        if(ticket.isRealized()) {
-            imageResource = R.drawable.ic_done_black_24dp;
-        } else {
-            imageResource = R.drawable.ic_close_black_24dp;
+            ticket.checkIfRealized(player);
+            int imageResource = 0;
+            if (ticket.isRealized()) {
+                imageResource = R.drawable.ic_done_black_24dp;
+            } else {
+                imageResource = R.drawable.ic_close_black_24dp;
+            }
+            ImageView realizedValue = drawer.findViewById(R.id.realized_value);
+            realizedValue.setImageResource(imageResource);
         }
-        ImageView realizedValue = drawer.findViewById(R.id.realized_value);
-        realizedValue.setImageResource(imageResource);
     }
 }

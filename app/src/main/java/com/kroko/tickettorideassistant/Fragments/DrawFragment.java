@@ -2,7 +2,6 @@ package com.kroko.TicketToRideAssistant.Fragments;
 
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.FragmentTransaction;
-import com.google.android.material.navigation.NavigationView;
+
 import com.kroko.TicketToRideAssistant.Logic.Game;
 import com.kroko.TicketToRideAssistant.Logic.Player;
 import com.kroko.TicketToRideAssistant.R;
@@ -36,8 +35,8 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        game = ((TtRA_Application) getActivity().getApplication()).game;
-        player = ((TtRA_Application) getActivity().getApplication()).player;
+        game = ((TtRA_Application) requireActivity().getApplication()).game;
+        player = ((TtRA_Application) requireActivity().getApplication()).player;
         cardCounter = new int[1];
         cardsNumbers = new int[game.getCards().size()];
         for(int i = 0; i < game.getCards().size(); ++i) {
@@ -46,17 +45,17 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
             cardsNumbers[i] = 0;
         }
 
-        game = ((TtRA_Application) getActivity().getApplication()).game;
-        player = ((TtRA_Application) getActivity().getApplication()).player;
+        game = ((TtRA_Application) requireActivity().getApplication()).game;
+        player = ((TtRA_Application) requireActivity().getApplication()).player;
 
         View drawer = inflater.inflate(R.layout.fragment_draw_cards, container, false);
 
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(title);
 
-        ImageView acceptIcon = drawer.findViewById(R.id.accept_icon);
+        ImageView acceptIcon = drawer.findViewById(R.id.accept_button);
         acceptIcon.setOnClickListener(this);
-        ImageView resetIcon = drawer.findViewById(R.id.reset_icon);
+        ImageView resetIcon = drawer.findViewById(R.id.reset_button);
         resetIcon.setOnClickListener(this);
 
         TextView drawCardsLabel = drawer.findViewById(R.id.drawCards_label);
@@ -78,7 +77,7 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.accept_icon:
+            case R.id.accept_button:
                 if(cardCounter[0] == 0) {
                     String text = getString(R.string.too_little_cards);
                     Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
@@ -91,7 +90,7 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
 
-            case R.id.reset_icon:
+            case R.id.reset_button:
                 clearDrawCards();
                 refreshCards();
                 break;
@@ -118,9 +117,9 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
     }
 
     private void returnToTopPage() {
-        //((MainActivity)getActivity()).onNavigationItemSelected(0);
-        //NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+        //((MainActivity)requireActivity()).onNavigationItemSelected(0);
+        //NavigationView navigationView = requireActivity().findViewById(R.id.nav_view);
         //navigationView.getMenu().getItem(0).setChecked(true);
-        getActivity().getSupportFragmentManager().popBackStack();
+        requireActivity().getSupportFragmentManager().popBackStack();
     }
 }

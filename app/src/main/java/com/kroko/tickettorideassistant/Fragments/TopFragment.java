@@ -26,7 +26,7 @@ public class TopFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View drawer = inflater.inflate(R.layout.fragment_top, container, false);
-        Player player = ((TtRA_Application) getActivity().getApplication()).player;
+        Player player = ((TtRA_Application) requireActivity().getApplication()).player;
         TextView points = drawer.findViewById(R.id.points_value);
         points.setText(String.valueOf(player.getPoints()));
         TextView cars = drawer.findViewById(R.id.cars_value);
@@ -52,7 +52,7 @@ public class TopFragment extends Fragment {
         TextView longestPath = drawer.findViewById(R.id.longest_path_value);
         longestPath.setText(String.valueOf(player.getLongestPathLength()));
 
-        Game game = ((TtRA_Application) getActivity().getApplication()).game;
+        Game game = ((TtRA_Application) requireActivity().getApplication()).game;
         for (Card card : game.getCards()) {
             card.setClickable(1);
             card.setVisible(1);
@@ -90,7 +90,7 @@ public class TopFragment extends Fragment {
         switchControl.setChecked(true);
         switchControl.setChecked(false);
 
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_top);
 
         return drawer;

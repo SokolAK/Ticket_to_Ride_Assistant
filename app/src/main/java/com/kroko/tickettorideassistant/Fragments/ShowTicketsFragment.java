@@ -30,7 +30,7 @@ public class ShowTicketsFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View drawer = inflater.inflate(R.layout.fragment_show_tickets, container, false);
 
-        Player player = ((TtRA_Application) getActivity().getApplication()).player;
+        Player player = ((TtRA_Application) requireActivity().getApplication()).player;
 
         ArrayList<CustomItem> ticketList = new ArrayList<>();
         for (Ticket ticket : player.getTickets()) {
@@ -77,7 +77,7 @@ public class ShowTicketsFragment extends Fragment implements View.OnClickListene
             });
         }
 
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_showTickets);
 
         Button buttonDrawTicket = drawer.findViewById(R.id.draw_ticket);
@@ -90,7 +90,7 @@ public class ShowTicketsFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.draw_ticket:
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.content_frame, new DrawTicketFragment());
                 ft.addToBackStack(null);
                 ft.commit();

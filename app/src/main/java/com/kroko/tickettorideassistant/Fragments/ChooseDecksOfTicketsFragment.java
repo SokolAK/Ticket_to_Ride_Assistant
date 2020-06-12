@@ -45,12 +45,12 @@ public class ChooseDecksOfTicketsFragment extends Fragment implements View.OnCli
         ListView checkableList = drawer.findViewById(R.id.decks_of_tickets_list);
         checkableList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        Game game = ((TtRA_Application) getActivity().getApplication()).game;
+        Game game = ((TtRA_Application) requireActivity().getApplication()).game;
         ArrayList<String> items = new ArrayList<>();
         for(Triplet deck: game.getTicketsDecks()) {
             items.add((String)deck.second);
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.checkable_item_layout, R.id.checkable_text_view, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), R.layout.checkable_item_layout, R.id.checkable_text_view, items);
         checkableList.setAdapter(adapter);
         for(int i = 0; i < game.getTicketsDecks().size(); ++i) {
             Triplet deck = game.getTicketsDecks().get(i);
@@ -61,7 +61,7 @@ public class ChooseDecksOfTicketsFragment extends Fragment implements View.OnCli
             game.getTicketsDecks().get(position).third= !game.getTicketsDecks().get(position).third;
         });
 
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_tickets_decks);
 
         Button buttonAccept = drawer.findViewById(R.id.accept_button);
@@ -74,11 +74,11 @@ public class ChooseDecksOfTicketsFragment extends Fragment implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.accept_button:
-                Game game = ((TtRA_Application) getActivity().getApplication()).game;
-                Player player = ((TtRA_Application) getActivity().getApplication()).player;
+                Game game = ((TtRA_Application) requireActivity().getApplication()).game;
+                Player player = ((TtRA_Application) requireActivity().getApplication()).player;
                 game.updateTickets();
                 player.updateTickets();
-                getActivity().getSupportFragmentManager().popBackStack();
+                requireActivity().getSupportFragmentManager().popBackStack();
                 break;
         }
     }

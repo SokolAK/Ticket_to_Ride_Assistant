@@ -30,8 +30,8 @@ public class ShowBuiltStationsFragment extends Fragment implements View.OnClickL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View drawer = inflater.inflate(R.layout.fragment_show_built_stations, container, false);
-        Player player = ((TtRA_Application) getActivity().getApplication()).player;
-        Game game = ((TtRA_Application) getActivity().getApplication()).game;
+        Player player = ((TtRA_Application) requireActivity().getApplication()).player;
+        Game game = ((TtRA_Application) requireActivity().getApplication()).game;
 
 
         ArrayList<CustomItem> stationList = new ArrayList<>();
@@ -83,7 +83,7 @@ public class ShowBuiltStationsFragment extends Fragment implements View.OnClickL
             });
         }
 
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_showStations);
 
         Button buttonNewStation = drawer.findViewById(R.id.new_station);
@@ -96,7 +96,7 @@ public class ShowBuiltStationsFragment extends Fragment implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.new_station:
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.content_frame, new BuildStationFragment());
                 ft.addToBackStack(null);
                 ft.commit();

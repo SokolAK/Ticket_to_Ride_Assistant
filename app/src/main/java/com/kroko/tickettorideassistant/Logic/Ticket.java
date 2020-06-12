@@ -12,6 +12,7 @@ import lombok.Data;
 
 @Data
 public class Ticket {
+    private static int counter;
     private int id;
     private String city1;
     private String city2;
@@ -20,8 +21,9 @@ public class Ticket {
     private boolean realized;
     private String deckName;
 
-    public Ticket(int id, String city1, String city2, int points, String deckName) {
-        this.id = id;
+    public Ticket(String city1, String city2, int points, String deckName) {
+        counter++;
+        id = counter;
         this.city1 = city1;
         this.city2 = city2;
         this.points = points;
@@ -30,7 +32,8 @@ public class Ticket {
         this.deckName = deckName;
     }
     public Ticket(Ticket ticket) {
-        this.id = ticket.id;
+        counter++;
+        id = counter;
         this.city1 = ticket.city1;
         this.city2 = ticket.city2;
         this.points = ticket.points;
@@ -41,7 +44,7 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return city1 + "-" + city2 + " ★" + points;
+        return city1 + " - " + city2 + " ★" + points;
     }
 
     public boolean checkIfRealized(Player player) {

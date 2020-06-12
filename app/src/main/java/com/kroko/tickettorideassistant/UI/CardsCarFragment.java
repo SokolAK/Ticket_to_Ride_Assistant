@@ -35,7 +35,7 @@ public class CardsCarFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Game game = ((TtRA_Application) getActivity().getApplication()).game;
+        Game game = ((TtRA_Application) requireActivity().getApplication()).game;
         View drawer = inflater.inflate(R.layout.fragment_cards, container, false);
         RecyclerView cardRecycler = drawer.findViewById(R.id.card_recycler);
 
@@ -46,7 +46,7 @@ public class CardsCarFragment extends Fragment {
 
         CardImageAdapter adapter = new CardImageAdapter(game.getCards(), cardsNumbers);
         cardRecycler.setAdapter(adapter);
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.HORIZONTAL, false);
+        GridLayoutManager layoutManager = new GridLayoutManager(requireActivity(), 3, GridLayoutManager.HORIZONTAL, false);
         cardRecycler.setLayoutManager(layoutManager);
 
         adapter.setListener(position -> {
@@ -91,7 +91,7 @@ public class CardsCarFragment extends Fragment {
     }
 
     private void refreshPage() {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
         CardsCarFragment cardsCarFragment = CardsCarFragment.builder().cardsNumbers(cardsNumbers).
                 cardCounter(cardCounter).maxCards(maxCards).maxCardsNumbers(maxCardsNumbers).
                 active(active).activeLong(activeLong).oneColor(oneColor).

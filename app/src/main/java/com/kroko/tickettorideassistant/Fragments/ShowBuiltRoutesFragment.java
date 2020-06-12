@@ -30,8 +30,8 @@ public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View drawer = inflater.inflate(R.layout.fragment_show_built_routes, container, false);
-        Player player = ((TtRA_Application) getActivity().getApplication()).player;
-        Game game = ((TtRA_Application) getActivity().getApplication()).game;
+        Player player = ((TtRA_Application) requireActivity().getApplication()).player;
+        Game game = ((TtRA_Application) requireActivity().getApplication()).game;
 
 
         ArrayList<CustomItem> routeList = new ArrayList<>();
@@ -81,7 +81,7 @@ public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickLis
             });
         }
 
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_showRoutes);
 
         Button buttonNewRoute = drawer.findViewById(R.id.new_route);
@@ -94,7 +94,7 @@ public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.new_route:
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.content_frame, new BuildRouteFragment());
                 ft.addToBackStack(null);
                 ft.commit();

@@ -38,7 +38,7 @@
         android:id="@+id/cards_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9"
+        android:layout_weight="7"
         app:layout_constraintBottom_toTopOf="@+id/draw_buttons_panel"
         app:layout_constraintTop_toBottomOf="@+id/drawCards_label"
         app:layout_constraintVertical_bias="1.0" />
@@ -53,20 +53,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageView
-            android:id="@+id/reset_icon"
+        <ImageButton
+            android:id="@+id/reset_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorReset"
+            android:background="@drawable/button_red"
+            android:scaleType="fitCenter"
+            android:padding="4dp"
             app:srcCompat="@drawable/ic_cached_black_24dp" />
 
-        <ImageView
-            android:id="@+id/accept_icon"
+        <ImageButton
+            android:id="@+id/accept_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorAccept"
+            android:background="@drawable/button_green"
+            android:scaleType="fitCenter"
+            android:padding="4dp"
             app:srcCompat="@drawable/ic_check_circle_black_24dp" />
     </LinearLayout>
 

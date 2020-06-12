@@ -35,8 +35,8 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        game = ((TtRA_Application) getActivity().getApplication()).game;
-        player = ((TtRA_Application) getActivity().getApplication()).player;
+        game = ((TtRA_Application) requireActivity().getApplication()).game;
+        player = ((TtRA_Application) requireActivity().getApplication()).player;
         cardCounter = new int[1];
         cardsNumbers = new int[game.getCards().size()];
         int numberOfStation = game.getNumberOfStations() - player.getNumberOfStations() + 1;
@@ -49,9 +49,9 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
         }
 
         drawer = inflater.inflate(R.layout.fragment_build_station, container, false);
-        ImageView acceptIcon = drawer.findViewById(R.id.accept_icon);
+        ImageView acceptIcon = drawer.findViewById(R.id.accept_button);
         acceptIcon.setOnClickListener(this);
-        ImageView resetIcon = drawer.findViewById(R.id.reset_icon);
+        ImageView resetIcon = drawer.findViewById(R.id.reset_button);
         resetIcon.setOnClickListener(this);
 
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
@@ -59,7 +59,7 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
         ft.replace(R.id.spinners_container, spinnerRouteFragment);
         ft.commit();
 
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_buildStation);
 
         return drawer;
@@ -69,7 +69,7 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.accept_icon:
+            case R.id.accept_button:
 
                 if (cardCounter[0] >= maxCards) {
                     //player.spendPoints(game.getStationPoints());
@@ -94,7 +94,7 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
 
                 break;
 
-            case R.id.reset_icon:
+            case R.id.reset_button:
                 clearCards();
                 refreshCards();
                 break;
@@ -102,16 +102,18 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public void onSpinnerItemSelected(CustomItem spinnerItem) {
-        int routeId = spinnerItem.getItemId();
-        route = game.getRoute(routeId);
-        clearCards();
-        refreshCards();
+    public void onSpinnerItemSelected(CustomItem... items) {
+        if(items.length == 1) {
+            int routeId = items[0].getItemId();
+            route = game.getRoute(routeId);
+            clearCards();
+            refreshCards();
+        }
     }
 
     private void clearCards() {
         cardCounter[0] = 0;
-        Game game = ((TtRA_Application) getActivity().getApplication()).game;
+        Game game = ((TtRA_Application) requireActivity().getApplication()).game;
         for (int i = 0; i < game.getCards().size(); ++i) {
             cardsNumbers[i] = 0;
         }
@@ -138,14 +140,14 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
         ft.replace(R.id.cards_container, cardsCarFragment);
         //ft.addToBackStack(null);
         ft.commit();
-        //getActivity().findViewById(R.id.buttons_panel).setVisibility(View.VISIBLE);
+        //requireActivity().findViewById(R.id.buttons_panel).setVisibility(View.VISIBLE);
     }
 
     private void returnToTopPage() {
-        //((MainActivity) getActivity()).onNavigationItemSelected(0);
-        //NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+        //((MainActivity) requireActivity()).onNavigationItemSelected(0);
+        //NavigationView navigationView = requireActivity().findViewById(R.id.nav_view);
         //navigationView.getMenu().getItem(0).setChecked(true);
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, new ShowBuiltStationsFragment());
         ft.commit();
     }

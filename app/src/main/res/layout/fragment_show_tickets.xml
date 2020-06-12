@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="@string/draw_ticket"
         android:textColor="#80000000"
-        android:background="@drawable/button" />
+        android:background="@drawable/button_green" />
 
     <TextView
         android:id="@+id/tickets_header"

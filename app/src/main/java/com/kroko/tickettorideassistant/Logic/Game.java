@@ -101,11 +101,6 @@ public class Game {
         }
         return null;
     }
-    public void removeTicket(int id) {
-        for(int i =0; i<tickets.size(); ++i)
-            if(tickets.get(i).getId() == id)
-                tickets.remove(i);
-    }
 
     public Route getRoute(int id) {
         for (Route route : routes) {

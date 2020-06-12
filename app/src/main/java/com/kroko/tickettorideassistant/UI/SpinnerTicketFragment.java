@@ -30,8 +30,8 @@ public class SpinnerTicketFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View drawer =  inflater.inflate(R.layout.custom_spinner, container, false);
 
-        game = ((TtRA_Application) getActivity().getApplication()).game;
-        player = ((TtRA_Application) getActivity().getApplication()).player;
+        game = ((TtRA_Application) requireActivity().getApplication()).game;
+        player = ((TtRA_Application) requireActivity().getApplication()).player;
 
         manageSpinner1(drawer);
         manageSpinner2(drawer);
@@ -107,7 +107,7 @@ public class SpinnerTicketFragment extends Fragment {
                 }
             }
 
-            Collections.sort(cityList, (x, y) -> x.compareTo(y));
+            Collections.sort(cityList, CustomItem::compareTo);
 
             Spinner spinner = drawer.findViewById(R.id.spinner2);
             CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList);
@@ -131,7 +131,9 @@ public class SpinnerTicketFragment extends Fragment {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Spinner spinner2 = drawer.findViewById(R.id.spinner2);
             SpinnerListenerInterface parentFragment = (SpinnerListenerInterface) getParentFragment();
-            parentFragment.onSpinnerItemSelected((CustomItem) spinner2.getSelectedItem());
+            if(parentFragment != null) {
+                parentFragment.onSpinnerItemSelected((CustomItem) spinner2.getSelectedItem());
+            }
         }
 
         @Override

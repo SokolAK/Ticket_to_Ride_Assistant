@@ -2,6 +2,7 @@ package com.kroko.TicketToRideAssistant.Fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -35,10 +36,10 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
     private View drawer;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        game = ((TtRA_Application) getActivity().getApplication()).game;
-        player = ((TtRA_Application) getActivity().getApplication()).player;
+        game = ((TtRA_Application) requireActivity().getApplication()).game;
+        player = ((TtRA_Application) requireActivity().getApplication()).player;
         cardCounter = new int[1];
         cardsNumbers = new int[game.getCards().size()];
 
@@ -48,11 +49,12 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
             cardsNumbers[i] = 0;
         }
 
+
         drawer = inflater.inflate(R.layout.fragment_build_route, container, false);
 
-        ImageView acceptIcon = drawer.findViewById(R.id.accept_icon);
+        ImageView acceptIcon = drawer.findViewById(R.id.accept_button);
         acceptIcon.setOnClickListener(this);
-        ImageView resetIcon = drawer.findViewById(R.id.reset_icon);
+        ImageView resetIcon = drawer.findViewById(R.id.reset_button);
         resetIcon.setOnClickListener(this);
 
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
@@ -60,7 +62,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         ft.replace(R.id.spinners_container, spinnerRouteFragment);
         ft.commit();
 
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_buildRoute);
 
         return drawer;
@@ -70,7 +72,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.accept_icon:
+            case R.id.accept_button:
                 int length = route.getLength();
                 int locos = route.getLocos();
                 if (length <= player.getNumberOfCars()) {
@@ -110,7 +112,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
 
                 break;
 
-            case R.id.reset_icon:
+            case R.id.reset_button:
                 clearCards();
                 refreshCards();
                 break;
@@ -119,7 +121,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
 
     private void clearCards() {
         cardCounter[0] = 0;
-        Game game = ((TtRA_Application) getActivity().getApplication()).game;
+        Game game = ((TtRA_Application) requireActivity().getApplication()).game;
         for (int i = 0; i < game.getCards().size(); ++i) {
             cardsNumbers[i] = 0;
         }
@@ -149,59 +151,61 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         ft.replace(R.id.cards_container, cardsCarFragment);
         //ft.addToBackStack(null);
         ft.commit();
-        getActivity().findViewById(R.id.buttons_panel).setVisibility(View.VISIBLE);
+        requireActivity().findViewById(R.id.buttons_panel).setVisibility(View.VISIBLE);
     }
 
     private void returnToTopPage() {
-        //((MainActivity) getActivity()).onNavigationItemSelected(0);
-        //NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+        //((MainActivity) requireActivity()).onNavigationItemSelected(0);
+        //NavigationView navigationView = requireActivity().findViewById(R.id.nav_view);
         //navigationView.getMenu().getItem(0).setChecked(true);
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, new ShowBuiltRoutesFragment());
         ft.commit();
     }
 
     @Override
-    public void onSpinnerItemSelected(CustomItem spinnerItem) {
-        int routeId = spinnerItem.getItemId();
-        route = game.getRoute(routeId);
-        cars = route.getLength() - route.getLocos();
-        maxCards = route.getLength();
+    public void onSpinnerItemSelected(CustomItem... items) {
+        if(items.length == 1) {
+            int routeId = items[0].getItemId();
+            route = game.getRoute(routeId);
+            cars = route.getLength() - route.getLocos();
+            maxCards = route.getLength();
 
-        if (cars > 0) {
-            drawer.findViewById(R.id.car_icon).setVisibility(View.VISIBLE);
-            drawer.findViewById(R.id.car_number).setVisibility(View.VISIBLE);
-            TextView carText = drawer.findViewById(R.id.car_number);
-            carText.setText(" " + String.valueOf(cars));
-        } else {
-            drawer.findViewById(R.id.car_icon).setVisibility(View.INVISIBLE);
-            drawer.findViewById(R.id.car_number).setVisibility(View.INVISIBLE);
+            if (cars > 0) {
+                drawer.findViewById(R.id.car_icon).setVisibility(View.VISIBLE);
+                drawer.findViewById(R.id.car_number).setVisibility(View.VISIBLE);
+                TextView carText = drawer.findViewById(R.id.car_number);
+                carText.setText(" " + String.valueOf(cars));
+            } else {
+                drawer.findViewById(R.id.car_icon).setVisibility(View.INVISIBLE);
+                drawer.findViewById(R.id.car_number).setVisibility(View.INVISIBLE);
+            }
+            if (route.getLocos() > 0) {
+                drawer.findViewById(R.id.loco_icon).setVisibility(View.VISIBLE);
+                drawer.findViewById(R.id.loco_number).setVisibility(View.VISIBLE);
+                TextView locoText = drawer.findViewById(R.id.loco_number);
+                locoText.setText(" " + String.valueOf(route.getLocos()));
+            } else {
+                drawer.findViewById(R.id.loco_icon).setVisibility(View.INVISIBLE);
+                drawer.findViewById(R.id.loco_number).setVisibility(View.INVISIBLE);
+            }
+            if (route.isTunnel()) {
+                drawer.findViewById(R.id.tunnel_icon).setVisibility(View.VISIBLE);
+                maxCards += game.getMaxExtraCardsForTunnel();
+            } else {
+                drawer.findViewById(R.id.tunnel_icon).setVisibility(View.INVISIBLE);
+            }
+
+            TextView lengthText = drawer.findViewById(R.id.length_value);
+            lengthText.setText(" " + String.valueOf(route.getLength()));
+            TextView pointsText = drawer.findViewById(R.id.points_value);
+            pointsText.setText(" " + String.valueOf(game.getScoring().get(route.getLength())));
+
+            setAvailableCards(route.getColor());
+
+            clearCards();
+            refreshCards();
         }
-        if (route.getLocos() > 0) {
-            drawer.findViewById(R.id.loco_icon).setVisibility(View.VISIBLE);
-            drawer.findViewById(R.id.loco_number).setVisibility(View.VISIBLE);
-            TextView locoText = drawer.findViewById(R.id.loco_number);
-            locoText.setText(" " + String.valueOf(route.getLocos()));
-        } else {
-            drawer.findViewById(R.id.loco_icon).setVisibility(View.INVISIBLE);
-            drawer.findViewById(R.id.loco_number).setVisibility(View.INVISIBLE);
-        }
-        if (route.isTunnel()) {
-            drawer.findViewById(R.id.tunnel_icon).setVisibility(View.VISIBLE);
-            maxCards += game.getMaxExtraCardsForTunnel();
-        } else {
-            drawer.findViewById(R.id.tunnel_icon).setVisibility(View.INVISIBLE);
-        }
-
-        TextView lengthText = drawer.findViewById(R.id.length_value);
-        lengthText.setText(" " + String.valueOf(route.getLength()));
-        TextView pointsText = drawer.findViewById(R.id.points_value);
-        pointsText.setText(" " + String.valueOf(game.getScoring().get(route.getLength())));
-
-        setAvailableCards(route.getColor());
-
-        clearCards();
-        refreshCards();
     }
 
     private void setAvailableCards(char color) {

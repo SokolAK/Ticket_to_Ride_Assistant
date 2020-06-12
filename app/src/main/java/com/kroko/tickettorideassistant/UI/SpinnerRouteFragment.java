@@ -35,8 +35,8 @@ public class SpinnerRouteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View drawer =  inflater.inflate(R.layout.custom_spinner, container, false);
 
-        game = ((TtRA_Application) getActivity().getApplication()).game;
-        player = ((TtRA_Application) getActivity().getApplication()).player;
+        game = ((TtRA_Application) requireActivity().getApplication()).game;
+        player = ((TtRA_Application) requireActivity().getApplication()).player;
 
         manageSpinner1(drawer);
         manageSpinner2(drawer);
@@ -76,7 +76,7 @@ public class SpinnerRouteFragment extends Fragment {
                 }
             }
         }
-        Collections.sort(cities1, (x, y) -> x.compareTo(y));
+        Collections.sort(cities1, String::compareTo);
 
         ArrayList<CustomItem> cityList1 = new ArrayList<>();
         for (String city1: cities1) {

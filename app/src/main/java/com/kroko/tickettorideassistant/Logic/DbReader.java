@@ -3,8 +3,11 @@ package com.kroko.TicketToRideAssistant.Logic;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 
@@ -14,8 +17,9 @@ public final class DbReader {
         DbHelper dbHelper = DbHelper.getInstance(context, databaseName, databaseVersion);
         dbHelper.checkDatabase();
         //dbHelper.openDatabase();
-        SQLiteDatabase database = dbHelper.getReadableDatabase();
-
+        //SQLiteDatabase database = dbHelper.getReadableDatabase();
+        SQLiteDatabase database = dbHelper.openDatabase();
+        
         ArrayList<Ticket> tickets = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT * FROM " + tableName, null);
         while (cursor.moveToNext()) {
@@ -23,7 +27,7 @@ public final class DbReader {
             String city1 = cursor.getString(1);
             String city2 = cursor.getString(2);
             int points = cursor.getInt(3);
-            tickets.add(new Ticket(id, city1, city2, points, tableName));
+            tickets.add(new Ticket(city1, city2, points, tableName));
         }
         cursor.close();
         database.close();

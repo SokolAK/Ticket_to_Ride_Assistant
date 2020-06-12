@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/reset_icon"
+            android:id="@+id/reset_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -44,7 +44,7 @@
             app:srcCompat="@drawable/ic_cached_black_24dp" />
 
         <ImageView
-            android:id="@+id/accept_icon"
+            android:id="@+id/accept_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

@@ -48,6 +48,12 @@
     <string name="realized">Zrealizowany?</string>
     <string name="ticket_details">Szczegóły biletu:</string>
     <string name="add_new_ticket">Zdefiniuj nowy bilet</string>
+    <string name="enter_points">Proszę podać liczbę punktów</string>
+    <string name="city1">Miasto 1</string>
+    <string name="city2">Miasto 2</string>
+    <string name="choose_decks_of_tickets">Talie biletów:</string>
+    <string name="accept">Akceptuj</string>
+    <string name="nav_tickets_decks">Talie biletów</string>
 
     <!-- Lock switch -->
     <string name="cards_locked">Karty zablokowane</string>
@@ -71,10 +77,6 @@
     Build the station by pressing "accept" button or reset the cards set by pressing "reset" button.</string>
 
     <string name="presents">KrokoPL prezentuje</string>
-
-    <string name="choose_decks_of_tickets">Talie biletów:</string>
-    <string name="accept">Akceptuj</string>
-    <string name="nav_tickets_decks">Talie biletów</string>
 
     <string name="TtRA_Europe_Tickets_Base_Short">Europa podstawowa. Krótkie</string>
     <string name="TtRA_Europe_Tickets_Base_Long">Europa podstawowa. Długie</string>
