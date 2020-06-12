@@ -27,6 +27,15 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
     private Ticket ticket;
     private View drawer;
     private int ticketId;
+    private String defaultCity1;
+    private String defaultCity2;
+
+    public DrawTicketFragment() {
+    }
+    public DrawTicketFragment(String city1, String city2) {
+        defaultCity1 = city1;
+        defaultCity2 = city2;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,7 +46,7 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
         drawer = inflater.inflate(R.layout.fragment_draw_ticket, container, false);
 
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        SpinnerTicketFragment spinnerTicketFragment = new SpinnerTicketFragment();
+        SpinnerTicketFragment spinnerTicketFragment = new SpinnerTicketFragment(defaultCity1,defaultCity2);
         ft.replace(R.id.spinners_container, spinnerTicketFragment);
         ft.commit();
 
@@ -66,7 +75,7 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
             case R.id.add_ticket:
                 FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.content_frame, new AddTicketFragment());
-                ft.addToBackStack(null);
+                //ft.addToBackStack(null);
                 ft.commit();
                 break;
         }

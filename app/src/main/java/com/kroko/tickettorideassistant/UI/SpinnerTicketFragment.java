@@ -24,15 +24,28 @@ import java.util.Collections;
  */
 public class SpinnerTicketFragment extends Fragment {
     private Game game;
-    private Player player;
+    //private Player player;
+    private Spinner spinner1;
+    private Spinner spinner2;
+    private String defaultItem1;
+    private String defaultItem2;
+
+    public SpinnerTicketFragment() {
+    }
+    public SpinnerTicketFragment(String item1, String item2) {
+        defaultItem1 = item1;
+        defaultItem2 = item2;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View drawer =  inflater.inflate(R.layout.custom_spinner, container, false);
 
         game = ((TtRA_Application) requireActivity().getApplication()).game;
-        player = ((TtRA_Application) requireActivity().getApplication()).player;
+        //player = ((TtRA_Application) requireActivity().getApplication()).player;
 
+        spinner1 = drawer.findViewById(R.id.spinner1);
+        spinner2 = drawer.findViewById(R.id.spinner2);
         manageSpinner1(drawer);
         manageSpinner2(drawer);
 
@@ -66,17 +79,23 @@ public class SpinnerTicketFragment extends Fragment {
         Collections.sort(cities1, (x, y) -> x.compareTo(y));
 
         ArrayList<CustomItem> cityList = new ArrayList<>();
+        int pos = 0;
+        int defaultPos = 0;
         for (String city1: cities1) {
             cityList.add(new CustomItem(city1, 0, 0));
+            if(city1.equals(defaultItem1)) {
+                defaultPos = pos;
+            }
+            pos++;
         }
         CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList);
-        Spinner spinner = drawer.findViewById(R.id.spinner1);
-        spinner.setAdapter(adapter);
+        spinner1.setAdapter(adapter);
+
+        spinner1.setSelection(defaultPos);
     }
 
     public void manageSpinner2(View drawer) {
-        Spinner listCity1 = drawer.findViewById(R.id.spinner1);
-        listCity1.setOnItemSelectedListener(new SpinnerTicketFragment.listenerCity1(drawer));
+        spinner1.setOnItemSelectedListener(new SpinnerTicketFragment.listenerCity1(drawer));
     }
 
     private class listenerCity1 implements AdapterView.OnItemSelectedListener {
@@ -90,8 +109,7 @@ public class SpinnerTicketFragment extends Fragment {
         public void onItemSelected(AdapterView<?> adapterView, View view,
                                    int position, long id) {
 
-            Spinner listCity1 = drawer.findViewById(R.id.spinner1);
-            String city1 = ((CustomItem) listCity1.getSelectedItem()).getText();
+            String city1 = ((CustomItem) spinner1.getSelectedItem()).getText();
             ArrayList<Ticket> tickets = game.getTickets(city1);
 
             ArrayList<CustomItem> cityList = new ArrayList<>();
@@ -108,11 +126,19 @@ public class SpinnerTicketFragment extends Fragment {
             }
 
             Collections.sort(cityList, CustomItem::compareTo);
+            int defaultPos = 0;
+            for(int i = 0; i<cityList.size(); ++i) {
+                if(cityList.get(i).getText().equals(defaultItem2)) {
+                    defaultPos = i;
+                    break;
+                }
+            }
 
-            Spinner spinner = drawer.findViewById(R.id.spinner2);
             CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList);
-            spinner.setAdapter(adapter);
-            spinner.setOnItemSelectedListener(new SpinnerTicketFragment.listenerCity2(drawer));
+            spinner2.setAdapter(adapter);
+            spinner2.setOnItemSelectedListener(new SpinnerTicketFragment.listenerCity2(drawer));
+
+            spinner2.setSelection(defaultPos);
         }
 
         @Override
@@ -129,7 +155,6 @@ public class SpinnerTicketFragment extends Fragment {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Spinner spinner2 = drawer.findViewById(R.id.spinner2);
             SpinnerListenerInterface parentFragment = (SpinnerListenerInterface) getParentFragment();
             if(parentFragment != null) {
                 parentFragment.onSpinnerItemSelected((CustomItem) spinner2.getSelectedItem());

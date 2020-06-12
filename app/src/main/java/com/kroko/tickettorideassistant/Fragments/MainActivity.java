@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
 import com.google.android.material.navigation.NavigationView;
+import com.kroko.TicketToRideAssistant.Logic.DbHelper;
 import com.kroko.TicketToRideAssistant.Logic.Game;
 import com.kroko.TicketToRideAssistant.Logic.Player;
 import com.kroko.TicketToRideAssistant.R;
@@ -151,4 +152,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dlgAlert.setCancelable(true);
         dlgAlert.create().show();
     }
+
 }

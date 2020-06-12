@@ -19,7 +19,7 @@ public final class DbReader {
         //dbHelper.openDatabase();
         //SQLiteDatabase database = dbHelper.getReadableDatabase();
         SQLiteDatabase database = dbHelper.openDatabase();
-        
+
         ArrayList<Ticket> tickets = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT * FROM " + tableName, null);
         while (cursor.moveToNext()) {

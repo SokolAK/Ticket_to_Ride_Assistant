@@ -26,6 +26,8 @@ import com.kroko.TicketToRideAssistant.UI.CustomItem;
 import com.kroko.TicketToRideAssistant.UI.SpinnerCitiesFragment;
 import com.kroko.TicketToRideAssistant.UI.SpinnerListenerInterface;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -76,9 +78,14 @@ public class AddTicketFragment extends Fragment implements View.OnClickListener,
                     Game game = ((TtRA_Application) requireActivity().getApplication()).game;
 
                     game.getTickets().add(new Ticket(city1, city2, points, "custom"));
-                    requireActivity().getSupportFragmentManager().popBackStack();
+                    //requireActivity().getSupportFragmentManager().popBackStack();
 
-                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.content_frame, new DrawTicketFragment(city1,city2));
+                    //ft.addToBackStack(null);
+                    ft.commit();
+
+                    InputMethodManager imm = (InputMethodManager) Objects.requireNonNull(context).getSystemService(Activity.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
                 break;

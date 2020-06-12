@@ -11,7 +11,7 @@
     <string name="nav_showTickets">Tickets</string>
     <string name="nav_buildRoute">Build route</string>
     <string name="nav_buildStation">Build station</string>
-    <string name="nav_drawTicket">Draw ticket</string>
+    <string name="nav_drawTicket">Draw a ticket</string>
     <string name="nav_help">Help</string>
     <string name="nav_open_drawer">Open Navigation View</string>
     <string name="nav_close_drawer">Close Navigation View</string>

@@ -29,7 +29,7 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public static DbHelper getInstance(Context mContext, String DB_NAME, int DB_VERSION) {
-            return new DbHelper(mContext, DB_NAME, DB_VERSION);
+        return new DbHelper(mContext, DB_NAME, DB_VERSION);
     }
 
     @Override
