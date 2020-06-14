@@ -83,8 +83,6 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
                     player.addRouteStation(route);
                     //player.spendStation(1);
 
-                    player.checkIfTicketsRealized();
-
                     clearCards();
                     refreshCards();
                     returnToTopPage();

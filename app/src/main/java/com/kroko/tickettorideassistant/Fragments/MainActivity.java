@@ -147,10 +147,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dlgAlert.setPositiveButton(R.string.no, null);
         dlgAlert.setNegativeButton(R.string.yes, (dialog, which) -> {
             finishAffinity();
+            System.exit(0);
         });
         ;
         dlgAlert.setCancelable(true);
         dlgAlert.create().show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
 }

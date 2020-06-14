@@ -60,40 +60,44 @@ public class Player implements Serializable {
 
     public void addRoute(Route route) {
         builtRoutes.add(0, route);
-        updatePoints();
+        //updatePoints();
         longestPathLength = findLongestPath();
+        checkIfTicketsRealized();
     }
 
     public void removeRoute(int i) {
         builtRoutes.remove(i);
-        updatePoints();
+        //updatePoints();
         longestPathLength = findLongestPath();
+        checkIfTicketsRealized();
     }
 
     public void addRouteStation(Route route) {
         builtStations.add(0, route);
         numberOfStations--;
-        updatePoints();
+        //updatePoints();
         longestPathLength = findLongestPath();
+        checkIfTicketsRealized();
     }
 
     public void removeRouteStation(int i) {
         builtStations.remove(i);
         numberOfStations++;
-        updatePoints();
+        //updatePoints();
         longestPathLength = findLongestPath();
+        checkIfTicketsRealized();
     }
 
     public void addTicket(Ticket ticket) {
         tickets.add(0, ticket);
         ticket.setInHand(true);
-        updatePoints();
+        //updatePoints();
     }
 
     public void removeTicket(int i) {
         tickets.get(i).setInHand(false);
         tickets.remove(i);
-        updatePoints();
+        //updatePoints();
     }
 
     public void updateTickets() {
@@ -108,17 +112,18 @@ public class Player implements Serializable {
                 }
             }
         }
+        checkIfTicketsRealized();
     }
 
     public void checkIfTicketsRealized() {
-        for (Ticket ticket : tickets) {
+        for (Ticket ticket : game.getTickets()) {
             boolean realized = ticket.checkIfRealized(this);
             ticket.setRealized(realized);
         }
-        updatePoints();
+        //updatePoints();
     }
 
-    private void updatePoints() {
+    public void updatePoints() {
         points = 0;
         for (Ticket ticket : tickets) {
             if (ticket.isRealized()) {

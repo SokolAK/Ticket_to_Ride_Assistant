@@ -27,6 +27,7 @@ public class TopFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View drawer = inflater.inflate(R.layout.fragment_top, container, false);
         Player player = ((TtRA_Application) requireActivity().getApplication()).player;
+        player.updatePoints();
         TextView points = drawer.findViewById(R.id.points_value);
         points.setText(String.valueOf(player.getPoints()));
         TextView cars = drawer.findViewById(R.id.cars_value);

@@ -82,9 +82,6 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
     }
 
     private void returnToTopPage() {
-        //((MainActivity) requireActivity()).onNavigationItemSelected(0);
-        //NavigationView navigationView = requireActivity().findViewById(R.id.nav_view);
-        //navigationView.getMenu().getItem(0).setChecked(true);
         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, new ShowTicketsFragment());
         ft.commit();
@@ -94,11 +91,11 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
     @Override
     public void onSpinnerItemSelected(CustomItem... items) {
         if(items.length == 1) {
+            player.checkIfTicketsRealized();
             ticketId = items[0].getItemId();
             ticket = game.getTicket(ticketId);
             TextView pointsValue = drawer.findViewById(R.id.points_value);
             pointsValue.setText(String.valueOf(ticket.getPoints()));
-
             ticket.checkIfRealized(player);
             int imageResource = 0;
             if (ticket.isRealized()) {

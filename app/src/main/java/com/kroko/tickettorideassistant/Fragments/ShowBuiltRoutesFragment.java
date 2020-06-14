@@ -54,7 +54,6 @@ public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickLis
                 game.getRoute(route.getId()).setBuilt(false);
 
                 routeList.remove(position);
-                player.checkIfTicketsRealized();
 
                 adapter.notifyDataSetChanged();
             }

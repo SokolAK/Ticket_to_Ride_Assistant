@@ -56,7 +56,6 @@ public class ShowBuiltStationsFragment extends Fragment implements View.OnClickL
                 //player.addStation(1);
 
                 stationList.remove(position);
-                player.checkIfTicketsRealized();
 
                 adapter.notifyDataSetChanged();
             }

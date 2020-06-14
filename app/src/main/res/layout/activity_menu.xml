@@ -13,8 +13,7 @@
         android:layout_height="100dp"
         android:adjustViewBounds="true"
         android:layout_gravity="center_horizontal"
-        app:srcCompat="@drawable/ic_icon2" />
-
+        app:srcCompat="@drawable/ic_app_icon" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="64dp"
@@ -36,5 +35,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBackLight"
-        android:entries="@array/games"/>
+        android:entries="@array/games" />
+
 </LinearLayout>

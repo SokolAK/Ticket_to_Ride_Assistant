@@ -95,8 +95,6 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                             route.setBuiltCardsNumber(cardsNumbers.clone());
                             player.addRoute(route);
 
-                            player.checkIfTicketsRealized();
-
                             clearCards();
                             refreshCards();
                             returnToTopPage();
