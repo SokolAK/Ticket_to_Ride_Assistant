@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kroko.TicketToRideAssistant">
+    package="com.sokolak87.TicketToRideAssistant">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".Logic.TtRA_Application"
+        android:name="com.sokolak87.TicketToRideAssistant.Logic.TtRA_Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Fragments.MenuActivity"
+        <activity android:name="com.sokolak87.TicketToRideAssistant.Fragments.MenuActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,12 +22,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Fragments.IntroActivity" />
+        <activity android:name="com.sokolak87.TicketToRideAssistant.Fragments.IntroActivity" />
 
-        <activity android:name=".Fragments.HelpActivity"
+        <activity android:name="com.sokolak87.TicketToRideAssistant.Fragments.HelpActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".Fragments.MainActivity"
+        <activity android:name="com.sokolak87.TicketToRideAssistant.Fragments.MainActivity"
             android:screenOrientation="portrait">
         </activity>
 

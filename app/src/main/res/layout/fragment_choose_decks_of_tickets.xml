@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorBackDark"
-    tools:context="com.kroko.TicketToRideAssistant.Fragments.MainActivity">
+    tools:context="com.sokolak87.TicketToRideAssistant.Fragments.MainActivity">
 
     <TextView
         android:layout_width="match_parent"
