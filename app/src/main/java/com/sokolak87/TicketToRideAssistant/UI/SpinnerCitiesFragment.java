@@ -33,7 +33,7 @@ public class SpinnerCitiesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View drawer =  inflater.inflate(R.layout.custom_spinner, container, false);
+        View drawer = inflater.inflate(R.layout.custom_spinner, container, false);
 
         game = ((TtRA_Application) requireActivity().getApplication()).game;
         player = ((TtRA_Application) requireActivity().getApplication()).player;
@@ -47,7 +47,7 @@ public class SpinnerCitiesFragment extends Fragment {
 
     private void populateCities() {
         Set<String> cities = new HashSet<>();
-        for (Route route: game.getRoutes()) {
+        for (Route route : game.getRoutes()) {
             cities.add(route.getCity1());
             cities.add(route.getCity2());
         }
@@ -58,7 +58,7 @@ public class SpinnerCitiesFragment extends Fragment {
     private void manageSpinner1(View drawer) {
         spinner1 = drawer.findViewById(R.id.spinner1);
         List<CustomItem> cityList1 = new ArrayList<>();
-        for (String city1: citiesSorted) {
+        for (String city1 : citiesSorted) {
             cityList1.add(new CustomItem(city1, 0, 0));
         }
         CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList1);
@@ -86,7 +86,7 @@ public class SpinnerCitiesFragment extends Fragment {
             List<String> citiesSorted2 = new ArrayList<>(citiesSorted);
             citiesSorted2.remove(city1);
             List<CustomItem> cityList2 = new ArrayList<>();
-            for (String city2: citiesSorted2) {
+            for (String city2 : citiesSorted2) {
                 cityList2.add(new CustomItem(city2, 0, 0));
             }
 
@@ -110,8 +110,8 @@ public class SpinnerCitiesFragment extends Fragment {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             SpinnerListenerInterface parentFragment = (SpinnerListenerInterface) getParentFragment();
-            if(parentFragment != null) {
-                parentFragment.onSpinnerItemSelected((CustomItem) spinner1.getSelectedItem(),(CustomItem) spinner2.getSelectedItem());
+            if (parentFragment != null) {
+                parentFragment.onSpinnerItemSelected((CustomItem) spinner1.getSelectedItem(), (CustomItem) spinner2.getSelectedItem());
             }
         }
 

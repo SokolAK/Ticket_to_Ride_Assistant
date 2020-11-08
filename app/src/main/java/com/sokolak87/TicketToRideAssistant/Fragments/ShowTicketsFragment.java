@@ -50,7 +50,6 @@ public class ShowTicketsFragment extends Fragment implements View.OnClickListene
 
         listTickets.setOnItemLongClickListener((arg0, arg1, position, id) -> {
             if (unlockDelete) {
-                //Ticket ticket = player.getTickets().get(position);
                 player.removeTicket(position);
                 ticketList.remove(position);
                 adapter.notifyDataSetChanged();

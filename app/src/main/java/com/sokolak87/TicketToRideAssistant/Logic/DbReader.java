@@ -8,14 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public final class DbReader {
 
     public static List<Ticket> readTickets(Context context, String databaseName, int databaseVersion, String tableName) {
         DbHelper dbHelper = DbHelper.getInstance(context, databaseName, databaseVersion);
         dbHelper.checkDatabase();
-        //dbHelper.openDatabase();
-        //SQLiteDatabase database = dbHelper.getReadableDatabase();
         SQLiteDatabase database = dbHelper.openDatabase();
 
         List<Ticket> tickets = new ArrayList<>();
@@ -35,7 +32,6 @@ public final class DbReader {
     public static List<Route> readRoutes(Context context, String databaseName, int databaseVersion) {
         DbHelper dbHelper = DbHelper.getInstance(context, databaseName, databaseVersion);
         dbHelper.checkDatabase();
-        //dbHelper.openDatabase();
         SQLiteDatabase database = dbHelper.getReadableDatabase();
 
         List<Route> routes = new ArrayList<>();

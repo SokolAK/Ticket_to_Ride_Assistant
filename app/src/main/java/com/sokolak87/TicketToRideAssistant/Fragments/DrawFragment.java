@@ -1,14 +1,22 @@
 package com.sokolak87.TicketToRideAssistant.Fragments;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.fragment.app.FragmentTransaction;
 
 import com.sokolak87.TicketToRideAssistant.Logic.Game;
@@ -25,7 +33,9 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
     private int maxCards;
     private String title;
 
-    public DrawFragment() {}
+    public DrawFragment() {
+    }
+
     public DrawFragment(int maxCards, String title) {
         this.maxCards = maxCards;
         this.title = title;
@@ -39,7 +49,7 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         player = ((TtRA_Application) requireActivity().getApplication()).player;
         cardCounter = new int[1];
         cardsNumbers = new int[game.getCards().size()];
-        for(int i = 0; i < game.getCards().size(); ++i) {
+        for (int i = 0; i < game.getCards().size(); ++i) {
             game.getCards().get(i).setClickable(1);
             game.getCards().get(i).setVisible(1);
             cardsNumbers[i] = 0;
@@ -60,11 +70,10 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
 
         TextView drawCardsLabel = drawer.findViewById(R.id.drawCards_label);
         TextView drawCardsValue = drawer.findViewById(R.id.drawCards_value);
-        if(maxCards != 0) {
+        if (maxCards != 0) {
             drawCardsValue.setText(String.valueOf(maxCards));
             drawCardsLabel.setText(R.string.draw_cards_label);
-        }
-        else {
+        } else {
             drawCardsValue.setText("");
             drawCardsLabel.setText("");
         }
@@ -78,11 +87,10 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.accept_button:
-                if(cardCounter[0] == 0) {
+                if (cardCounter[0] == 0) {
                     String text = getString(R.string.too_little_cards);
                     Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     player.addCards(cardsNumbers);
                     clearDrawCards();
                     refreshCards();
@@ -99,12 +107,13 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
 
     private void clearDrawCards() {
         cardCounter[0] = 0;
-        for(int i = 0; i < game.getCards().size(); ++i) {
+        for (int i = 0; i < game.getCards().size(); ++i) {
             game.getCards().get(i).setClickable(1);
             game.getCards().get(i).setVisible(1);
             cardsNumbers[i] = 0;
         }
     }
+
     private void refreshCards() {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         CardsCarFragment cardsCarFragment = CardsCarFragment.builder().cardsNumbers(cardsNumbers).
@@ -112,14 +121,10 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
                 active(true).activeLong(true).
                 build();
         ft.replace(R.id.cards_container, cardsCarFragment);
-        //ft.addToBackStack(null);
         ft.commit();
     }
 
     private void returnToTopPage() {
-        //((MainActivity)requireActivity()).onNavigationItemSelected(0);
-        //NavigationView navigationView = requireActivity().findViewById(R.id.nav_view);
-        //navigationView.getMenu().getItem(0).setChecked(true);
         requireActivity().getSupportFragmentManager().popBackStack();
     }
 }

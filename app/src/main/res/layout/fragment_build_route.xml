@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/build_route_frag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackDark"
-    android:orientation="vertical"
-    android:id="@+id/build_route_frag">
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/spinners_container"
@@ -31,6 +30,7 @@
             android:layout_weight="1"
             android:adjustViewBounds="true"
             app:srcCompat="@drawable/ic_carriage" />
+
         <TextView
             android:id="@+id/car_number"
             android:layout_width="wrap_content"
@@ -42,9 +42,10 @@
             android:id="@+id/loco_icon"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_loco"
+            android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:layout_weight="1" />
+            app:srcCompat="@drawable/ic_loco" />
+
         <TextView
             android:id="@+id/loco_number"
             android:layout_width="wrap_content"
@@ -57,8 +58,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_tunnel2"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_tunnel2" />
+
         <TextView
             android:id="@+id/tunnel_number"
             android:layout_width="wrap_content"
@@ -74,6 +76,7 @@
             android:layout_weight="1"
             android:adjustViewBounds="true"
             app:srcCompat="@drawable/ic_length" />
+
         <TextView
             android:id="@+id/length_value"
             android:layout_width="wrap_content"
@@ -88,6 +91,7 @@
             android:layout_weight="1"
             android:adjustViewBounds="true"
             app:srcCompat="@drawable/ic_points" />
+
         <TextView
             android:id="@+id/points_value"
             android:layout_width="wrap_content"
@@ -96,8 +100,7 @@
     </LinearLayout>
 
 
-    <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/cards_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -122,8 +125,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/button_red"
-            android:scaleType="fitCenter"
             android:padding="4dp"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_cached_black_24dp" />
 
         <ImageButton
@@ -132,8 +135,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/button_green"
-            android:scaleType="fitCenter"
             android:padding="4dp"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_check_circle_black_24dp" />
     </LinearLayout>
 

@@ -83,7 +83,7 @@ public final class ConnectionCalculator {
                 findLongestPathFromCity(cityNext, routesWithoutRoute, length + route.getLength());
             }
         }
-        if(length > maxLength) {
+        if (length > maxLength) {
             maxLength = length;
         }
     }

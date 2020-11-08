@@ -64,7 +64,6 @@ public class Player implements Serializable {
 
     public void removeRoute(int i) {
         builtRoutes.remove(i);
-        //updatePoints();
         longestPathLength = findLongestPath();
         checkIfTicketsRealized();
     }
@@ -72,7 +71,6 @@ public class Player implements Serializable {
     public void addRouteStation(Route route) {
         builtStations.add(0, route);
         numberOfStations--;
-        //updatePoints();
         longestPathLength = findLongestPath();
         checkIfTicketsRealized();
     }
@@ -80,7 +78,6 @@ public class Player implements Serializable {
     public void removeRouteStation(int i) {
         builtStations.remove(i);
         numberOfStations++;
-        //updatePoints();
         longestPathLength = findLongestPath();
         checkIfTicketsRealized();
     }
@@ -88,20 +85,18 @@ public class Player implements Serializable {
     public void addTicket(Ticket ticket) {
         tickets.add(0, ticket);
         ticket.setInHand(true);
-        //updatePoints();
     }
 
     public void removeTicket(int i) {
         tickets.get(i).setInHand(false);
         tickets.remove(i);
-        //updatePoints();
     }
 
     public void updateTickets() {
-        for(int i = 0; i < tickets.size(); ++i) {
-            for(Triplet deck: game.getTicketsDecks()) {
-                if(tickets.get(i).getDeckName().equals(deck.first)) {
-                    if(!(Boolean)deck.third) {
+        for (int i = 0; i < tickets.size(); ++i) {
+            for (Triplet deck : game.getTicketsDecks()) {
+                if (tickets.get(i).getDeckName().equals(deck.first)) {
+                    if (!(Boolean) deck.third) {
                         removeTicket(i);
                         --i;
                         break;
@@ -117,7 +112,6 @@ public class Player implements Serializable {
             boolean realized = ticket.checkIfRealized(this);
             ticket.setRealized(realized);
         }
-        //updatePoints();
     }
 
     public void updatePoints() {
@@ -130,7 +124,7 @@ public class Player implements Serializable {
             }
         }
         for (Route route : builtRoutes) {
-            if(game.getScoring().containsKey(route.getLength())) {
+            if (game.getScoring().containsKey(route.getLength())) {
                 @SuppressWarnings("ConstantConditions") int routePoints = game.getScoring().get(route.getLength());
                 points += routePoints;
             }

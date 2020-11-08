@@ -20,7 +20,8 @@ import lombok.Builder;
 
 @Builder
 public class CardsCarFragment extends Fragment {
-    @Builder.Default private int[] cardCounter = new int[1];
+    @Builder.Default
+    private int[] cardCounter = new int[1];
     private int maxCards;
     private int[] cardsNumbers;
     private boolean active;

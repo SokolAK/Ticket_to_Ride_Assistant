@@ -67,24 +67,17 @@ public class AddTicketFragment extends Fragment implements View.OnClickListener,
         switch (view.getId()) {
             case R.id.add_ticket:
                 Context context = getContext();
-
                 String pointsText = pointsField.getText().toString();
-                if(TextUtils.isEmpty(pointsText)) {
+                if (TextUtils.isEmpty(pointsText)) {
                     String text = getString(R.string.enter_points);
                     Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     int points = Integer.parseInt(pointsText);
                     Game game = ((TtRA_Application) requireActivity().getApplication()).game;
-
                     game.getTickets().add(new Ticket(city1, city2, points, "custom"));
-                    //requireActivity().getSupportFragmentManager().popBackStack();
-
                     FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.content_frame, new DrawTicketFragment(city1,city2));
-                    //ft.addToBackStack(null);
+                    ft.replace(R.id.content_frame, new DrawTicketFragment(city1, city2));
                     ft.commit();
-
                     InputMethodManager imm = (InputMethodManager) Objects.requireNonNull(context).getSystemService(Activity.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
@@ -94,7 +87,7 @@ public class AddTicketFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onSpinnerItemSelected(CustomItem... items) {
-        if(items.length == 2) {
+        if (items.length == 2) {
             city1 = items[0].getText();
             city2 = items[1].getText();
         }

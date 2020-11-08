@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.sokolak87.TicketToRideAssistant.Games.Europe;
 import com.sokolak87.TicketToRideAssistant.Games.USA;
+import com.sokolak87.TicketToRideAssistant.Games.Nordic;
 import com.sokolak87.TicketToRideAssistant.R;
 import com.sokolak87.TicketToRideAssistant.UI.Card;
 import com.sokolak87.TicketToRideAssistant.Util.*;
@@ -32,8 +33,10 @@ public class Game {
     protected String databaseName;
     protected int databaseVersion;
     protected Context context;
-    protected List<Triplet<String,String,Boolean>> ticketsDecks = new ArrayList<>();
-    protected long ticketHash = 0;
+    protected List<Triplet<String, String, Boolean>> ticketsDecks = new ArrayList<>();
+    protected long ticketHash;
+    protected boolean warehousesAvailable;
+    protected boolean stationsAvailable;
 
     public Game(Context context, String title) {
         this.context = context;
@@ -47,6 +50,8 @@ public class Game {
                 return new USA(context, title);
             case 1:
                 return new Europe(context, title);
+            case 2:
+                return new Nordic(context, title);
         }
         return null;
     }
@@ -65,10 +70,10 @@ public class Game {
 
     public void updateTickets() {
         long newTicketHash = calculateTicketsHash();
-        if(ticketHash != newTicketHash) {
+        if (ticketHash != newTicketHash) {
             ticketHash = newTicketHash;
             tickets.clear();
-            for (Triplet deck : ticketsDecks) {
+            for (Triplet<String, String, Boolean> deck : ticketsDecks) {
                 if ((Boolean) deck.third) {
                     tickets.addAll(DbReader.readTickets(context, databaseName, databaseVersion, (String) deck.first));
                 }
@@ -78,8 +83,8 @@ public class Game {
 
     private long calculateTicketsHash() {
         long hash = 0;
-        for(Triplet deck: ticketsDecks) {
-            int c = (Boolean)deck.third ? 1 : 0;
+        for (Triplet<String, String, Boolean> deck : ticketsDecks) {
+            int c = (Boolean) deck.third ? 1 : 0;
             hash = 31 * hash + c;
         }
         return hash;
@@ -87,15 +92,16 @@ public class Game {
 
     public List<Ticket> getTickets(String city1) {
         List<Ticket> result = new ArrayList<>();
-        for (Ticket ticket: tickets) {
+        for (Ticket ticket : tickets) {
             if (ticket.getCity1().equals(city1) || ticket.getCity2().equals(city1)) {
                 result.add(ticket);
             }
         }
         return result;
     }
+
     public Ticket getTicket(int id) {
-        for (Ticket ticket: tickets) {
+        for (Ticket ticket : tickets) {
             if (ticket.getId() == id) {
                 return ticket;
             }

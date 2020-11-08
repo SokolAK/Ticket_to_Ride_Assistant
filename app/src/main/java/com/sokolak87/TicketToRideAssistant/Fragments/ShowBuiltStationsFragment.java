@@ -49,12 +49,10 @@ public class ShowBuiltStationsFragment extends Fragment implements View.OnClickL
                 Route route = player.getBuiltStations().get(position);
 
                 player.addCards(route.getBuiltStationCardsNumber());
-                //player.addPoints(game.getStationPoints());
                 player.removeRouteStation(position);
                 for (Route rout : game.getRoutes(route.getCity1(), route.getCity2(),false,false)) {
                     rout.setBuiltStation(false);
                 }
-                //player.addStation(1);
 
                 stationList.remove(position);
 

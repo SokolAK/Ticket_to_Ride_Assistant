@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/build_route_frag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackDark"
-    android:orientation="vertical"
-    android:id="@+id/build_route_frag">
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/spinners_container"
@@ -22,21 +21,23 @@
         android:id="@+id/ticket_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ticket_details"
         android:layout_marginVertical="16dp"
-        android:gravity="center_vertical"
         android:background="@color/colorBackLight"
+        android:gravity="center_vertical"
+        android:text="@string/ticket_details"
         app:layout_constraintEnd_toStartOf="@+id/points_value"
-        app:layout_constraintTop_toBottomOf="@+id/spinners_container"/>
+        app:layout_constraintTop_toBottomOf="@+id/spinners_container" />
+
     <TextView
         android:id="@+id/points_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/points"
         android:layout_marginVertical="16dp"
         android:gravity="center_vertical"
+        android:text="@string/points"
         app:layout_constraintEnd_toStartOf="@+id/points_value"
-        app:layout_constraintTop_toBottomOf="@+id/ticket_details"/>
+        app:layout_constraintTop_toBottomOf="@+id/ticket_details" />
+
     <TextView
         android:id="@+id/points_value"
         android:layout_width="wrap_content"
@@ -50,10 +51,11 @@
         android:id="@+id/realized_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/realized"
         android:layout_marginVertical="16dp"
         android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/points_label"/>
+        android:text="@string/realized"
+        app:layout_constraintTop_toBottomOf="@+id/points_label" />
+
     <ImageView
         android:id="@+id/realized_value"
         android:layout_width="wrap_content"
@@ -65,9 +67,9 @@
         android:id="@+id/add_ticket"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginVertical="16dp"
         android:background="@drawable/ic_baseline_add_circle_24"
         android:textColor="#000000"
-        android:layout_marginVertical="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/realized_label" />
 
@@ -76,9 +78,9 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/button_green"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:scaleType="fitCenter"
         android:padding="4dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/ic_check_circle_black_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

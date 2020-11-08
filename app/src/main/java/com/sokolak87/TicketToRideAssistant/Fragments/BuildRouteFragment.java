@@ -84,11 +84,8 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                             }
                         }
                         if (selectedLocos >= locos) {
-                            //player.addPoints(game.getScoring().get(length));
                             player.spendCars(length);
                             player.spendCards(cardsNumbers);
-                            //game.removeRoute(route);
-                            //game.getRoute(route.getId()).setBuilt(true);
                             route.setBuilt(true);
                             char builtColor = determineRouteColor(cardsNumbers);
                             route.setBuiltColor(builtColor);
@@ -147,15 +144,11 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                 active(true).activeLong(true).oneColor(true).
                 build();
         ft.replace(R.id.cards_container, cardsCarFragment);
-        //ft.addToBackStack(null);
         ft.commit();
         requireActivity().findViewById(R.id.buttons_panel).setVisibility(View.VISIBLE);
     }
 
     private void returnToTopPage() {
-        //((MainActivity) requireActivity()).onNavigationItemSelected(0);
-        //NavigationView navigationView = requireActivity().findViewById(R.id.nav_view);
-        //navigationView.getMenu().getItem(0).setChecked(true);
         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, new ShowBuiltRoutesFragment());
         ft.commit();
@@ -163,7 +156,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onSpinnerItemSelected(CustomItem... items) {
-        if(items.length == 1) {
+        if (items.length == 1) {
             int routeId = items[0].getItemId();
             route = game.getRoute(routeId);
             cars = route.getLength() - route.getLocos();

@@ -22,8 +22,7 @@ public class DbHelper extends SQLiteOpenHelper {
         this.mContext = mContext;
         this.DB_NAME = DB_NAME;
         this.DB_VERSION = DB_VERSION;
-        OUTFILE_NAME = mContext.getDatabasePath(DB_NAME).getPath() ;
-        //this.DB_PATH = "/data/data/" + mContext.getPackageName() + "/databases/";
+        OUTFILE_NAME = mContext.getDatabasePath(DB_NAME).getPath();
     }
 
     public static DbHelper getInstance(Context mContext, String DB_NAME, int DB_VERSION) {
@@ -39,8 +38,6 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public void checkDatabase() {
-        //String path = DB_PATH + DB_NAME;
-        //SQLiteDatabase.openDatabase(path, null, 0);
         this.getReadableDatabase();
         copyDatabase();
     }
@@ -48,7 +45,6 @@ public class DbHelper extends SQLiteOpenHelper {
     public void copyDatabase() {
         try {
             InputStream io = mContext.getAssets().open(DB_NAME);
-            //String outFileName = DB_PATH + DB_NAME;
             OutputStream outputStream = new FileOutputStream(OUTFILE_NAME);
             int length;
             byte[] buffer = new byte[1024];
@@ -66,7 +62,6 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public SQLiteDatabase openDatabase() {
-        //String outFileName = DB_PATH + DB_NAME;
         return SQLiteDatabase.openDatabase(OUTFILE_NAME, null, 0);
     }
 }

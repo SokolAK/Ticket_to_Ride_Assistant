@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/status_frag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackDark"
-    android:orientation="vertical"
-    android:id="@+id/status_frag">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/points_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/points"
         android:background="@color/colorBackLight"
+        android:text="@string/points"
         app:layout_constraintEnd_toStartOf="@+id/points_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/points_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="0"
         android:background="@color/colorBackLight"
+        android:text="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,6 +38,7 @@
         app:layout_constraintEnd_toStartOf="@+id/cars_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/points_label" />
+
     <TextView
         android:id="@+id/cars_value"
         android:layout_width="0dp"
@@ -52,18 +53,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/stations"
         android:background="@color/colorBackLight"
+        android:text="@string/stations"
         app:layout_constraintEnd_toStartOf="@+id/stations_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cars_label" />
+
     <TextView
         android:id="@+id/stations_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="0"
         android:background="@color/colorBackLight"
+        android:text="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cars_value" />
 
@@ -76,6 +78,7 @@
         app:layout_constraintEnd_toStartOf="@+id/realized_tickets_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stations_label" />
+
     <TextView
         android:id="@+id/realized_tickets_value"
         android:layout_width="0dp"
@@ -85,6 +88,7 @@
         android:textColor="@color/colorAccept"
         app:layout_constraintEnd_toStartOf="@+id/slash"
         app:layout_constraintTop_toBottomOf="@+id/stations_value" />
+
     <TextView
         android:id="@+id/slash"
         android:layout_width="0dp"
@@ -93,6 +97,7 @@
         android:text="/"
         app:layout_constraintEnd_toStartOf="@+id/unrealized_tickets_value"
         app:layout_constraintTop_toBottomOf="@+id/stations_value" />
+
     <TextView
         android:id="@+id/unrealized_tickets_value"
         android:layout_width="0dp"
@@ -108,18 +113,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/longestPath"
         android:background="@color/colorBackLight"
+        android:text="@string/longestPath"
         app:layout_constraintEnd_toStartOf="@+id/longest_path_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tickets_label" />
+
     <TextView
         android:id="@+id/longest_path_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="0"
         android:background="@color/colorBackLight"
+        android:text="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tickets_label" />
 
@@ -130,16 +136,15 @@
         android:layout_weight="1"
         app:layout_constraintBottom_toTopOf="@+id/switch_control"
         app:layout_constraintTop_toBottomOf="@+id/longest_path_label"
-        app:layout_constraintVertical_bias="1.0" >
-    </FrameLayout>
+        app:layout_constraintVertical_bias="1.0"></FrameLayout>
 
     <Switch
         android:id="@+id/switch_control"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
         android:text="@string/cards_locked"
         android:textColor="@color/colorReset"
-        android:layout_marginStart="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cards_container" />
 

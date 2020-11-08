@@ -36,8 +36,8 @@ public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickLis
 
 
         List<CustomItem> routeList = new ArrayList<>();
-        for(Route route: player.getBuiltRoutes()) {
-            routeList.add(new CustomItem(route.toString(), route.getImageId(game,route.getBuiltColor()), route.getId()));
+        for (Route route : player.getBuiltRoutes()) {
+            routeList.add(new CustomItem(route.toString(), route.getImageId(game, route.getBuiltColor()), route.getId()));
         }
 
         ListView listRoutes = drawer.findViewById(R.id.list_routes);
@@ -45,12 +45,11 @@ public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickLis
         listRoutes.setAdapter(adapter);
 
         listRoutes.setOnItemLongClickListener((arg0, arg1, position, id) -> {
-            if(unlockDelete) {
+            if (unlockDelete) {
                 Route route = player.getBuiltRoutes().get(position);
 
                 player.addCards(route.getBuiltCardsNumber());
                 player.addCars(route.getLength());
-                //player.spendPoints(game.getScoring().get(route.getLength()));
                 player.removeRoute(position);
                 game.getRoute(route.getId()).setBuilt(false);
 
@@ -65,7 +64,7 @@ public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickLis
         if (switchControl != null) {
             switchControl.setChecked(false);
             switchControl.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if(isChecked) {
+                if (isChecked) {
                     unlockDelete = true;
                     switchControl.setText(R.string.unlocked);
                     switchControl.setTextColor(getResources().getColor(R.color.cardsUnlocked));

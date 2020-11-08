@@ -1,10 +1,12 @@
 package com.sokolak87.TicketToRideAssistant.UI;
 
 import android.graphics.drawable.Drawable;
+
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,19 +25,21 @@ public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.View
     interface Listener {
         void onClick(int position);
     }
+
     interface ListenerLong {
         void onLongClick(int position);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private CardView cardView;
+
         public ViewHolder(CardView v) {
             super(v);
             cardView = v;
         }
     }
 
-    public CardImageAdapter(List<Card> cards, int[] cardsNumbers){
+    public CardImageAdapter(List<Card> cards, int[] cardsNumbers) {
         this.cards = cards;
         this.cardsNumbers = cardsNumbers;
     }
@@ -46,16 +50,16 @@ public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.View
     }
 
     @Override
-    public int getItemCount(){
+    public int getItemCount() {
         return cards.size();
     }
 
     @Override
-    public CardImageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public CardImageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView cv = null;
-        if(viewType == 1)
+        if (viewType == 1)
             cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_car_view, parent, false);
-        if(viewType == 0)
+        if (viewType == 0)
             cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.blank_card_view, parent, false);
         GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) cv.getLayoutParams();
         float density = parent.getContext().getResources().getDisplayMetrics().density;
@@ -66,7 +70,7 @@ public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position){
+    public void onBindViewHolder(ViewHolder holder, int position) {
         CardView cardView = holder.cardView;
         switch (holder.getItemViewType()) {
             case 1:
@@ -96,10 +100,11 @@ public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.View
         });
     }
 
-    public void setListener(Listener listener){
+    public void setListener(Listener listener) {
         this.listener = listener;
     }
-    public void setListenerLong(ListenerLong listener){
+
+    public void setListenerLong(ListenerLong listener) {
         this.listenerLong = listener;
     }
 }

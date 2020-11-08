@@ -23,6 +23,7 @@ public class Ticket {
         this.inHand = false;
         this.deckName = deckName;
     }
+
     public Ticket(Ticket ticket) {
         counter++;
         id = counter;
@@ -42,7 +43,7 @@ public class Ticket {
     public boolean checkIfRealized(Player player) {
         ConnectionCalculator connectionCalc = new ConnectionCalculator(player);
 
-        if(!connectionCalc.checkIfCityIsOnPlayersList(city1) && !connectionCalc.checkIfCityIsOnPlayersList(city2))
+        if (!connectionCalc.checkIfCityIsOnPlayersList(city1) && !connectionCalc.checkIfCityIsOnPlayersList(city2))
             return false;
 
         return connectionCalc.checkIfConnected(city1, "", city2);

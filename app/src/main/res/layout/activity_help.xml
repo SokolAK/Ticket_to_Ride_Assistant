@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -11,62 +12,67 @@
         tools:context="com.sokolak87.TicketToRideAssistant.Fragments.HelpActivity">
 
         <include
-            layout="@layout/toolbar_main"
-            android:id="@+id/toolbar" />
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_main" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             style="@style/HelpHeader"
-            android:text="@string/nav_top" />
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/nav_top" />
+
+        <TextView
             style="@style/HelpText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/help_status" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             style="@style/HelpHeader"
-            android:text="@string/nav_drawCards" />
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/nav_drawCards" />
+
+        <TextView
             style="@style/HelpText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/help_draw" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             style="@style/HelpHeader"
-            android:text="@string/nav_showRoutes" />
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/nav_showRoutes" />
+
+        <TextView
             style="@style/HelpText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/help_route" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             style="@style/HelpHeader"
-            android:text="@string/nav_showStations" />
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/HelpText"
-            android:text="@string/help_station"/>
+            android:text="@string/nav_showStations" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/HelpHeader"
-            android:text="@string/nav_showTickets" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             style="@style/HelpText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/help_station" />
+
+        <TextView
+            style="@style/HelpHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_showTickets" />
+
+        <TextView
+            style="@style/HelpText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/help_ticket" />
     </LinearLayout>
 </ScrollView>

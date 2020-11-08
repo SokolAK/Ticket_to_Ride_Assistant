@@ -34,7 +34,7 @@ public class SpinnerRouteFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View drawer =  inflater.inflate(R.layout.custom_spinner, container, false);
+        View drawer = inflater.inflate(R.layout.custom_spinner, container, false);
 
         game = ((TtRA_Application) requireActivity().getApplication()).game;
         player = ((TtRA_Application) requireActivity().getApplication()).player;
@@ -47,12 +47,12 @@ public class SpinnerRouteFragment extends Fragment {
 
     private void manageSpinner1(View drawer) {
         List<String> cities1 = new ArrayList<>();
-        for (Route route: game.getRoutes()) {
+        for (Route route : game.getRoutes()) {
             boolean isAvailable = false;
-            if(type == 'R') {
+            if (type == 'R') {
                 isAvailable = !route.isBuilt();
             }
-            if(type == 'S') {
+            if (type == 'S') {
                 isAvailable = !route.isBuilt() && !route.isBuiltStation();
             }
 
@@ -80,7 +80,7 @@ public class SpinnerRouteFragment extends Fragment {
         Collections.sort(cities1, String::compareTo);
 
         List<CustomItem> cityList1 = new ArrayList<>();
-        for (String city1: cities1) {
+        for (String city1 : cities1) {
             cityList1.add(new CustomItem(city1, 0, 0));
         }
         CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList1);
@@ -111,10 +111,10 @@ public class SpinnerRouteFragment extends Fragment {
             List<CustomItem> cityList2 = new ArrayList<>();
             for (Route route : routes) {
                 boolean isAvailable = false;
-                if(type == 'R') {
+                if (type == 'R') {
                     isAvailable = !route.isBuilt();
                 }
-                if(type == 'S') {
+                if (type == 'S') {
                     isAvailable = !route.isBuilt() && !route.isBuiltStation();
                 }
 
@@ -125,18 +125,18 @@ public class SpinnerRouteFragment extends Fragment {
                     } else {
                         city2 = route.getCity1();
                     }
-                    if(type == 'R') {
+                    if (type == 'R') {
                         cityList2.add(new CustomItem(city2, route.getImageId(game, route.getColor()), route.getId()));
                     }
-                    if(type == 'S') {
+                    if (type == 'S') {
                         boolean addRoute = true;
-                        for(CustomItem item : cityList2) {
-                            if(item.getText().equals(city2)) {
+                        for (CustomItem item : cityList2) {
+                            if (item.getText().equals(city2)) {
                                 addRoute = false;
                                 break;
                             }
                         }
-                        if(addRoute) {
+                        if (addRoute) {
                             cityList2.add(new CustomItem(city2, 0, route.getId()));
                         }
                     }

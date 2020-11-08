@@ -32,6 +32,7 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
 
     public DrawTicketFragment() {
     }
+
     public DrawTicketFragment(String city1, String city2) {
         defaultCity1 = city1;
         defaultCity2 = city2;
@@ -39,14 +40,12 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         game = ((TtRA_Application) requireActivity().getApplication()).game;
         player = ((TtRA_Application) requireActivity().getApplication()).player;
-
         drawer = inflater.inflate(R.layout.fragment_draw_ticket, container, false);
 
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        SpinnerTicketFragment spinnerTicketFragment = new SpinnerTicketFragment(defaultCity1,defaultCity2);
+        SpinnerTicketFragment spinnerTicketFragment = new SpinnerTicketFragment(defaultCity1, defaultCity2);
         ft.replace(R.id.spinners_container, spinnerTicketFragment);
         ft.commit();
 
@@ -65,9 +64,7 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.accept_button:
-                if(ticket != null) {
-                    //ticket.setInHand(true);
-                    //player.addTicket(new Ticket(ticket));
+                if (ticket != null) {
                     player.addTicket(ticket);
                     returnToTopPage();
                 }
@@ -75,7 +72,6 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
             case R.id.add_ticket:
                 FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.content_frame, new AddTicketFragment());
-                //ft.addToBackStack(null);
                 ft.commit();
                 break;
         }
@@ -90,7 +86,7 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onSpinnerItemSelected(CustomItem... items) {
-        if(items.length == 1) {
+        if (items.length == 1) {
             player.checkIfTicketsRealized();
             ticketId = items[0].getItemId();
             ticket = game.getTicket(ticketId);

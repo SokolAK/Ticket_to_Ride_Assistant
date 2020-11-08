@@ -14,7 +14,7 @@ public class CustomItem {
 
     public int compareTo(CustomItem y) {
         int comp = text.compareTo(y.getText());
-        if(comp == 0) {
+        if (comp == 0) {
             comp = Integer.compare(imageResource, y.getImageResource());
         }
         return comp;

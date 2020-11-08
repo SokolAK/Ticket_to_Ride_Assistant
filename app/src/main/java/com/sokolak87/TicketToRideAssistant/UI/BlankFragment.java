@@ -11,10 +11,6 @@ import android.widget.TextView;
 
 import com.sokolak87.TicketToRideAssistant.R;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class BlankFragment extends Fragment {
     private String text;
 
@@ -25,7 +21,6 @@ public class BlankFragment extends Fragment {
     public BlankFragment(String text) {
         this.text = text;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

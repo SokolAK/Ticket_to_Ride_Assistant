@@ -1,6 +1,7 @@
 package com.sokolak87.TicketToRideAssistant.Games;
 
 import android.content.Context;
+
 import com.sokolak87.TicketToRideAssistant.Logic.DbReader;
 import com.sokolak87.TicketToRideAssistant.Logic.Game;
 import com.sokolak87.TicketToRideAssistant.R;
@@ -18,6 +19,8 @@ public class Europe extends Game {
         numberOfStations = 3;
         stationPoints = 4;
         maxExtraCardsForTunnel = 3;
+        stationsAvailable = true;
+        warehousesAvailable = true;
 
         //ROUTES
         //------------------------------------------------------------------------------------------

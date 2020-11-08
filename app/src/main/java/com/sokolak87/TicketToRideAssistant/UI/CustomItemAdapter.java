@@ -32,7 +32,7 @@ public class CustomItemAdapter extends ArrayAdapter<CustomItem> {
     }
 
     private View initView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null) {
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_list_item, parent, false);
         }
 
@@ -40,7 +40,7 @@ public class CustomItemAdapter extends ArrayAdapter<CustomItem> {
         TextView textView = convertView.findViewById(R.id.text_view);
 
         CustomItem customItem = getItem(position);
-        if(customItem != null) {
+        if (customItem != null) {
             imageView.setImageResource(customItem.getImageResource());
             textView.setText(customItem.getText());
         }

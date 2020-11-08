@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/build_route_frag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackDark"
-    android:orientation="vertical"
-    android:id="@+id/build_route_frag">
+    android:orientation="vertical">
 
-    <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/spinners_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,8 +17,7 @@
         app:layout_constraintTop_toBottomOf="@+id/details_panel"
         app:layout_constraintVertical_bias="1.0" />
 
-    <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/cards_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -45,8 +42,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/button_red"
-            android:scaleType="fitCenter"
             android:padding="4dp"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_cached_black_24dp" />
 
         <ImageButton
@@ -55,8 +52,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/button_green"
-            android:scaleType="fitCenter"
             android:padding="4dp"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_check_circle_black_24dp" />
     </LinearLayout>
 

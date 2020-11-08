@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.sokolak87.TicketToRideAssistant.Fragments.MenuActivity"
+        <activity
+            android:name="com.sokolak87.TicketToRideAssistant.Fragments.MenuActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,15 +23,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.sokolak87.TicketToRideAssistant.Fragments.IntroActivity" />
-
-        <activity android:name="com.sokolak87.TicketToRideAssistant.Fragments.HelpActivity"
+        <activity
+            android:name="com.sokolak87.TicketToRideAssistant.Fragments.HelpActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name="com.sokolak87.TicketToRideAssistant.Fragments.MainActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
+        <activity
+            android:name="com.sokolak87.TicketToRideAssistant.Fragments.MainActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

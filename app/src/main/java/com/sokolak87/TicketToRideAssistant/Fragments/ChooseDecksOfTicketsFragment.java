@@ -26,12 +26,8 @@ import java.util.List;
  */
 public class ChooseDecksOfTicketsFragment extends Fragment implements View.OnClickListener {
 
-    List<String> selectedItems = new ArrayList<>();
-
     public ChooseDecksOfTicketsFragment() {
-        // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,18 +38,18 @@ public class ChooseDecksOfTicketsFragment extends Fragment implements View.OnCli
 
         Game game = ((TtRA_Application) requireActivity().getApplication()).game;
         List<String> items = new ArrayList<>();
-        for(Triplet deck: game.getTicketsDecks()) {
-            items.add((String)deck.second);
+        for (Triplet deck : game.getTicketsDecks()) {
+            items.add((String) deck.second);
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), R.layout.checkable_item_layout, R.id.checkable_text_view, items);
         checkableList.setAdapter(adapter);
-        for(int i = 0; i < game.getTicketsDecks().size(); ++i) {
+        for (int i = 0; i < game.getTicketsDecks().size(); ++i) {
             Triplet deck = game.getTicketsDecks().get(i);
-            checkableList.setItemChecked(i, (Boolean)deck.third);
+            checkableList.setItemChecked(i, (Boolean) deck.third);
         }
 
         checkableList.setOnItemClickListener((parent, view, position, id) -> {
-            game.getTicketsDecks().get(position).third= !game.getTicketsDecks().get(position).third;
+            game.getTicketsDecks().get(position).third = !game.getTicketsDecks().get(position).third;
         });
 
         Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);

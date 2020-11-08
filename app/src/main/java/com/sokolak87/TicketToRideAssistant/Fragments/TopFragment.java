@@ -36,8 +36,8 @@ public class TopFragment extends Fragment {
 
         int realizedTicketsNumber = 0;
         int unrealizedTicketsNumber = 0;
-        for(Ticket ticket: player.getTickets()) {
-            if(ticket.isRealized()) {
+        for (Ticket ticket : player.getTickets()) {
+            if (ticket.isRealized()) {
                 realizedTicketsNumber++;
             } else {
                 unrealizedTicketsNumber++;
@@ -63,7 +63,7 @@ public class TopFragment extends Fragment {
             switchControl.setChecked(false);
             switchControl.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-                if(isChecked) {
+                if (isChecked) {
                     CardsCarFragment cardsCarFragment = CardsCarFragment.builder().cardsNumbers(player.getCardsNumbers()).
                             active(true).activeLong(true).
                             build();
@@ -82,7 +82,6 @@ public class TopFragment extends Fragment {
                     switchControl.setTextColor(getResources().getColor(R.color.cardsLocked));
                     ft.replace(R.id.cards_container, cardsCarFragment);
                 }
-                //ft.addToBackStack(null);
                 ft.commit();
             });
         }
