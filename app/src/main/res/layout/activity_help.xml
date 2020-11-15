@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.sokolak87.TicketToRideAssistant.Fragments.HelpActivity">
+        tools:context="pl.sokolak.TicketToRideAssistant.pl.sokolak87.TicketToRideAssistant.Fragments.HelpActivity">
 
         <include
             android:id="@+id/toolbar"
             layout="@layout/toolbar_main" />
+
+        <TextView
+            style="@style/HelpText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/help_about"
+            android:textAllCaps="false"
+            android:textColor="#2196F3"
+            android:textSize="24sp" />
 
         <TextView
             style="@style/HelpHeader"

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackDark"
     android:orientation="vertical"
-    tools:context=".Fragments.AddTicketFragment">
+    tools:context="pl.sokolak.TicketToRideAssistant.Fragments.AddTicketFragment">
 
     <FrameLayout
         android:id="@+id/spinners_container"
