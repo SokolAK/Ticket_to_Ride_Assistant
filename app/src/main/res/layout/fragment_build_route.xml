@@ -36,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textSize="@dimen/text_size"
             android:text="0" />
 
         <ImageView
@@ -51,6 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textSize="@dimen/text_size"
             android:text="0" />
 
         <ImageView
@@ -67,6 +69,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="0"
+            android:textSize="@dimen/text_size"
             android:visibility="invisible" />
 
         <ImageView
@@ -82,6 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textSize="@dimen/text_size"
             android:text="0" />
 
         <ImageView
@@ -96,6 +100,7 @@
             android:id="@+id/points_value"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:textSize="@dimen/text_size"
             android:text="0" />
     </LinearLayout>
 

@@ -5,12 +5,13 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackDark"
     android:orientation="vertical"
-    tools:context="pl.sokolak.TicketToRideAssistant.pl.sokolak87.TicketToRideAssistant.Fragments.MainActivity">
+    tools:context="pl.sokolak.TicketToRideAssistant.Fragments.MainActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp"
+        android:textSize="@dimen/text_size"
         android:text="@string/choose_decks_of_tickets" />
 
     <Button
@@ -19,6 +20,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_green"
         android:text="@string/accept"
+        android:textSize="@dimen/text_size"
         android:textColor="#80000000" />
 
     <ListView

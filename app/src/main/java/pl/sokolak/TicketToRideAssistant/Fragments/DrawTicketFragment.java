@@ -95,9 +95,9 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
             ticket.checkIfRealized(player);
             int imageResource = 0;
             if (ticket.isRealized()) {
-                imageResource = R.drawable.ic_done_black_24dp;
+                imageResource = R.drawable.ic_done_green_24dp;
             } else {
-                imageResource = R.drawable.ic_close_black_24dp;
+                imageResource = R.drawable.ic_close_red_24dp;
             }
             ImageView realizedValue = drawer.findViewById(R.id.realized_value);
             realizedValue.setImageResource(imageResource);

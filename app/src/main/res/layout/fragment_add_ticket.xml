@@ -19,6 +19,7 @@
         android:digits="0123456789"
         android:ems="3"
         android:hint="@string/points"
+        android:textSize="@dimen/text_size"
         android:inputType="number" />
 
     <Button
@@ -27,6 +28,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_green"
         android:text="@string/accept"
+        android:textSize="@dimen/text_size"
         android:textColor="#000000" />
 
 </LinearLayout>

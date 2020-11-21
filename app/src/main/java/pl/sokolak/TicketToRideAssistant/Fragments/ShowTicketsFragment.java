@@ -37,9 +37,9 @@ public class ShowTicketsFragment extends Fragment implements View.OnClickListene
         for (Ticket ticket : player.getTickets()) {
             int imageResource = 0;
             if (ticket.isRealized()) {
-                imageResource = R.drawable.ic_done_black_24dp;
+                imageResource = R.drawable.ic_done_green_24dp;
             } else {
-                imageResource = R.drawable.ic_close_black_24dp;
+                imageResource = R.drawable.ic_close_red_24dp;
             }
             ticketList.add(new CustomItem(ticket.toString(), imageResource, ticket.getId()));
         }

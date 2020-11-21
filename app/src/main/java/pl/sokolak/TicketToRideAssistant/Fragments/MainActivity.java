@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_nav, menu);
+        inflater.inflate(R.menu.drawer_nav, menu);
         MenuItem item = menu.findItem(R.id.nav_draw_cards_warehouse);
         item.setVisible(false);
         return true;

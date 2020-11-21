@@ -6,21 +6,25 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackDark"
     android:orientation="vertical"
-    tools:context="pl.sokolak.TicketToRideAssistant.pl.sokolak87.TicketToRideAssistant.Fragments.MainActivity">
+    tools:context="pl.sokolak.TicketToRideAssistant.Fragments.MainActivity">
 
     <Button
         android:id="@+id/new_station"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_height="@dimen/button_height"
         android:background="@drawable/button_green"
         android:text="@string/build_new_station"
+        android:textSize="@dimen/text_size"
         android:textColor="#80000000" />
 
     <TextView
         android:id="@+id/built_routes_header"
         android:layout_width="match_parent"
-        android:layout_height="64sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin"
         android:gravity="center|bottom"
+        android:textSize="@dimen/text_size"
         android:text="@string/built_stations_header" />
 
     <Switch
@@ -29,7 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:text="@string/locked"
-        android:textColor="@color/colorReset" />
+        android:textSize="@dimen/lock_text_size"
+        android:textColor="@color/colorReset"
+        tools:ignore="UseSwitchCompatOrMaterialXml"/>
 
     <TextView
         android:id="@+id/delete_comment"
@@ -38,7 +44,7 @@
         android:layout_marginStart="6dp"
         android:text="@string/delete_comment"
         android:textColor="@color/colorReset"
-        android:textSize="16sp"
+        android:textSize="@dimen/lock_text_size"
         android:visibility="invisible" />
 
     <ListView

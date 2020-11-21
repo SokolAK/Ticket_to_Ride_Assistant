@@ -1,5 +1,6 @@
 package pl.sokolak.TicketToRideAssistant.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +59,7 @@ public class TopFragment extends Fragment {
             card.setVisible(1);
         }
 
-        Switch switchControl = drawer.findViewById(R.id.switch_control);
+        @SuppressLint("UseSwitchCompatOrMaterialCode") Switch switchControl = drawer.findViewById(R.id.switch_control);
         if (switchControl != null) {
             switchControl.setChecked(false);
             switchControl.setOnCheckedChangeListener((buttonView, isChecked) -> {

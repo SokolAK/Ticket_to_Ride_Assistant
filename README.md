@@ -5,16 +5,28 @@ No more missed connections, scoring mistakes or tedious calculations of the long
 
 Find it on Google Play: -
 
+
 ## System requirements
 * Android 5.0+ (API level 21+)
 
-## Technologies
-* Java
 
-## Configuration
+## Technologies
+* Java 8
+* SQLite 3.24.0
 
 
 ## Program usage
+
+
+
+## Currently available games
+* USA
+* Europe + 1912 Expansion
+* Nordic Countries
+
+
+## Snapshots
+
 
 
 ## Status
