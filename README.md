@@ -63,6 +63,6 @@ Project is: _in progress_
 
 
 ## Snapshots
-<img src="./snapshots/1.png" width="310"> <img src="./snapshots/2.png" width="310"> <img src="./snapshots/3.png" width="310">
-<img src="./snapshots/4.png" width="310"> <img src="./snapshots/5.png" width="310"> <img src="./snapshots/6.png" width="310">
-<img src="./snapshots/7.png" width="310"> <img src="./snapshots/8.png" width="310"> <img src="./snapshots/9.png" width="310">
+<img src="./snapshots/1.png" width="280"> <img src="./snapshots/2.png" width="280"> <img src="./snapshots/3.png" width="280">
+<img src="./snapshots/4.png" width="280"> <img src="./snapshots/5.png" width="280"> <img src="./snapshots/6.png" width="280">
+<img src="./snapshots/7.png" width="280"> <img src="./snapshots/8.png" width="280"> <img src="./snapshots/9.png" width="280">
