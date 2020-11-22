@@ -21,12 +21,18 @@ Find it on Google Play: -
 
 ## Currently available games
 * USA
-* Europe + 1912 Expansion
+* Europe + 1912 Expansion Pack
 * Nordic Countries
 
 
 ## Snapshots
-
+![1](./snapshots/1.png)
+![2](./snapshots/2.png)
+![3](./snapshots/3.png)
+![4](./snapshots/4.png)
+![5](./snapshots/5.png)
+![6](./snapshots/6.png)
+![7](./snapshots/7.png)
 
 
 ## Status

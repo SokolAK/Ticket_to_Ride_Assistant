@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <dimen name="text_size">48sp</dimen>
     <dimen name="text_margin">32sp</dimen>
@@ -9,9 +9,10 @@
     <dimen name="toolbar_text_size">42sp</dimen>
 
     <!-- DRAWER -->
-    <dimen name="drawer_text_size">32sp</dimen>
-    <dimen name="drawer_item_height">88sp</dimen>
-    <dimen name="drawer_header_text_size">48sp</dimen>
+    <dimen name="drawer_text_size">42sp</dimen>
+    <dimen name="design_navigation_icon_size" tools:override="true">42sp</dimen>
+    <dimen name="drawer_item_height">84sp</dimen>
+    <dimen name="drawer_header_text_size">56sp</dimen>
 
     <!-- MENU -->
     <dimen name="menu_logo_size">180dp</dimen>

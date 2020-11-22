@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <dimen name="text_size">34sp</dimen>
+    <dimen name="text_size">36sp</dimen>
     <dimen name="text_margin">26sp</dimen>
     <dimen name="lock_text_size">24sp</dimen>
 
     <!-- TOOLBAR -->
-    <dimen name="toolbar_text_size">34sp</dimen>
+    <dimen name="toolbar_text_size">36sp</dimen>
 
     <!-- DRAWER -->
-    <dimen name="drawer_text_size">24sp</dimen>
-    <dimen name="drawer_item_height">72sp</dimen>
-    <dimen name="drawer_header_text_size">34sp</dimen>
+    <dimen name="drawer_text_size">30sp</dimen>
+    <dimen name="design_navigation_icon_size" tools:override="true">30sp</dimen>
+    <dimen name="drawer_item_height">64sp</dimen>
+    <dimen name="drawer_header_text_size">40sp</dimen>
 
     <!-- MENU -->
     <dimen name="menu_logo_size">120dp</dimen>
     <dimen name="menu_header_text_size">44sp</dimen>
-    <dimen name="menu_header2_text_size">34sp</dimen>
-    <dimen name="menu_item_text_size">34sp</dimen>
-    <dimen name="menu_item_height">64sp</dimen>
+    <dimen name="menu_header2_text_size">36sp</dimen>
+    <dimen name="menu_item_text_size">36sp</dimen>
+    <dimen name="menu_item_height">96sp</dimen>
 
     <!-- HELP -->
     <dimen name="help_title_text_size">36sp</dimen>
