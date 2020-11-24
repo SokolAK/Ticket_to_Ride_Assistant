@@ -38,13 +38,13 @@
     <string name="built_routes_header">Claimed Routes:</string>
 
     <!-- Stations -->
-    <string name="build_new_station">Build a Train Station</string>
+    <string name="build_new_station">Build a Station</string>
     <string name="station_cost">Train Station cost:</string>
     <string name="built_stations_header">Built Train Stations:</string>
     <string name="no__more_stations">No more stations available</string>
 
     <!-- Tickets -->
-    <string name="draw_ticket">Draw a Destination Ticket</string>
+    <string name="draw_ticket">Draw a Ticket</string>
     <string name="tickets_header">Your Destination Tickets:</string>
     <string name="realized">Realized?</string>
     <string name="ticket_details">Destination Ticket details:</string>

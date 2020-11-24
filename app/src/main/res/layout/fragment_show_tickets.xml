@@ -14,7 +14,7 @@
         android:layout_marginTop="@dimen/text_margin"
         android:background="@drawable/button_green"
         android:text="@string/draw_ticket"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         android:textColor="#80000000" />
 
     <TextView
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:gravity="center|bottom"
         android:layout_marginTop="@dimen/text_margin"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         android:text="@string/tickets_header" />
 
     <Switch

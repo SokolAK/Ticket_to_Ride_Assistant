@@ -15,7 +15,7 @@
         android:layout_height="@dimen/button_height"
         android:background="@drawable/button_green"
         android:text="@string/build_new_station"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         android:textColor="#80000000" />
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/text_margin"
         android:gravity="center|bottom"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         android:text="@string/built_stations_header" />
 
     <Switch

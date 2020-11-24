@@ -15,7 +15,7 @@
         android:layout_weight="1"
         android:background="@color/colorBackLight"
         android:text="@string/points"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         app:layout_constraintEnd_toStartOf="@+id/points_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +27,7 @@
         android:layout_weight="1"
         android:background="@color/colorBackLight"
         android:text="0"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/cars"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         app:layout_constraintEnd_toStartOf="@+id/cars_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/points_label" />
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="0"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/points_value" />
 
@@ -59,7 +59,7 @@
         android:layout_weight="1"
         android:background="@color/colorBackLight"
         android:text="@string/stations"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         app:layout_constraintEnd_toStartOf="@+id/stations_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cars_label" />
@@ -71,7 +71,7 @@
         android:layout_weight="1"
         android:background="@color/colorBackLight"
         android:text="0"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cars_value" />
 
@@ -81,7 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/tickets"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         app:layout_constraintEnd_toStartOf="@+id/realized_tickets_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stations_label" />
@@ -92,7 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="0"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         android:textColor="@color/colorAccept"
         app:layout_constraintEnd_toStartOf="@+id/slash"
         app:layout_constraintTop_toBottomOf="@+id/stations_value" />
@@ -103,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="/"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         app:layout_constraintEnd_toStartOf="@+id/unrealized_tickets_value"
         app:layout_constraintTop_toBottomOf="@+id/stations_value" />
 
@@ -113,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="0"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         android:textColor="@color/colorReset"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stations_value" />
@@ -125,7 +125,7 @@
         android:layout_weight="1"
         android:background="@color/colorBackLight"
         android:text="@string/longestPath"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         app:layout_constraintEnd_toStartOf="@+id/longest_path_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tickets_label" />
@@ -137,7 +137,7 @@
         android:layout_weight="1"
         android:background="@color/colorBackLight"
         android:text="0"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/text_size_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tickets_label" />
 

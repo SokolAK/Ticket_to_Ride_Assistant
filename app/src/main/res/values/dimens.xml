@@ -1,36 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-
-    <dimen name="text_size">28sp</dimen>
-    <dimen name="text_margin">16sp</dimen>
-    <dimen name="lock_text_size">18sp</dimen>
-
-    <!-- TOOLBAR -->
-    <dimen name="toolbar_text_size">24sp</dimen>
-
-    <!-- DRAWER -->
-    <dimen name="drawer_text_size">22sp</dimen>
-    <dimen name="design_navigation_icon_size" tools:override="true">22sp</dimen>
-    <dimen name="drawer_item_height">44sp</dimen>
-    <dimen name="drawer_header_text_size">28sp</dimen>
-
-    <!-- MENU -->
-    <dimen name="menu_logo_size">100dp</dimen>
-    <dimen name="menu_header_text_size">32sp</dimen>
-    <dimen name="menu_header2_text_size">28sp</dimen>
-    <dimen name="menu_item_text_size">28sp</dimen>
-    <dimen name="menu_item_height">64sp</dimen>
-
-    <!-- HELP -->
-    <dimen name="help_title_text_size">24sp</dimen>
-    <dimen name="help_web_text_size">16sp</dimen>
-    <dimen name="help_header_text_size">22sp</dimen>
-    <dimen name="help_paragraph_text_size">16sp</dimen>
-
-    <!-- BUTTONS -->
-    <dimen name="button_height">60sp</dimen>
-
-    <!-- GRAPHICS -->
-    <dimen name="realized_icon_height">40sp</dimen>
-
+	<dimen name="text_size_big">40sp</dimen>
+	<dimen name="text_size_normal">32sp</dimen>
+	<dimen name="text_size_small">24sp</dimen>
+	<dimen name="text_size_tiny">20sp</dimen>
+	<dimen name="text_margin">@dimen/text_size_tiny</dimen>
+	<dimen name="lock_text_size">@dimen/text_size_tiny</dimen>
+	<dimen name="toolbar_text_size">@dimen/text_size_normal</dimen>
+	<dimen name="drawer_text_size">@dimen/text_size_small</dimen>
+	<dimen name="design_navigation_icon_size">@dimen/text_size_small</dimen>
+	<dimen name="drawer_item_height">56sp</dimen>
+	<dimen name="drawer_header_text_size">@dimen/text_size_normal</dimen>
+	<dimen name="menu_logo_size">100dp</dimen>
+	<dimen name="menu_header_text_size">@dimen/text_size_big</dimen>
+	<dimen name="menu_header2_text_size">@dimen/text_size_normal</dimen>
+	<dimen name="menu_item_text_size">@dimen/text_size_normal</dimen>
+	<dimen name="menu_item_height">64sp</dimen>
+	<dimen name="help_title_text_size">@dimen/text_size_normal</dimen>
+	<dimen name="help_web_text_size">@dimen/text_size_tiny</dimen>
+	<dimen name="help_header_text_size">@dimen/text_size_small</dimen>
+	<dimen name="help_paragraph_text_size">@dimen/text_size_tiny</dimen>
+	<dimen name="button_height">60sp</dimen>
+	<dimen name="realized_icon_height">40sp</dimen>
 </resources>

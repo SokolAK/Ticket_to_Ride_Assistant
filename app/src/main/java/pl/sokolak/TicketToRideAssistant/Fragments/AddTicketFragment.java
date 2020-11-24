@@ -25,6 +25,7 @@ import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.UI.CustomItem;
 import pl.sokolak.TicketToRideAssistant.UI.SpinnerCitiesFragment;
 import pl.sokolak.TicketToRideAssistant.UI.SpinnerListenerInterface;
+import pl.sokolak.TicketToRideAssistant.Util.SoftKeyboard;
 
 import java.util.Objects;
 
@@ -57,6 +58,14 @@ public class AddTicketFragment extends Fragment implements View.OnClickListener,
         listCity1 = drawer.findViewById(R.id.spinner1);
         listCity2 = drawer.findViewById(R.id.spinner2);
         pointsField = drawer.findViewById(R.id.ticket_value);
+
+        pointsField.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                SoftKeyboard.hideKeyboardFrom(getContext(), drawer);
+            }
+        });
+
+
 
         return drawer;
     }

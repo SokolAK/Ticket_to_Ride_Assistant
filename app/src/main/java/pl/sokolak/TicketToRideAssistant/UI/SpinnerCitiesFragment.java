@@ -1,5 +1,6 @@
 package pl.sokolak.TicketToRideAssistant.UI;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -90,9 +92,11 @@ public class SpinnerCitiesFragment extends Fragment {
                 cityList2.add(new CustomItem(city2, 0, 0));
             }
 
-            CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList2);
-            spinner2.setAdapter(adapter);
-            spinner2.setOnItemSelectedListener(new SpinnerCitiesFragment.listenerCity2(drawer));
+            if(getContext() != null) {
+                CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList2);
+                spinner2.setAdapter(adapter);
+                spinner2.setOnItemSelectedListener(new SpinnerCitiesFragment.listenerCity2(drawer));
+            }
         }
 
         @Override

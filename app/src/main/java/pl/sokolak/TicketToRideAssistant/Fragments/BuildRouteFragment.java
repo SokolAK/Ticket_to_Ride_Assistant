@@ -49,7 +49,6 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
             cardsNumbers[i] = 0;
         }
 
-
         drawer = inflater.inflate(R.layout.fragment_build_route, container, false);
 
         ImageView acceptIcon = drawer.findViewById(R.id.accept_button);
