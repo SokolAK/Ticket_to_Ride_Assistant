@@ -21,7 +21,7 @@
     <string name="cars">Cars</string>
     <string name="stations">Train Stations</string>
     <string name="tickets">Destination Tickets</string>
-    <string name="longestPath">Longest Continuous Path</string>
+    <string name="longestPath">Longest Path</string>
 
     <!-- Cards panel -->
     <string name="too_much_cards">Too much cards</string>

@@ -1,11 +1,11 @@
 <resources>
-	<dimen name="menu_logo_size">90dp</dimen>
-	<dimen name="text_size_big">36sp</dimen>
+	<dimen name="menu_logo_size">76.8dp</dimen>
+	<dimen name="text_size_big">33.6sp</dimen>
 	<dimen name="text_size_normal">28.8sp</dimen>
-	<dimen name="drawer_item_height">50.4sp</dimen>
-	<dimen name="button_height">54sp</dimen>
+	<dimen name="drawer_item_height">48sp</dimen>
+	<dimen name="button_height">57.6sp</dimen>
 	<dimen name="text_size_small">21.6sp</dimen>
 	<dimen name="menu_item_height">57.6sp</dimen>
-	<dimen name="text_size_tiny">18sp</dimen>
-	<dimen name="realized_icon_height">36sp</dimen>
+	<dimen name="text_size_tiny">19.2sp</dimen>
+	<dimen name="realized_icon_height">18sp</dimen>
 </resources>
