@@ -7,12 +7,12 @@ import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.Util.Triplet;
 
 public class USA extends Game {
-    public USA(Context context, String title) {
-        super(context, title);
+    public USA(Context context) {
+        super(context);
 
         databaseName = "TtRA_USA.db";
         databaseVersion = 1;
-        prepareBaseGame();
+        prepareBaseGame("USA");
 
         //TICKETS
         //------------------------------------------------------------------------------------------

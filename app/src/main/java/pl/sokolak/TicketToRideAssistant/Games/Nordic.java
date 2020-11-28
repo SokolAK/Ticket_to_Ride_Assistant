@@ -7,12 +7,12 @@ import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.Util.Triplet;
 
 public class Nordic extends Game {
-    public Nordic(Context context, String title) {
-        super(context, title);
+    public Nordic(Context context) {
+        super(context);
 
         databaseName = "TtRA_Nordic.db";
         databaseVersion = 1;
-        prepareBaseGame();
+        prepareBaseGame("Nordic Countries");
 
         //TICKETS
         //------------------------------------------------------------------------------------------

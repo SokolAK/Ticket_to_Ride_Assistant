@@ -3,6 +3,7 @@ package pl.sokolak.TicketToRideAssistant.UI;
 import java.util.List;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class CustomItemAdapter extends ArrayAdapter<CustomItem> {
         if (customItem != null) {
             imageView.setImageResource(customItem.getImageResource());
             textView.setText(customItem.getText());
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, customItem.getTextSize());
         }
         return convertView;
     }

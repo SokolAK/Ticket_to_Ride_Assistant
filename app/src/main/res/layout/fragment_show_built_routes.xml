@@ -27,7 +27,7 @@
         android:textSize="@dimen/text_size_normal"
         android:text="@string/built_routes_header" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switch_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

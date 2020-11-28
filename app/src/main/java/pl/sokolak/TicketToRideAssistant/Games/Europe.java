@@ -2,18 +2,18 @@ package pl.sokolak.TicketToRideAssistant.Games;
 
 import android.content.Context;
 
-import pl.sokolak.TicketToRideAssistant.Logic.DbReader;
+import pl.sokolak.TicketToRideAssistant.Database.DbReader;
 import pl.sokolak.TicketToRideAssistant.Logic.Game;
 import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.Util.Triplet;
 
 public class Europe extends Game {
-    public Europe(Context context, String title) {
-        super(context, title);
+    public Europe(Context context) {
+        super(context);
 
         databaseName = "TtRA_Europe.db";
         databaseVersion = 1;
-        prepareBaseGame();
+        prepareBaseGame("Europe");
         stationCost = DbReader.readStationCost(context, databaseName, databaseVersion);
 
         //TICKETS

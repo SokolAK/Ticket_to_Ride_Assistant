@@ -148,9 +148,9 @@
         android:layout_weight="1"
         app:layout_constraintBottom_toTopOf="@+id/switch_control"
         app:layout_constraintTop_toBottomOf="@+id/longest_path_label"
-        app:layout_constraintVertical_bias="1.0"></FrameLayout>
+        app:layout_constraintVertical_bias="1.0" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switch_control"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

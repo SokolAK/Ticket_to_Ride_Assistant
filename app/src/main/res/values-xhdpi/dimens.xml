@@ -6,6 +6,11 @@
 	<dimen name="button_height">48sp</dimen>
 	<dimen name="text_size_small">18sp</dimen>
 	<dimen name="menu_item_height">48sp</dimen>
-	<dimen name="text_size_tiny">16sp</dimen>
+	<dimen name="text_size_tiny">15sp</dimen>
 	<dimen name="realized_icon_height">15sp</dimen>
+	<dimen name="corner_radius">10dp</dimen>
+	<dimen name="corner_margin">2dp</dimen>
+	<dimen name="cards_spacing">2dp</dimen>
+	<dimen name="card_margin">2dp</dimen>
+	<dimen name="card_elevation">4dp</dimen>
 </resources>

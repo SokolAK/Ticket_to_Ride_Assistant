@@ -9,6 +9,10 @@
             android:icon="@drawable/ic_list_black_24dp"
             android:title="@string/nav_top" />
         <item
+            android:id="@+id/nav_points"
+            android:icon="@drawable/ic_baseline_star_24"
+            android:title="@string/nav_points" />
+        <item
             android:id="@+id/nav_draw_cards"
             android:icon="@drawable/ic_content_copy_black_24dp"
             android:title="@string/nav_drawCards" />

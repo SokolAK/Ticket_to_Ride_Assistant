@@ -3,6 +3,7 @@
     <!-- Main -->
     <string name="app_name">"Wsiąść do pociągu" Asystent</string>
     <string name="nav_top">Status</string>
+    <string name="nav_points">Punkty</string>
     <string name="nav_drawCards">Dobierz karty wagonów</string>
     <string name="nav_pickCardsFromWarehouse">Rozbij magazyn</string>
     <string name="nav_showRoutes">Połączenia</string>
@@ -21,6 +22,9 @@
     <string name="stations">Dworce</string>
     <string name="tickets">Bilety</string>
     <string name="longestPath">Najdłuższa trasa</string>
+
+    <!-- Points -->
+    <string name="claimed_routes">Utworzone połączenia</string>
 
     <!-- Cards panel -->
     <string name="too_much_cards">Zbyt dużo kart</string>

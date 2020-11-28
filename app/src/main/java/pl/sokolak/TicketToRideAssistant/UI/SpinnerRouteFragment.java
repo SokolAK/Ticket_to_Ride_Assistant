@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static pl.sokolak.TicketToRideAssistant.Util.DimensionUtils.getDimension;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -81,7 +83,8 @@ public class SpinnerRouteFragment extends Fragment {
 
         List<CustomItem> cityList1 = new ArrayList<>();
         for (String city1 : cities1) {
-            cityList1.add(new CustomItem(city1, 0, 0));
+            int textSize = getDimension(requireContext(),R.dimen.text_size_normal);
+            cityList1.add(new CustomItem(city1, 0, 0, textSize));
         }
         CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList1);
         Spinner spinner = drawer.findViewById(R.id.spinner1);
@@ -126,7 +129,8 @@ public class SpinnerRouteFragment extends Fragment {
                         city2 = route.getCity1();
                     }
                     if (type == 'R') {
-                        cityList2.add(new CustomItem(city2, route.getImageId(game, route.getColor()), route.getId()));
+                        int textSize = getDimension(requireContext(),R.dimen.text_size_normal);
+                        cityList2.add(new CustomItem(city2, route.getImageId(game, route.getColor()), route.getId(), textSize));
                     }
                     if (type == 'S') {
                         boolean addRoute = true;
@@ -137,7 +141,8 @@ public class SpinnerRouteFragment extends Fragment {
                             }
                         }
                         if (addRoute) {
-                            cityList2.add(new CustomItem(city2, 0, route.getId()));
+                            int textSize = getDimension(requireContext(),R.dimen.text_size_normal);
+                            cityList2.add(new CustomItem(city2, 0, route.getId(), textSize));
                         }
                     }
                 }

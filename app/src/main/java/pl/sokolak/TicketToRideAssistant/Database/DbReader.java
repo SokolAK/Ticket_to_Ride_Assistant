@@ -1,4 +1,4 @@
-package pl.sokolak.TicketToRideAssistant.Logic;
+package pl.sokolak.TicketToRideAssistant.Database;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,7 +9,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import pl.sokolak.TicketToRideAssistant.Logic.Game;
+import pl.sokolak.TicketToRideAssistant.Logic.Route;
+import pl.sokolak.TicketToRideAssistant.Logic.Ticket;
+
 public final class DbReader {
+
+    public static List<String> readGamesTitles(Context context, String databaseName, int databaseVersion) {
+        DbHelper dbHelper = DbHelper.getInstance(context, databaseName, databaseVersion);
+        dbHelper.checkDatabase();
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+
+        List<String> gamesTitles = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT * FROM Games", null);
+        while (cursor.moveToNext()) {
+            gamesTitles.add(cursor.getString(1));
+        }
+        cursor.close();
+        database.close();
+        return gamesTitles;
+    }
 
     public static List<Ticket> readTickets(Context context, String databaseName, int databaseVersion, String tableName) {
         DbHelper dbHelper = DbHelper.getInstance(context, databaseName, databaseVersion);

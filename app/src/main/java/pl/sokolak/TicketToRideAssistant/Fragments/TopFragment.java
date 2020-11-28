@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -59,7 +60,7 @@ public class TopFragment extends Fragment {
             card.setVisible(1);
         }
 
-        @SuppressLint("UseSwitchCompatOrMaterialCode") Switch switchControl = drawer.findViewById(R.id.switch_control);
+        SwitchCompat switchControl = drawer.findViewById(R.id.switch_control);
         if (switchControl != null) {
             switchControl.setChecked(false);
             switchControl.setOnCheckedChangeListener((buttonView, isChecked) -> {

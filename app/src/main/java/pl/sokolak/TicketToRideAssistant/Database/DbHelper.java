@@ -1,4 +1,4 @@
-package pl.sokolak.TicketToRideAssistant.Logic;
+package pl.sokolak.TicketToRideAssistant.Database;
 
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;

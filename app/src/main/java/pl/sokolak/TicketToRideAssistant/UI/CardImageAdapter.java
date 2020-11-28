@@ -63,8 +63,9 @@ public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.View
             cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.blank_card_view, parent, false);
         GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) cv.getLayoutParams();
         float density = parent.getContext().getResources().getDisplayMetrics().density;
-        float px = 4 * density * 6 + 1;
-        params.width = (int) ((parent.getMeasuredWidth() - px) / 3);
+        int margin = parent.getContext().getResources().getDimensionPixelSize(R.dimen.card_margin);
+        int space = margin * (2 +2*2);
+        params.width = (int) ((parent.getMeasuredWidth() - space) / 3);
         cv.setLayoutParams(params);
         return new ViewHolder(cv);
     }
@@ -74,7 +75,7 @@ public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.View
         CardView cardView = holder.cardView;
         switch (holder.getItemViewType()) {
             case 1:
-                cardView.setRadius(24); //to avoid ghosts
+                //cardView.setRadius(24); //to avoid ghosts
                 ImageView imageView = cardView.findViewById(R.id.card_image);
                 Drawable drawable = ContextCompat.getDrawable(cardView.getContext(), cards.get(position).getImageResourceId());
                 imageView.setImageDrawable(drawable);

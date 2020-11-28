@@ -60,11 +60,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         Intent intent = getIntent();
-        int gameId = intent.getIntExtra("gameId", 0);
-        String gameTitle = getResources().getStringArray(R.array.games)[gameId];
+        int gamePosition = intent.getIntExtra("gamePosition", 0);
+        //String gameTitle = getResources().getStringArray(R.array.games)[gameId];
 
         player = ((TtRA_Application) getApplication()).player;
-        game = Game.create(this, gameId, gameTitle);
+        game = Game.create(this, gamePosition);
         ((TtRA_Application) getApplication()).game = game;
 
         player.setGame(game);
@@ -120,6 +120,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment fragment = null;
         Intent intent = null;
         switch (id) {
+            case R.id.nav_points:
+                fragment = new PointsFragment();
+                break;
             case R.id.nav_draw_cards:
                 fragment = new DrawFragment(game.getMaxNoOfCardsToDraw(), getString(R.string.nav_drawCards));
                 break;

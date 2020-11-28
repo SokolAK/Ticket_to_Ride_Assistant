@@ -115,21 +115,8 @@ public class Player implements Serializable {
     }
 
     public void updatePoints() {
-        points = 0;
-        for (Ticket ticket : tickets) {
-            if (ticket.isRealized()) {
-                points += ticket.getPoints();
-            } else {
-                points -= ticket.getPoints();
-            }
-        }
-        for (Route route : builtRoutes) {
-            if (game.getScoring().containsKey(route.getLength())) {
-                @SuppressWarnings("ConstantConditions") int routePoints = game.getScoring().get(route.getLength());
-                points += routePoints;
-            }
-        }
-        points += numberOfStations * game.getStationPoints();
+        PointsCalculator pointsCalculator = new PointsCalculator(this, game);
+        points = pointsCalculator.sumPoints();
     }
 
     private int findLongestPath() {

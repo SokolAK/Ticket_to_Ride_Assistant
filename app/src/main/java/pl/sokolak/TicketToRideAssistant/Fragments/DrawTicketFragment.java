@@ -83,7 +83,6 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
         ft.commit();
     }
 
-
     @Override
     public void onSpinnerItemSelected(CustomItem... items) {
         if (items.length == 1) {

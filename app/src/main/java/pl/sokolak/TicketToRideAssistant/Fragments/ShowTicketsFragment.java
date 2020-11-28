@@ -2,6 +2,7 @@ package pl.sokolak.TicketToRideAssistant.Fragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -24,6 +25,8 @@ import pl.sokolak.TicketToRideAssistant.UI.CustomItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import static pl.sokolak.TicketToRideAssistant.Util.DimensionUtils.getDimension;
+
 public class ShowTicketsFragment extends Fragment implements View.OnClickListener {
     private boolean unlockDelete;
 
@@ -41,7 +44,8 @@ public class ShowTicketsFragment extends Fragment implements View.OnClickListene
             } else {
                 imageResource = R.drawable.ic_close_red_24dp;
             }
-            ticketList.add(new CustomItem(ticket.toString(), imageResource, ticket.getId()));
+            int textSize = getDimension(requireContext(),R.dimen.text_size_small);
+            ticketList.add(new CustomItem(ticket.toString(), imageResource, ticket.getId(), textSize));
         }
 
         ListView listTickets = drawer.findViewById(R.id.list_tickets);
@@ -57,7 +61,7 @@ public class ShowTicketsFragment extends Fragment implements View.OnClickListene
             return true;
         });
 
-        Switch switchControl = drawer.findViewById(R.id.switch_delete);
+        SwitchCompat switchControl = drawer.findViewById(R.id.switch_delete);
         if (switchControl != null) {
             switchControl.setChecked(false);
             switchControl.setOnCheckedChangeListener((buttonView, isChecked) -> {

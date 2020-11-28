@@ -3,6 +3,7 @@
     <!-- Main -->
     <string name="app_name">Ticket to Ride Assistant</string>
     <string name="nav_top">Status</string>
+    <string name="nav_points">Points</string>
     <string name="nav_drawCards">Draw Train Car Cards</string>
     <string name="nav_pickCardsFromWarehouse">Break a Warehouse</string>
     <string name="nav_showRoutes">Routes</string>
@@ -22,6 +23,9 @@
     <string name="stations">Train Stations</string>
     <string name="tickets">Destination Tickets</string>
     <string name="longestPath">Longest Path</string>
+
+    <!-- Points -->
+    <string name="claimed_routes">Claimed Routes</string>
 
     <!-- Cards panel -->
     <string name="too_much_cards">Too much cards</string>

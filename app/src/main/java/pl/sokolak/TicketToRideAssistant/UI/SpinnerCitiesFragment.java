@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import static pl.sokolak.TicketToRideAssistant.Util.DimensionUtils.getDimension;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -61,7 +63,8 @@ public class SpinnerCitiesFragment extends Fragment {
         spinner1 = drawer.findViewById(R.id.spinner1);
         List<CustomItem> cityList1 = new ArrayList<>();
         for (String city1 : citiesSorted) {
-            cityList1.add(new CustomItem(city1, 0, 0));
+            int textSize = getDimension(requireContext(),R.dimen.text_size_normal);
+            cityList1.add(new CustomItem(city1, 0, 0, textSize));
         }
         CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList1);
         spinner1.setAdapter(adapter);
@@ -89,7 +92,8 @@ public class SpinnerCitiesFragment extends Fragment {
             citiesSorted2.remove(city1);
             List<CustomItem> cityList2 = new ArrayList<>();
             for (String city2 : citiesSorted2) {
-                cityList2.add(new CustomItem(city2, 0, 0));
+                int textSize = getDimension(requireContext(),R.dimen.text_size_normal);
+                cityList2.add(new CustomItem(city2, 0, 0, textSize));
             }
 
             if(getContext() != null) {

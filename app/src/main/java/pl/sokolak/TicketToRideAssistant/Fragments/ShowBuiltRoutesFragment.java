@@ -2,6 +2,7 @@ package pl.sokolak.TicketToRideAssistant.Fragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -24,6 +25,9 @@ import pl.sokolak.TicketToRideAssistant.UI.CustomItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static pl.sokolak.TicketToRideAssistant.Util.DimensionUtils.getDimension;
 
 public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickListener {
     private boolean unlockDelete;
@@ -36,7 +40,9 @@ public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickLis
 
         List<CustomItem> routeList = new ArrayList<>();
         for (Route route : player.getBuiltRoutes()) {
-            routeList.add(new CustomItem(route.toString(), route.getImageId(game, route.getBuiltColor()), route.getId()));
+            String routeString = route.toString() + " ★" + game.getScoring().get(route.getLength());
+            int textSize = getDimension(requireContext(),R.dimen.text_size_small);
+            routeList.add(new CustomItem(routeString, route.getImageId(game, route.getBuiltColor()), route.getId(), textSize));
         }
 
         ListView listRoutes = drawer.findViewById(R.id.list_routes);
@@ -59,7 +65,7 @@ public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickLis
             return true;
         });
 
-        Switch switchControl = drawer.findViewById(R.id.switch_delete);
+        SwitchCompat switchControl = drawer.findViewById(R.id.switch_delete);
         if (switchControl != null) {
             switchControl.setChecked(false);
             switchControl.setOnCheckedChangeListener((buttonView, isChecked) -> {

@@ -2,6 +2,7 @@ package pl.sokolak.TicketToRideAssistant.Logic;
 
 import android.content.Context;
 
+import pl.sokolak.TicketToRideAssistant.Database.DbReader;
 import pl.sokolak.TicketToRideAssistant.Games.Europe;
 import pl.sokolak.TicketToRideAssistant.Games.Nordic;
 import pl.sokolak.TicketToRideAssistant.Games.USA;
@@ -12,13 +13,18 @@ import pl.sokolak.TicketToRideAssistant.UI.Card;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import lombok.Data;
 import pl.sokolak.TicketToRideAssistant.Util.Triplet;
 
+import static pl.sokolak.TicketToRideAssistant.Database.DbService.generalDatabaseName;
+import static pl.sokolak.TicketToRideAssistant.Database.DbService.generalDatabaseVersion;
+
 
 @Data
 public class Game {
+    private int id;
     private String title;
     private int startCards;
     private int maxNoOfCardsToDraw;
@@ -31,8 +37,6 @@ public class Game {
     private List<Card> cards = new ArrayList<>();
     private List<Route> routes = new ArrayList<>();
     private List<Ticket> tickets = new ArrayList<>();
-    private String generalDatabaseName;
-    private int generalDatabaseVersion;
     protected String databaseName;
     protected int databaseVersion;
     private Context context;
@@ -41,26 +45,32 @@ public class Game {
     private boolean warehousesAvailable;
     private boolean stationsAvailable;
 
-    public Game(Context context, String title) {
+    public Game(Context context) {
         this.context = context;
-        this.title = title;
-        generalDatabaseName = "TtRA_General.db";
-        generalDatabaseVersion = 1;
     }
 
-    public static Game create(Context context, int gameId, String title) {
-        switch (gameId) {
+    public static Game create(Context context, int gamePosition) {
+        Game game = null;
+        switch (gamePosition) {
             case 0:
-                return new USA(context, title);
+                game = new USA(context);
+                break;
             case 1:
-                return new Europe(context, title);
+                game = new Europe(context);
+                break;
             case 2:
-                return new Nordic(context, title);
+                game = new Nordic(context);
+                break;
         }
-        return null;
+        if (game != null) {
+            game.setTitle(context.getResources().getStringArray(R.array.games)[gamePosition]);
+        }
+
+        return game;
     }
 
-    public void prepareBaseGame() {
+    public void prepareBaseGame(String title) {
+        setTitle(title);
         setCards();
         DbReader.readGeneralData(context, generalDatabaseName, generalDatabaseVersion, this);
         routes = DbReader.readRoutes(context, databaseName, databaseVersion);
