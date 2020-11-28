@@ -35,6 +35,8 @@ Ticket to Ride Assistant offers several screens to support the game:
 Show player points, number of cars and train stations left, number of realized/unrealized tickets, length of the longest continuous path.
 You can unlock the cards panel using the switch on the bottom, to manually modify the numbers of cards.
 To add (remove) a card of an individual color, tap (long press) the corresponding tile.
+### Points
+Show detailed calculations of points.
 #### Draw train car cards
 You can draw new train car cards here. Add card by taping it or remove by long pressing.
 Accept your choice by pressing green button or reset the cards set by pressing red button.
@@ -63,6 +65,6 @@ Project is: _in progress_
 
 
 ## Snapshots
-<img src="./snapshots/1.png" width="280"> <img src="./snapshots/2.png" width="280"> <img src="./snapshots/9.png" width="280">
-<img src="./snapshots/3.png" width="280"> <img src="./snapshots/4.png" width="280"> <img src="./snapshots/5.png" width="280">
-<img src="./snapshots/6.png" width="280"> <img src="./snapshots/7.png" width="280"> <img src="./snapshots/8.png" width="280">
+<img src="./snapshots/1.png" width="290"> <img src="./snapshots/2.png" width="290"> <img src="./snapshots/9.png" width="290">
+<img src="./snapshots/3.png" width="290"> <img src="./snapshots/4.png" width="290"> <img src="./snapshots/5.png" width="290">
+<img src="./snapshots/6.png" width="290"> <img src="./snapshots/7.png" width="290"> <img src="./snapshots/8.png" width="290">

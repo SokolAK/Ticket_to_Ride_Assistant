@@ -87,6 +87,18 @@
             style="@style/HelpHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/nav_points" />
+
+        <TextView
+            style="@style/HelpText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/help_points" />
+
+        <TextView
+            style="@style/HelpHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/nav_drawCards" />
 
         <TextView

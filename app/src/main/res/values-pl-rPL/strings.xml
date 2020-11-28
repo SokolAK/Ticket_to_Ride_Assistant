@@ -72,6 +72,8 @@
         liczby zrealizowanych i niezrealizowanych biletów, długości najdłuższej nieprzerwanego połączenia.
         Przesunięcie suwaka na dole powoduje odblokowanie panelu kart. Teraz możesz ręcznie modyfikować liczby poszczególnych kart.
         Dodaj (usuń) kartę danego koloru, naciskając (przytrzymując) odpowiedni kafelek.</string>
+    <string name="help_points">
+        Pokazuje szczegółowe obliczenia punktów.</string>
     <string name="help_draw">
         W tej zakładce możesz dobrać karty wagonów.
         Dodaj kartę, naciskając kafelek w odpowiednim kolorze.
