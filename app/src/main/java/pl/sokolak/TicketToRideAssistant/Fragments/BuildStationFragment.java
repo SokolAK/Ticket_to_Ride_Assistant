@@ -19,7 +19,7 @@ import pl.sokolak.TicketToRideAssistant.Logic.Route;
 import pl.sokolak.TicketToRideAssistant.Logic.TtRA_Application;
 import pl.sokolak.TicketToRideAssistant.UI.Card;
 import pl.sokolak.TicketToRideAssistant.UI.CardsCarFragment;
-import pl.sokolak.TicketToRideAssistant.UI.CustomItem;
+import pl.sokolak.TicketToRideAssistant.UI.TextImageItem;
 import pl.sokolak.TicketToRideAssistant.UI.SpinnerListenerInterface;
 import pl.sokolak.TicketToRideAssistant.UI.SpinnerRouteFragment;
 
@@ -98,7 +98,7 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public void onSpinnerItemSelected(CustomItem... items) {
+    public void onSpinnerItemSelected(TextImageItem... items) {
         if (items.length == 1) {
             int routeId = items[0].getItemId();
             route = game.getRoute(routeId);

@@ -22,7 +22,7 @@ import pl.sokolak.TicketToRideAssistant.Logic.Game;
 import pl.sokolak.TicketToRideAssistant.Logic.Ticket;
 import pl.sokolak.TicketToRideAssistant.Logic.TtRA_Application;
 import pl.sokolak.TicketToRideAssistant.R;
-import pl.sokolak.TicketToRideAssistant.UI.CustomItem;
+import pl.sokolak.TicketToRideAssistant.UI.TextImageItem;
 import pl.sokolak.TicketToRideAssistant.UI.SpinnerCitiesFragment;
 import pl.sokolak.TicketToRideAssistant.UI.SpinnerListenerInterface;
 import pl.sokolak.TicketToRideAssistant.Util.SoftKeyboard;
@@ -95,7 +95,7 @@ public class AddTicketFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void onSpinnerItemSelected(CustomItem... items) {
+    public void onSpinnerItemSelected(TextImageItem... items) {
         if (items.length == 2) {
             city1 = items[0].getText();
             city2 = items[1].getText();

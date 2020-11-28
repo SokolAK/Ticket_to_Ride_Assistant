@@ -12,15 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import pl.sokolak.TicketToRideAssistant.Logic.Player;
 import pl.sokolak.TicketToRideAssistant.Logic.Ticket;
 import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.Logic.TtRA_Application;
-import pl.sokolak.TicketToRideAssistant.UI.CustomItemAdapter;
-import pl.sokolak.TicketToRideAssistant.UI.CustomItem;
+import pl.sokolak.TicketToRideAssistant.UI.TextImageItemAdapter;
+import pl.sokolak.TicketToRideAssistant.UI.TextImageItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class ShowTicketsFragment extends Fragment implements View.OnClickListene
 
         Player player = ((TtRA_Application) requireActivity().getApplication()).player;
 
-        List<CustomItem> ticketList = new ArrayList<>();
+        List<TextImageItem> ticketList = new ArrayList<>();
         for (Ticket ticket : player.getTickets()) {
             int imageResource = 0;
             if (ticket.isRealized()) {
@@ -45,11 +44,11 @@ public class ShowTicketsFragment extends Fragment implements View.OnClickListene
                 imageResource = R.drawable.ic_close_red_24dp;
             }
             int textSize = getDimension(requireContext(),R.dimen.text_size_small);
-            ticketList.add(new CustomItem(ticket.toString(), imageResource, ticket.getId(), textSize));
+            ticketList.add(new TextImageItem(ticket.toString(), imageResource, ticket.getId(), textSize));
         }
 
         ListView listTickets = drawer.findViewById(R.id.list_tickets);
-        CustomItemAdapter adapter = new CustomItemAdapter(getContext(), ticketList);
+        TextImageItemAdapter adapter = new TextImageItemAdapter(getContext(), ticketList);
         listTickets.setAdapter(adapter);
 
         listTickets.setOnItemLongClickListener((arg0, arg1, position, id) -> {

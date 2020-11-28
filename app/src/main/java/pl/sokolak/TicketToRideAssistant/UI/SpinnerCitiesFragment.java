@@ -1,6 +1,5 @@
 package pl.sokolak.TicketToRideAssistant.UI;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import static pl.sokolak.TicketToRideAssistant.Util.DimensionUtils.getDimension;
@@ -61,12 +59,12 @@ public class SpinnerCitiesFragment extends Fragment {
 
     private void manageSpinner1(View drawer) {
         spinner1 = drawer.findViewById(R.id.spinner1);
-        List<CustomItem> cityList1 = new ArrayList<>();
+        List<TextImageItem> cityList1 = new ArrayList<>();
         for (String city1 : citiesSorted) {
             int textSize = getDimension(requireContext(),R.dimen.text_size_normal);
-            cityList1.add(new CustomItem(city1, 0, 0, textSize));
+            cityList1.add(new TextImageItem(city1, 0, 0, textSize));
         }
-        CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList1);
+        TextImageItemAdapter adapter = new TextImageItemAdapter(getContext(), cityList1);
         spinner1.setAdapter(adapter);
     }
 
@@ -86,18 +84,18 @@ public class SpinnerCitiesFragment extends Fragment {
         public void onItemSelected(AdapterView<?> adapterView, View view,
                                    int position, long id) {
 
-            String city1 = ((CustomItem) spinner1.getSelectedItem()).getText();
+            String city1 = ((TextImageItem) spinner1.getSelectedItem()).getText();
 
             List<String> citiesSorted2 = new ArrayList<>(citiesSorted);
             citiesSorted2.remove(city1);
-            List<CustomItem> cityList2 = new ArrayList<>();
+            List<TextImageItem> cityList2 = new ArrayList<>();
             for (String city2 : citiesSorted2) {
                 int textSize = getDimension(requireContext(),R.dimen.text_size_normal);
-                cityList2.add(new CustomItem(city2, 0, 0, textSize));
+                cityList2.add(new TextImageItem(city2, 0, 0, textSize));
             }
 
             if(getContext() != null) {
-                CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList2);
+                TextImageItemAdapter adapter = new TextImageItemAdapter(getContext(), cityList2);
                 spinner2.setAdapter(adapter);
                 spinner2.setOnItemSelectedListener(new SpinnerCitiesFragment.listenerCity2(drawer));
             }
@@ -119,7 +117,7 @@ public class SpinnerCitiesFragment extends Fragment {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             SpinnerListenerInterface parentFragment = (SpinnerListenerInterface) getParentFragment();
             if (parentFragment != null) {
-                parentFragment.onSpinnerItemSelected((CustomItem) spinner1.getSelectedItem(), (CustomItem) spinner2.getSelectedItem());
+                parentFragment.onSpinnerItemSelected((TextImageItem) spinner1.getSelectedItem(), (TextImageItem) spinner2.getSelectedItem());
             }
         }
 

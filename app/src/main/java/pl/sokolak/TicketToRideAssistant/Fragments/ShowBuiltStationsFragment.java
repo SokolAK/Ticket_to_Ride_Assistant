@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +20,8 @@ import pl.sokolak.TicketToRideAssistant.Logic.Player;
 import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.Logic.Route;
 import pl.sokolak.TicketToRideAssistant.Logic.TtRA_Application;
-import pl.sokolak.TicketToRideAssistant.UI.CustomItemAdapter;
-import pl.sokolak.TicketToRideAssistant.UI.CustomItem;
+import pl.sokolak.TicketToRideAssistant.UI.TextImageItemAdapter;
+import pl.sokolak.TicketToRideAssistant.UI.TextImageItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,14 +39,14 @@ public class ShowBuiltStationsFragment extends Fragment implements View.OnClickL
         player = ((TtRA_Application) requireActivity().getApplication()).player;
         game = ((TtRA_Application) requireActivity().getApplication()).game;
 
-        List<CustomItem> stationList = new ArrayList<>();
+        List<TextImageItem> stationList = new ArrayList<>();
         for(Route route: player.getBuiltStations()) {
             int textSize = getDimension(requireContext(),R.dimen.text_size_small);
-            stationList.add(new CustomItem(route.toString(), route.getImageId(game,route.getBuiltStationColor()), route.getId(), textSize));
+            stationList.add(new TextImageItem(route.toString(), route.getImageId(game,route.getBuiltStationColor()), route.getId(), textSize));
         }
 
         ListView listStations = drawer.findViewById(R.id.list_stations);
-        CustomItemAdapter adapter = new CustomItemAdapter(getContext(), stationList);
+        TextImageItemAdapter adapter = new TextImageItemAdapter(getContext(), stationList);
         listStations.setAdapter(adapter);
 
         listStations.setOnItemLongClickListener((arg0, arg1, position, id) -> {

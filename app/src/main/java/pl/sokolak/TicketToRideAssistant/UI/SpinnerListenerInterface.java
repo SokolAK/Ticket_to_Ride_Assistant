@@ -1,5 +1,5 @@
 package pl.sokolak.TicketToRideAssistant.UI;
 
 public interface SpinnerListenerInterface {
-    void onSpinnerItemSelected(CustomItem... spinnerItems);
+    void onSpinnerItemSelected(TextImageItem... spinnerItems);
 }

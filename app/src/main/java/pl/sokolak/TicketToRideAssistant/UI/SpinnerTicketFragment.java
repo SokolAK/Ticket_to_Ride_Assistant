@@ -79,18 +79,18 @@ public class SpinnerTicketFragment extends Fragment {
         }
         Collections.sort(cities1, (x, y) -> x.compareTo(y));
 
-        List<CustomItem> cityList = new ArrayList<>();
+        List<TextImageItem> cityList = new ArrayList<>();
         int pos = 0;
         int defaultPos = 0;
         for (String city1 : cities1) {
             int textSize = getDimension(requireContext(),R.dimen.text_size_normal);
-            cityList.add(new CustomItem(city1, 0, 0, textSize));
+            cityList.add(new TextImageItem(city1, 0, 0, textSize));
             if (city1.equals(defaultItem1)) {
                 defaultPos = pos;
             }
             pos++;
         }
-        CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList);
+        TextImageItemAdapter adapter = new TextImageItemAdapter(getContext(), cityList);
         spinner1.setAdapter(adapter);
 
         spinner1.setSelection(defaultPos);
@@ -111,10 +111,10 @@ public class SpinnerTicketFragment extends Fragment {
         public void onItemSelected(AdapterView<?> adapterView, View view,
                                    int position, long id) {
 
-            String city1 = ((CustomItem) spinner1.getSelectedItem()).getText();
+            String city1 = ((TextImageItem) spinner1.getSelectedItem()).getText();
             List<Ticket> tickets = game.getTickets(city1);
 
-            List<CustomItem> cityList = new ArrayList<>();
+            List<TextImageItem> cityList = new ArrayList<>();
             for (Ticket ticket : tickets) {
                 if (!ticket.isInHand()) {
                     String city2;
@@ -124,11 +124,11 @@ public class SpinnerTicketFragment extends Fragment {
                         city2 = ticket.getCity1();
                     }
                     int textSize = getDimension(requireContext(),R.dimen.text_size_normal);
-                    cityList.add(new CustomItem(city2, 0, ticket.getId(), textSize));
+                    cityList.add(new TextImageItem(city2, 0, ticket.getId(), textSize));
                 }
             }
 
-            Collections.sort(cityList, CustomItem::compareTo);
+            Collections.sort(cityList, TextImageItem::compareTo);
             int defaultPos = 0;
             for (int i = 0; i < cityList.size(); ++i) {
                 if (cityList.get(i).getText().equals(defaultItem2)) {
@@ -137,7 +137,7 @@ public class SpinnerTicketFragment extends Fragment {
                 }
             }
 
-            CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList);
+            TextImageItemAdapter adapter = new TextImageItemAdapter(getContext(), cityList);
             spinner2.setAdapter(adapter);
             spinner2.setOnItemSelectedListener(new SpinnerTicketFragment.listenerCity2(drawer));
 
@@ -160,7 +160,7 @@ public class SpinnerTicketFragment extends Fragment {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             SpinnerListenerInterface parentFragment = (SpinnerListenerInterface) getParentFragment();
             if (parentFragment != null) {
-                parentFragment.onSpinnerItemSelected((CustomItem) spinner2.getSelectedItem());
+                parentFragment.onSpinnerItemSelected((TextImageItem) spinner2.getSelectedItem());
             }
         }
 

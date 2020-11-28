@@ -17,7 +17,7 @@ import pl.sokolak.TicketToRideAssistant.Logic.Player;
 import pl.sokolak.TicketToRideAssistant.Logic.Ticket;
 import pl.sokolak.TicketToRideAssistant.Logic.TtRA_Application;
 import pl.sokolak.TicketToRideAssistant.R;
-import pl.sokolak.TicketToRideAssistant.UI.CustomItem;
+import pl.sokolak.TicketToRideAssistant.UI.TextImageItem;
 import pl.sokolak.TicketToRideAssistant.UI.SpinnerListenerInterface;
 import pl.sokolak.TicketToRideAssistant.UI.SpinnerTicketFragment;
 
@@ -84,7 +84,7 @@ public class DrawTicketFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void onSpinnerItemSelected(CustomItem... items) {
+    public void onSpinnerItemSelected(TextImageItem... items) {
         if (items.length == 1) {
             player.checkIfTicketsRealized();
             ticketId = items[0].getItemId();

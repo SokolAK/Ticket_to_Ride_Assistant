@@ -81,12 +81,12 @@ public class SpinnerRouteFragment extends Fragment {
         }
         Collections.sort(cities1, String::compareTo);
 
-        List<CustomItem> cityList1 = new ArrayList<>();
+        List<TextImageItem> cityList1 = new ArrayList<>();
         for (String city1 : cities1) {
             int textSize = getDimension(requireContext(),R.dimen.text_size_normal);
-            cityList1.add(new CustomItem(city1, 0, 0, textSize));
+            cityList1.add(new TextImageItem(city1, 0, 0, textSize));
         }
-        CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList1);
+        TextImageItemAdapter adapter = new TextImageItemAdapter(getContext(), cityList1);
         Spinner spinner = drawer.findViewById(R.id.spinner1);
         spinner.setAdapter(adapter);
     }
@@ -108,10 +108,10 @@ public class SpinnerRouteFragment extends Fragment {
                                    int position, long id) {
 
             Spinner listCity1 = drawer.findViewById(R.id.spinner1);
-            String city1 = ((CustomItem) listCity1.getSelectedItem()).getText();
+            String city1 = ((TextImageItem) listCity1.getSelectedItem()).getText();
             List<Route> routes = game.getRoutes(city1, false, true);
 
-            List<CustomItem> cityList2 = new ArrayList<>();
+            List<TextImageItem> cityList2 = new ArrayList<>();
             for (Route route : routes) {
                 boolean isAvailable = false;
                 if (type == 'R') {
@@ -130,11 +130,11 @@ public class SpinnerRouteFragment extends Fragment {
                     }
                     if (type == 'R') {
                         int textSize = getDimension(requireContext(),R.dimen.text_size_normal);
-                        cityList2.add(new CustomItem(city2, route.getImageId(game, route.getColor()), route.getId(), textSize));
+                        cityList2.add(new TextImageItem(city2, route.getImageId(game, route.getColor()), route.getId(), textSize));
                     }
                     if (type == 'S') {
                         boolean addRoute = true;
-                        for (CustomItem item : cityList2) {
+                        for (TextImageItem item : cityList2) {
                             if (item.getText().equals(city2)) {
                                 addRoute = false;
                                 break;
@@ -142,16 +142,16 @@ public class SpinnerRouteFragment extends Fragment {
                         }
                         if (addRoute) {
                             int textSize = getDimension(requireContext(),R.dimen.text_size_normal);
-                            cityList2.add(new CustomItem(city2, 0, route.getId(), textSize));
+                            cityList2.add(new TextImageItem(city2, 0, route.getId(), textSize));
                         }
                     }
                 }
             }
 
-            Collections.sort(cityList2, CustomItem::compareTo);
+            Collections.sort(cityList2, TextImageItem::compareTo);
 
             Spinner spinner = drawer.findViewById(R.id.spinner2);
-            CustomItemAdapter adapter = new CustomItemAdapter(getContext(), cityList2);
+            TextImageItemAdapter adapter = new TextImageItemAdapter(getContext(), cityList2);
             spinner.setAdapter(adapter);
             spinner.setOnItemSelectedListener(new SpinnerRouteFragment.listenerCity2(drawer));
         }
@@ -172,7 +172,7 @@ public class SpinnerRouteFragment extends Fragment {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Spinner spinner2 = drawer.findViewById(R.id.spinner2);
             SpinnerListenerInterface parentFragment = (SpinnerListenerInterface) getParentFragment();
-            parentFragment.onSpinnerItemSelected((CustomItem) spinner2.getSelectedItem());
+            parentFragment.onSpinnerItemSelected((TextImageItem) spinner2.getSelectedItem());
         }
 
         @Override

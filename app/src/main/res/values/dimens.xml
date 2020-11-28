@@ -21,7 +21,7 @@
 	<!-- DRAWER -->
 	<dimen name="drawer_text_size">@dimen/text_size_small</dimen>
 	<dimen name="design_navigation_icon_size" tools:ignore="PrivateResource">@dimen/text_size_small</dimen>
-	<dimen name="drawer_item_height">40sp</dimen>
+	<dimen name="drawer_item_height">48sp</dimen>
 	<dimen name="drawer_header_text_size">@dimen/text_size_normal</dimen>
 
 	<!-- MENU -->

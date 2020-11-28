@@ -1,7 +1,5 @@
 package pl.sokolak.TicketToRideAssistant.UI;
 
-import java.util.List;
-
 import android.content.Context;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -14,10 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.List;
+
 import pl.sokolak.TicketToRideAssistant.R;
 
-public class CustomItemAdapter extends ArrayAdapter<CustomItem> {
-    public CustomItemAdapter(Context context, List<CustomItem> itemsList) {
+public class TextTextItemAdapter extends ArrayAdapter<TextTextItem> {
+    public TextTextItemAdapter(Context context, List<TextTextItem> itemsList) {
         super(context, 0, itemsList);
     }
 
@@ -34,17 +34,18 @@ public class CustomItemAdapter extends ArrayAdapter<CustomItem> {
 
     private View initView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_list_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.text_text_list_item, parent, false);
         }
 
-        ImageView imageView = convertView.findViewById(R.id.image_view);
-        TextView textView = convertView.findViewById(R.id.text_view);
+        TextView textView1 = convertView.findViewById(R.id.text_view_1);
+        TextView textView2 = convertView.findViewById(R.id.text_view_2);
 
-        CustomItem customItem = getItem(position);
-        if (customItem != null) {
-            imageView.setImageResource(customItem.getImageResource());
-            textView.setText(customItem.getText());
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, customItem.getTextSize());
+        TextTextItem textTextItem = getItem(position);
+        if (textTextItem != null) {
+            textView1.setText(textTextItem.getText1());
+            textView2.setText(textTextItem.getText2());
+            textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, textTextItem.getTextSize());
+            textView2.setTextSize(TypedValue.COMPLEX_UNIT_SP, textTextItem.getTextSize());
         }
         return convertView;
     }

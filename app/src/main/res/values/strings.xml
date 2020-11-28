@@ -26,6 +26,8 @@
 
     <!-- Points -->
     <string name="claimed_routes">Claimed Routes</string>
+    <string name="stations_left">Stations left</string>
+    <string name="total">Total</string>
 
     <!-- Cards panel -->
     <string name="too_much_cards">Too much cards</string>

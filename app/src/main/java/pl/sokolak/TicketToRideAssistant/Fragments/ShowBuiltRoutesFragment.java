@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import pl.sokolak.TicketToRideAssistant.Logic.Game;
@@ -20,12 +19,11 @@ import pl.sokolak.TicketToRideAssistant.Logic.Player;
 import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.Logic.Route;
 import pl.sokolak.TicketToRideAssistant.Logic.TtRA_Application;
-import pl.sokolak.TicketToRideAssistant.UI.CustomItemAdapter;
-import pl.sokolak.TicketToRideAssistant.UI.CustomItem;
+import pl.sokolak.TicketToRideAssistant.UI.TextImageItemAdapter;
+import pl.sokolak.TicketToRideAssistant.UI.TextImageItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static pl.sokolak.TicketToRideAssistant.Util.DimensionUtils.getDimension;
 
@@ -38,15 +36,14 @@ public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickLis
         Player player = ((TtRA_Application) requireActivity().getApplication()).player;
         Game game = ((TtRA_Application) requireActivity().getApplication()).game;
 
-        List<CustomItem> routeList = new ArrayList<>();
+        List<TextImageItem> routeList = new ArrayList<>();
         for (Route route : player.getBuiltRoutes()) {
             String routeString = route.toString() + " ★" + game.getScoring().get(route.getLength());
             int textSize = getDimension(requireContext(),R.dimen.text_size_small);
-            routeList.add(new CustomItem(routeString, route.getImageId(game, route.getBuiltColor()), route.getId(), textSize));
+            routeList.add(new TextImageItem(routeString, route.getImageId(game, route.getBuiltColor()), route.getId(), textSize));
         }
-
         ListView listRoutes = drawer.findViewById(R.id.list_routes);
-        CustomItemAdapter adapter = new CustomItemAdapter(getContext(), routeList);
+        TextImageItemAdapter adapter = new TextImageItemAdapter(getContext(), routeList);
         listRoutes.setAdapter(adapter);
 
         listRoutes.setOnItemLongClickListener((arg0, arg1, position, id) -> {

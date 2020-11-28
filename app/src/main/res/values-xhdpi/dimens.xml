@@ -2,7 +2,7 @@
 	<dimen name="menu_logo_size">64dp</dimen>
 	<dimen name="text_size_big">28sp</dimen>
 	<dimen name="text_size_normal">24sp</dimen>
-	<dimen name="drawer_item_height">40sp</dimen>
+	<dimen name="drawer_item_height">48sp</dimen>
 	<dimen name="button_height">48sp</dimen>
 	<dimen name="text_size_small">18sp</dimen>
 	<dimen name="menu_item_height">48sp</dimen>
