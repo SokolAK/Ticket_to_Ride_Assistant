@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
-import pl.sokolak.TicketToRideAssistant.Logic.Game;
-import pl.sokolak.TicketToRideAssistant.Logic.Ticket;
-import pl.sokolak.TicketToRideAssistant.Logic.TtRA_Application;
+import pl.sokolak.TicketToRideAssistant.Domain.Game;
+import pl.sokolak.TicketToRideAssistant.Domain.Ticket;
+import pl.sokolak.TicketToRideAssistant.TtRA_Application;
 import pl.sokolak.TicketToRideAssistant.R;
 
 import java.util.ArrayList;

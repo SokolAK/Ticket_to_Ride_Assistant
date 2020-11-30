@@ -1,5 +1,6 @@
 package pl.sokolak.TicketToRideAssistant.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,11 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import pl.sokolak.TicketToRideAssistant.Logic.Game;
-import pl.sokolak.TicketToRideAssistant.Logic.Player;
+import pl.sokolak.TicketToRideAssistant.Domain.Game;
+import pl.sokolak.TicketToRideAssistant.Domain.Player;
 import pl.sokolak.TicketToRideAssistant.R;
-import pl.sokolak.TicketToRideAssistant.Logic.Route;
-import pl.sokolak.TicketToRideAssistant.Logic.TtRA_Application;
+import pl.sokolak.TicketToRideAssistant.Domain.Route;
+import pl.sokolak.TicketToRideAssistant.TtRA_Application;
 import pl.sokolak.TicketToRideAssistant.UI.Card;
 import pl.sokolak.TicketToRideAssistant.UI.CardsCarFragment;
 import pl.sokolak.TicketToRideAssistant.UI.TextImageItem;
@@ -119,7 +120,13 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         for (int i = 0; i < game.getCards().size(); ++i) {
             cardsNumbers[i] = 0;
         }
-        setAvailableCards(route.getColor());
+
+        if(route.isFerry() && game.getCarsToLocoTradeRatio() > 0) {
+            setAvailableCards('-');
+        }
+        else {
+            setAvailableCards(route.getColor());
+        }
     }
 
     private void refreshCards() {
@@ -133,8 +140,9 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                     maxCardsNumbers[i] += game.getMaxExtraCardsForTunnel();
                 }
                 if (game.getCards().get(i).getColor() != 'L') {
-                    maxCardsNumbers[i] -= route.getLocos();
+                    maxCardsNumbers[i] += -route.getLocos() + route.getLocos()*game.getCarsToLocoTradeRatio();
                 }
+                maxCards += route.getLocos()*game.getCarsToLocoTradeRatio();
             }
         }
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
@@ -153,6 +161,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         ft.commit();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onSpinnerItemSelected(TextImageItem... items) {
         if (items.length == 1) {
@@ -190,8 +199,6 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
             lengthText.setText(" " + String.valueOf(route.getLength()));
             TextView pointsText = drawer.findViewById(R.id.points_value);
             pointsText.setText(" " + String.valueOf(game.getScoring().get(route.getLength())));
-
-            setAvailableCards(route.getColor());
 
             clearCards();
             refreshCards();

@@ -1,5 +1,7 @@
-package pl.sokolak.TicketToRideAssistant.Logic;
+package pl.sokolak.TicketToRideAssistant.Domain;
 
+import pl.sokolak.TicketToRideAssistant.Calculators.ConnectionCalculator;
+import pl.sokolak.TicketToRideAssistant.Calculators.PointsCalculator;
 import pl.sokolak.TicketToRideAssistant.Util.Triplet;
 
 import java.io.Serializable;
@@ -115,7 +117,8 @@ public class Player implements Serializable {
     }
 
     public void updatePoints() {
-        PointsCalculator pointsCalculator = new PointsCalculator(this, game);
+        PointsCalculator pointsCalculator = game.getPointsCalculator();
+        pointsCalculator.setPlayer(this);
         points = pointsCalculator.sumPoints();
     }
 

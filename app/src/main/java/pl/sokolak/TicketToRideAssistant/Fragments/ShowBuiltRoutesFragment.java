@@ -14,11 +14,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import pl.sokolak.TicketToRideAssistant.Logic.Game;
-import pl.sokolak.TicketToRideAssistant.Logic.Player;
+import pl.sokolak.TicketToRideAssistant.Domain.Game;
+import pl.sokolak.TicketToRideAssistant.Domain.Player;
 import pl.sokolak.TicketToRideAssistant.R;
-import pl.sokolak.TicketToRideAssistant.Logic.Route;
-import pl.sokolak.TicketToRideAssistant.Logic.TtRA_Application;
+import pl.sokolak.TicketToRideAssistant.Domain.Route;
+import pl.sokolak.TicketToRideAssistant.TtRA_Application;
 import pl.sokolak.TicketToRideAssistant.UI.TextImageItemAdapter;
 import pl.sokolak.TicketToRideAssistant.UI.TextImageItem;
 

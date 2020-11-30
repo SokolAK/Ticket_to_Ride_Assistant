@@ -1,9 +1,12 @@
-package pl.sokolak.TicketToRideAssistant.Logic;
+package pl.sokolak.TicketToRideAssistant.Calculators;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import pl.sokolak.TicketToRideAssistant.Domain.Player;
+import pl.sokolak.TicketToRideAssistant.Domain.Route;
 
 public final class ConnectionCalculator {
     private Set<Route> builtSegments;

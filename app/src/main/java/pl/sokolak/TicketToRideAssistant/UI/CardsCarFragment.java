@@ -12,9 +12,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import pl.sokolak.TicketToRideAssistant.Logic.Game;
+import pl.sokolak.TicketToRideAssistant.Domain.Game;
 import pl.sokolak.TicketToRideAssistant.R;
-import pl.sokolak.TicketToRideAssistant.Logic.TtRA_Application;
+import pl.sokolak.TicketToRideAssistant.TtRA_Application;
 
 import lombok.Builder;
 

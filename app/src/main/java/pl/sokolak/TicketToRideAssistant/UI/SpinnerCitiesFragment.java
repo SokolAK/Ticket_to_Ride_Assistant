@@ -9,10 +9,10 @@ import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
 
-import pl.sokolak.TicketToRideAssistant.Logic.Game;
-import pl.sokolak.TicketToRideAssistant.Logic.Player;
-import pl.sokolak.TicketToRideAssistant.Logic.Route;
-import pl.sokolak.TicketToRideAssistant.Logic.TtRA_Application;
+import pl.sokolak.TicketToRideAssistant.Domain.Game;
+import pl.sokolak.TicketToRideAssistant.Domain.Player;
+import pl.sokolak.TicketToRideAssistant.Domain.Route;
+import pl.sokolak.TicketToRideAssistant.TtRA_Application;
 import pl.sokolak.TicketToRideAssistant.R;
 
 import java.util.ArrayList;

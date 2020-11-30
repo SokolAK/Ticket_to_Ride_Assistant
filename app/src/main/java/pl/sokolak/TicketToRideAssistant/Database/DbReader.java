@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import pl.sokolak.TicketToRideAssistant.Logic.Game;
-import pl.sokolak.TicketToRideAssistant.Logic.Route;
-import pl.sokolak.TicketToRideAssistant.Logic.Ticket;
+import pl.sokolak.TicketToRideAssistant.Domain.Game;
+import pl.sokolak.TicketToRideAssistant.Domain.Route;
+import pl.sokolak.TicketToRideAssistant.Domain.Ticket;
 
 public final class DbReader {
 
@@ -120,6 +120,7 @@ public final class DbReader {
                 game.setNumberOfStations(cursor.getInt(7));
                 game.setStationPoints(cursor.getInt(8));
                 game.setWarehousesAvailable(cursor.getInt(9) > 0);
+                game.setCarsToLocoTradeRatio(cursor.getInt(10));
             }
         }
         cursor.close();

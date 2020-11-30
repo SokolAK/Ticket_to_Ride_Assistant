@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -17,21 +16,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import pl.sokolak.TicketToRideAssistant.Logic.Game;
-import pl.sokolak.TicketToRideAssistant.Logic.Player;
-import pl.sokolak.TicketToRideAssistant.Logic.PointsCalculator;
-import pl.sokolak.TicketToRideAssistant.Logic.Route;
-import pl.sokolak.TicketToRideAssistant.Logic.TtRA_Application;
+import pl.sokolak.TicketToRideAssistant.Domain.Game;
+import pl.sokolak.TicketToRideAssistant.Domain.Player;
+import pl.sokolak.TicketToRideAssistant.TtRA_Application;
 import pl.sokolak.TicketToRideAssistant.R;
-import pl.sokolak.TicketToRideAssistant.UI.TextImageItem;
-import pl.sokolak.TicketToRideAssistant.UI.TextImageItemAdapter;
 import pl.sokolak.TicketToRideAssistant.UI.TextTextItem;
 import pl.sokolak.TicketToRideAssistant.UI.TextTextItemAdapter;
 
 import static pl.sokolak.TicketToRideAssistant.Util.DimensionUtils.getDimension;
 
 public class PointsFragment extends Fragment {
-    private PointsCalculator pointsCalculator;
+    //private Game.PointsCalculator pointsCalculator;
     private Player player;
     private Game game;
 
@@ -42,7 +37,7 @@ public class PointsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         player = ((TtRA_Application) requireActivity().getApplication()).player;
         game = ((TtRA_Application) requireActivity().getApplication()).game;
-        pointsCalculator = new PointsCalculator(player, game);
+        game.getPointsCalculator().setPlayer(player);
 
         View drawer = inflater.inflate(R.layout.fragment_points, container, false);
         Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
@@ -77,7 +72,7 @@ public class PointsFragment extends Fragment {
         }
 
         String totalPointsLabel = context.getResources().getString(R.string.total) + ": ";
-        String totalPointsValue = String.valueOf(pointsCalculator.sumPoints());
+        String totalPointsValue = String.valueOf(game.getPointsCalculator().sumPoints());
         TextTextItem totalItem = new TextTextItem(totalPointsLabel, totalPointsValue);
         totalItem.setTextSize(textSize);
         points.add(totalItem);
@@ -86,7 +81,7 @@ public class PointsFragment extends Fragment {
     }
 
     private TextTextItem getPointsTicketsItem(Context context) {
-        Map<String, Integer> pointsTickets = pointsCalculator.calculatePointsTickets(player.getTickets());
+        Map<String, Integer> pointsTickets = game.getPointsCalculator().calculatePointsTickets(player.getTickets());
         StringBuilder builder = new StringBuilder();
         builder.append(Objects.requireNonNull(pointsTickets.get("realized")).toString());
         builder.append(" - ");
@@ -101,7 +96,7 @@ public class PointsFragment extends Fragment {
 
     private TextTextItem getPointsRoutesItem(Context context) {
         String label = context.getResources().getString(R.string.claimed_routes) + ": ";
-        String value = String.valueOf(pointsCalculator.calculatePointsRoutes(player.getBuiltRoutes()));
+        String value = String.valueOf(game.getPointsCalculator().calculatePointsRoutes(player.getBuiltRoutes()));
         return new TextTextItem(label, value);
     }
 

@@ -1,4 +1,4 @@
-package pl.sokolak.TicketToRideAssistant.Logic;
+package pl.sokolak.TicketToRideAssistant.Domain;
 
 import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.UI.Card;
@@ -14,6 +14,7 @@ public class Route {
     private int length;
     private int locos;
     private boolean tunnel;
+    private boolean ferry;
     private char color;
 
     private boolean built;
@@ -35,6 +36,7 @@ public class Route {
         this.color = color;
         this.built = false;
         this.builtStation = false;
+        this.ferry = locos > 0;
     }
 
     public int getImageId(Game game, char color) {

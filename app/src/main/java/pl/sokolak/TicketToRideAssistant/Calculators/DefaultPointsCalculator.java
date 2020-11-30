@@ -1,27 +1,28 @@
-package pl.sokolak.TicketToRideAssistant.Logic;
+package pl.sokolak.TicketToRideAssistant.Calculators;
 
-import android.content.Context;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
-import pl.sokolak.TicketToRideAssistant.R;
-import pl.sokolak.TicketToRideAssistant.UI.TextTextItem;
+import pl.sokolak.TicketToRideAssistant.Domain.Game;
+import pl.sokolak.TicketToRideAssistant.Domain.Player;
+import pl.sokolak.TicketToRideAssistant.Domain.Route;
+import pl.sokolak.TicketToRideAssistant.Domain.Ticket;
 
-import static pl.sokolak.TicketToRideAssistant.Util.DimensionUtils.getDimension;
-
-public class PointsCalculator {
+public class DefaultPointsCalculator implements PointsCalculator {
     private Player player;
     private Game game;
 
-    public PointsCalculator(Player player, Game game) {
-        this.player = player;
+    public DefaultPointsCalculator(Game game) {
         this.game = game;
     }
 
+    @Override
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    @Override
     public int sumPoints() {
         int points = 0;
 
@@ -32,6 +33,7 @@ public class PointsCalculator {
         return points;
     }
 
+    @Override
     public Map<String, Integer> calculatePointsTickets(List<Ticket> tickets) {
         int pointsRealized = 0;
         int pointsUnrealized = 0;
@@ -49,6 +51,7 @@ public class PointsCalculator {
         return points;
     }
 
+    @Override
     public int calculatePointsRoutes(List<Route> routes) {
         int points = 0;
         for (Route route : routes) {

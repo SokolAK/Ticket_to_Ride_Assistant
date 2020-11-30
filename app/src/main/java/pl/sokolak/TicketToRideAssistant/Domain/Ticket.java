@@ -1,6 +1,7 @@
-package pl.sokolak.TicketToRideAssistant.Logic;
+package pl.sokolak.TicketToRideAssistant.Domain;
 
 import lombok.Data;
+import pl.sokolak.TicketToRideAssistant.Calculators.ConnectionCalculator;
 
 @Data
 public class Ticket {

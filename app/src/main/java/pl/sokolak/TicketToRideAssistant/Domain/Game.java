@@ -1,7 +1,9 @@
-package pl.sokolak.TicketToRideAssistant.Logic;
+package pl.sokolak.TicketToRideAssistant.Domain;
 
 import android.content.Context;
 
+import pl.sokolak.TicketToRideAssistant.Calculators.DefaultPointsCalculator;
+import pl.sokolak.TicketToRideAssistant.Calculators.PointsCalculator;
 import pl.sokolak.TicketToRideAssistant.Database.DbReader;
 import pl.sokolak.TicketToRideAssistant.Games.Europe;
 import pl.sokolak.TicketToRideAssistant.Games.Nordic;
@@ -13,7 +15,6 @@ import pl.sokolak.TicketToRideAssistant.UI.Card;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 import lombok.Data;
 import pl.sokolak.TicketToRideAssistant.Util.Triplet;
@@ -23,7 +24,7 @@ import static pl.sokolak.TicketToRideAssistant.Database.DbService.generalDatabas
 
 
 @Data
-public class Game {
+public abstract class Game {
     private int id;
     private String title;
     private int startCards;
@@ -32,6 +33,7 @@ public class Game {
     private int stationPoints;
     private int numberOfCars;
     private int maxExtraCardsForTunnel;
+    private int carsToLocoTradeRatio;
     private HashMap<Integer, Integer> scoring = new HashMap<>();
     protected HashMap<Integer, Integer> stationCost = new HashMap<>();
     private List<Card> cards = new ArrayList<>();
@@ -44,6 +46,8 @@ public class Game {
     private long ticketHash;
     private boolean warehousesAvailable;
     private boolean stationsAvailable;
+    protected PointsCalculator pointsCalculator = new DefaultPointsCalculator(this);
+
 
     public Game(Context context) {
         this.context = context;

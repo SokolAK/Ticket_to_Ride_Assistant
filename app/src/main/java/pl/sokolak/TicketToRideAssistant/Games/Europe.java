@@ -3,7 +3,7 @@ package pl.sokolak.TicketToRideAssistant.Games;
 import android.content.Context;
 
 import pl.sokolak.TicketToRideAssistant.Database.DbReader;
-import pl.sokolak.TicketToRideAssistant.Logic.Game;
+import pl.sokolak.TicketToRideAssistant.Domain.Game;
 import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.Util.Triplet;
 
