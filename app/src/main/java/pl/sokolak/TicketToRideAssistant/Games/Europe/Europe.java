@@ -1,4 +1,4 @@
-package pl.sokolak.TicketToRideAssistant.Games;
+package pl.sokolak.TicketToRideAssistant.Games.Europe;
 
 import android.content.Context;
 
@@ -8,16 +8,34 @@ import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.Util.Triplet;
 
 public class Europe extends Game {
+    Context context;
+
     public Europe(Context context) {
         super(context);
+        this.context = context;
 
         databaseName = "TtRA_Europe.db";
         databaseVersion = 1;
-        prepareBaseGame("Europe");
-        stationCost = DbReader.readStationCost(context, databaseName, databaseVersion);
 
-        //TICKETS
-        //------------------------------------------------------------------------------------------
+        title = "Europe";
+        startCards = 4;
+        maxNoOfCardsToDraw = 2;
+        numberOfStations = 3;
+        stationPoints = 4;
+        stationCost = DbReader.readStationCost(context, databaseName, databaseVersion);
+        numberOfCars = 45;
+        maxExtraCardsForTunnel = 3;
+        warehousesAvailable = true;
+        stationsAvailable = true;
+
+        prepareBaseGame(title);
+        addTicketDecks();
+
+        pointsCalculator = new EuropePointsCalculator(this);
+        stationCarCardController = new EuropeStationCarCardsController();
+    }
+
+    private void addTicketDecks() {
         ticketsDecks.add(Triplet.create
                 ("Tickets_Base_Long",
                         context.getString(R.string.TtRA_Europe_Tickets_Base_Long),

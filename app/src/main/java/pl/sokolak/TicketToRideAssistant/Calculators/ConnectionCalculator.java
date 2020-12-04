@@ -30,7 +30,6 @@ public final class ConnectionCalculator {
 
     public boolean checkIfConnected(String cityStart, String cityPrevious, String cityDestination) {
         List<String> cities2 = getCitiesConnectedToCityWithoutPrevious(builtSegments, cityStart, cityPrevious);
-
         for (String city2 : cities2) {
             if (city2.equals(cityDestination)) {
                 return true;

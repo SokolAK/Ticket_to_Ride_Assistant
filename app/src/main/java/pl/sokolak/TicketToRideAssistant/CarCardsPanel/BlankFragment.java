@@ -1,4 +1,4 @@
-package pl.sokolak.TicketToRideAssistant.UI;
+package pl.sokolak.TicketToRideAssistant.CarCardsPanel;
 
 import android.os.Bundle;
 
@@ -12,14 +12,7 @@ import android.widget.TextView;
 import pl.sokolak.TicketToRideAssistant.R;
 
 public class BlankFragment extends Fragment {
-    private String text;
-
     public BlankFragment() {
-        // Required empty public constructor
-    }
-
-    public BlankFragment(String text) {
-        this.text = text;
     }
 
     @Override
@@ -27,7 +20,6 @@ public class BlankFragment extends Fragment {
                              Bundle savedInstanceState) {
         View drawer = inflater.inflate(R.layout.fragment_blank, container, false);
         TextView textView = drawer.findViewById(R.id.blank_text);
-        textView.setText(text);
         return drawer;
     }
 }

@@ -28,6 +28,10 @@
     <string name="claimed_routes">Claimed Routes</string>
     <string name="stations_left">Stations left</string>
     <string name="total">Total</string>
+    <string name="possibleBonuses">Possible bonuses</string>
+    <string name="longestPathBonus">Longest Path Bonus</string>
+    <string name="globetrotterBonus">Globetrotter Bonus</string>
+
 
     <!-- Cards panel -->
     <string name="too_much_cards">Too much cards</string>
@@ -36,8 +40,8 @@
     <string name="too_little_cars">Too little cars</string>
     <string name="not_enough_cards">Not enough cards</string>
 
-    <!-- Draw cards -->
-    <string name="draw_cards_label">Number of cards to draw:</string>
+    <!-- Draw carCards -->
+    <string name="draw_cards_label">Number of carCards to draw:</string>
 
     <!-- Routes -->
     <string name="build_new_route">Claim a Route</string>
@@ -71,29 +75,29 @@
     <!-- Help Activity -->
     <string name="help_status">
         Show player points, number of cars and train stations left, number of realized/unrealized tickets, length of the longest continuous path.
-        You can unlock the cards panel using the switch on the bottom, to manually modify the numbers of cards.
-        To add (remove) a card of an individual color, tap (long press) the corresponding tile.</string>
+        You can unlock the carCards panel using the switch on the bottom, to manually modify the numbers of carCards.
+        To add (remove) a carCard of an individual color, tap (long press) the corresponding tile.</string>
     <string name="help_points">
         Show detailed calculations of points</string>
     <string name="help_draw">
-        You can draw new train car cards here. Add card by taping it or remove by long pressing.
-        Accept your choice by pressing green button or reset the cards set by pressing red button.</string>
+        You can draw new train car carCards here. Add carCard by taping it or remove by long pressing.
+        Accept your choice by pressing green button or reset the carCards set by pressing red button.</string>
     <string name="help_route">
         Show claimed routes. You can unlock the routes list and remove the route by long pressing it.
-        To claim a new one press the "Claim a route" button. First choose cities names. Then select proper train car cards.
-        Claim the route by pressing green button or reset the cards set by pressing red button.</string>
+        To claim a new one press the "Claim a route" button. First choose cities names. Then select proper train car carCards.
+        Claim the route by pressing green button or reset the carCards set by pressing red button.</string>
     <string name="help_ticket">
         Show drawn destination tickets. You can unlock the ticket list and remove the ticket by long pressing it.
         To draw a new ticket press "Draw a ticket" button. First choose cities names. Then draw a ticket by pressing the green button.
         You can also define your own ticket (if not available in selected ticket decks). To do this, click the "+" button on the "Draw Ticket" screen.</string>
     <string name="help_station">
         (Only available only in some games) Show built train stations. You can unlock the station list and remove the station by long pressing it.
-        To build a new one press the "Build a new station" button. First choose cities names. Then select proper car cards.
-        Build the station by pressing green button or reset the cards set by pressing red button.</string>
+        To build a new one press the "Build a new station" button. First choose cities names. Then select proper car carCards.
+        Build the station by pressing green button or reset the carCards set by pressing red button.</string>
     <string name="help_warehouse">
-        (Only available in some games) Pick train car cards from a warehouse.
-        Add card by taping it or remove by long pressing.
-        Accept your choice by pressing green button or reset the cards set by pressing red button.</string>
+        (Only available in some games) Pick train car carCards from a warehouse.
+        Add carCard by taping it or remove by long pressing.
+        Accept your choice by pressing green button or reset the carCards set by pressing red button.</string>
     <string name="help_decks">
         Here you can choose decks of destination tickets.</string>
 
@@ -103,8 +107,11 @@
     <string name="TtRA_Europe_Tickets_1912_Short">Europe 1912. Short</string>
     <string name="TtRA_Europe_Tickets_1912_Long">Europe 1912. Long</string>
     <string name="TtRA_Europe_Tickets_1912_BigCities">Europe 1912. Big cities</string>
-    <string name="TtRA_USA_Tickets_Base">USA Base</string>
-    <string name="TtRA_Nordic_Tickets_Base">Nordic Countries Base</string>
+    <string name="TtRA_USA_Tickets_Base_Short">USA Base. Short</string>
+    <string name="TtRA_USA_Tickets_Base_BigCities">USA Base. BigCities</string>
+    <string name="TtRA_USA_Tickets_1910_Classic">USA 1910. Classic</string>
+    <string name="TtRA_USA_Tickets_1910_BigCities">USA 1910. BigCities</string>
+    <string name="TtRA_Nordic_Tickets_Base">Nordic Countries. Base</string>
 
     <string name="choose_game">Choose your game</string>
     <string name="exit">Exit</string>

@@ -9,9 +9,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import pl.sokolak.TicketToRideAssistant.Domain.Game;
+import pl.sokolak.TicketToRideAssistant.Domain.CarCardColor;
 import pl.sokolak.TicketToRideAssistant.Domain.Route;
 import pl.sokolak.TicketToRideAssistant.Domain.Ticket;
+import pl.sokolak.TicketToRideAssistant.Domain.Game;
+
+import static pl.sokolak.TicketToRideAssistant.Util.ColorConverter.CarCardColorToChar;
+import static pl.sokolak.TicketToRideAssistant.Util.ColorConverter.CharToCarCardColor;
 
 public final class DbReader {
 
@@ -63,7 +67,11 @@ public final class DbReader {
             int locos = cursor.getInt(4);
             boolean tunnel = cursor.getInt(5) > 0;
             char color = cursor.getString(6).charAt(0);
-            routes.add(new Route(city1, city2, length, locos, tunnel, color));
+            CarCardColor carCardColor = CharToCarCardColor(color);
+            if(locos == length) {
+                carCardColor = CarCardColor.LOCO;
+            }
+            routes.add(new Route(city1, city2, length, locos, tunnel, carCardColor));
         }
         cursor.close();
         database.close();
@@ -102,29 +110,5 @@ public final class DbReader {
         cursor.close();
         database.close();
         return stationCost;
-    }
-
-    public static Game readGeneralData(Context context, String databaseName, int databaseVersion, Game game) {
-        DbHelper dbHelper = DbHelper.getInstance(context, databaseName, databaseVersion);
-        dbHelper.checkDatabase();
-        SQLiteDatabase database = dbHelper.getReadableDatabase();
-
-        Cursor cursor = database.rawQuery("SELECT * FROM Games", null);
-        while (cursor.moveToNext()) {
-            if (cursor.getString(1).equals(game.getTitle())) {
-                game.setNumberOfCars(cursor.getInt(2));
-                game.setStartCards(cursor.getInt(3));
-                game.setMaxNoOfCardsToDraw(cursor.getInt(4));
-                game.setMaxExtraCardsForTunnel(cursor.getInt(5));
-                game.setStationsAvailable(cursor.getInt(6) > 0);
-                game.setNumberOfStations(cursor.getInt(7));
-                game.setStationPoints(cursor.getInt(8));
-                game.setWarehousesAvailable(cursor.getInt(9) > 0);
-                game.setCarsToLocoTradeRatio(cursor.getInt(10));
-            }
-        }
-        cursor.close();
-        database.close();
-        return game;
     }
 }

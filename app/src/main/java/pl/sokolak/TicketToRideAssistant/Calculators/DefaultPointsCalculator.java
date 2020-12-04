@@ -1,17 +1,23 @@
 package pl.sokolak.TicketToRideAssistant.Calculators;
 
+import android.content.Context;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import pl.sokolak.TicketToRideAssistant.Domain.Game;
 import pl.sokolak.TicketToRideAssistant.Domain.Player;
 import pl.sokolak.TicketToRideAssistant.Domain.Route;
 import pl.sokolak.TicketToRideAssistant.Domain.Ticket;
+import pl.sokolak.TicketToRideAssistant.R;
+import pl.sokolak.TicketToRideAssistant.Util.Pair;
 
 public class DefaultPointsCalculator implements PointsCalculator {
-    private Player player;
-    private Game game;
+    protected Player player;
+    protected Game game;
 
     public DefaultPointsCalculator(Game game) {
         this.game = game;
@@ -23,13 +29,54 @@ public class DefaultPointsCalculator implements PointsCalculator {
     }
 
     @Override
+    public List<Pair<String, String>> getPointsList(Context context) {
+        List<Pair<String, String>> list = new ArrayList<>();
+
+        String labelTotal = context.getResources().getString(R.string.total);
+        String valueTotal = String.valueOf(game.getPointsCalculator().sumPoints());
+        list.add(Pair.create(labelTotal + ": ", valueTotal));
+
+        String labelTickets = context.getResources().getString(R.string.tickets);
+        Map<String, Integer> pointsTickets = game.getPointsCalculator().calculatePointsTickets(player.getTickets());
+        String valueTickets = getPointsTicketsString(Objects.requireNonNull(pointsTickets.get("realized")),
+                Objects.requireNonNull(pointsTickets.get("unrealized")),
+                Objects.requireNonNull(pointsTickets.get("total")));
+        list.add(Pair.create(labelTickets + ": ", valueTickets));
+
+        String labelRoutes = context.getResources().getString(R.string.claimed_routes);
+        String valueRoutes = String.valueOf(game.getPointsCalculator().calculatePointsRoutes(player.getBuiltRoutes()));
+        list.add(Pair.create(labelRoutes + ": ", valueRoutes));
+
+        list.addAll(getBonusesList(context));
+
+        list.add(Pair.create("", ""));
+        list.add(Pair.create(context.getResources().getString(R.string.possibleBonuses), ""));
+
+        list.addAll(getPossibleBonusesList(context));
+
+        return list;
+    }
+
+    @Override
+    public List<Pair<String, String>> getBonusesList(Context context) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<Pair<String, String>> getPossibleBonusesList(Context context) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public String getPointsTicketsString(int noRealized, int noUnrealized, int noTotal) {
+        return noRealized + " - " + noUnrealized + " = " + noTotal;
+    }
+
+    @Override
     public int sumPoints() {
         int points = 0;
-
         points += calculatePointsTickets(player.getTickets()).get("total");
         points += calculatePointsRoutes(player.getBuiltRoutes());
-        points += player.getNumberOfStations() * game.getStationPoints();
-
         return points;
     }
 

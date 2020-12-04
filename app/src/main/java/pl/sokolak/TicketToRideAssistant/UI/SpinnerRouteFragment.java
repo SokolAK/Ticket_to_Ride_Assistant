@@ -1,5 +1,6 @@
 package pl.sokolak.TicketToRideAssistant.UI;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -29,9 +30,13 @@ public class SpinnerRouteFragment extends Fragment {
     private Game game;
     private Player player;
     private char type;
+    private Context context;
+    private SpinnerListenerInterface parentFragment;
 
-    public SpinnerRouteFragment(char type) {
+    public SpinnerRouteFragment(char type, Context context, SpinnerListenerInterface parentFragment) {
         this.type = type;
+        this.context = context;
+        this.parentFragment = parentFragment;
     }
 
     @Override
@@ -83,10 +88,10 @@ public class SpinnerRouteFragment extends Fragment {
 
         List<TextImageItem> cityList1 = new ArrayList<>();
         for (String city1 : cities1) {
-            int textSize = getDimension(requireContext(),R.dimen.text_size_normal);
+            int textSize = getDimension(context,R.dimen.text_size_normal);
             cityList1.add(new TextImageItem(city1, 0, 0, textSize));
         }
-        TextImageItemAdapter adapter = new TextImageItemAdapter(getContext(), cityList1);
+        TextImageItemAdapter adapter = new TextImageItemAdapter(context, cityList1);
         Spinner spinner = drawer.findViewById(R.id.spinner1);
         spinner.setAdapter(adapter);
     }
@@ -129,8 +134,8 @@ public class SpinnerRouteFragment extends Fragment {
                         city2 = route.getCity1();
                     }
                     if (type == 'R') {
-                        int textSize = getDimension(requireContext(),R.dimen.text_size_normal);
-                        cityList2.add(new TextImageItem(city2, route.getImageId(game, route.getColor()), route.getId(), textSize));
+                        int textSize = getDimension(context,R.dimen.text_size_normal);
+                        cityList2.add(new TextImageItem(city2, route.getColor().getImageResourceId(), route.getId(), textSize));
                     }
                     if (type == 'S') {
                         boolean addRoute = true;
@@ -141,7 +146,7 @@ public class SpinnerRouteFragment extends Fragment {
                             }
                         }
                         if (addRoute) {
-                            int textSize = getDimension(requireContext(),R.dimen.text_size_normal);
+                            int textSize = getDimension(context,R.dimen.text_size_normal);
                             cityList2.add(new TextImageItem(city2, 0, route.getId(), textSize));
                         }
                     }
@@ -151,7 +156,7 @@ public class SpinnerRouteFragment extends Fragment {
             Collections.sort(cityList2, TextImageItem::compareTo);
 
             Spinner spinner = drawer.findViewById(R.id.spinner2);
-            TextImageItemAdapter adapter = new TextImageItemAdapter(getContext(), cityList2);
+            TextImageItemAdapter adapter = new TextImageItemAdapter(context, cityList2);
             spinner.setAdapter(adapter);
             spinner.setOnItemSelectedListener(new SpinnerRouteFragment.listenerCity2(drawer));
         }
@@ -171,7 +176,7 @@ public class SpinnerRouteFragment extends Fragment {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Spinner spinner2 = drawer.findViewById(R.id.spinner2);
-            SpinnerListenerInterface parentFragment = (SpinnerListenerInterface) getParentFragment();
+            //SpinnerListenerInterface parentFragment = (SpinnerListenerInterface) getParentFragment();
             parentFragment.onSpinnerItemSelected((TextImageItem) spinner2.getSelectedItem());
         }
 

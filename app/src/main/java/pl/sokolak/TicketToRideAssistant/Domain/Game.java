@@ -2,41 +2,43 @@ package pl.sokolak.TicketToRideAssistant.Domain;
 
 import android.content.Context;
 
-import pl.sokolak.TicketToRideAssistant.Calculators.DefaultPointsCalculator;
-import pl.sokolak.TicketToRideAssistant.Calculators.PointsCalculator;
-import pl.sokolak.TicketToRideAssistant.Database.DbReader;
-import pl.sokolak.TicketToRideAssistant.Games.Europe;
-import pl.sokolak.TicketToRideAssistant.Games.Nordic;
-import pl.sokolak.TicketToRideAssistant.Games.USA;
-import pl.sokolak.TicketToRideAssistant.R;
-
-import pl.sokolak.TicketToRideAssistant.UI.Card;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import lombok.Data;
+import pl.sokolak.TicketToRideAssistant.Calculators.DefaultPointsCalculator;
+import pl.sokolak.TicketToRideAssistant.Calculators.PointsCalculator;
+import pl.sokolak.TicketToRideAssistant.CarCardsPanel.CarCardsController;
+import pl.sokolak.TicketToRideAssistant.CarCardsPanel.RouteCarCardsController;
+import pl.sokolak.TicketToRideAssistant.Database.DbReader;
+import pl.sokolak.TicketToRideAssistant.Games.Europe.Europe;
+import pl.sokolak.TicketToRideAssistant.Games.Nordic.Nordic;
+import pl.sokolak.TicketToRideAssistant.Games.USA.USA;
+import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.Util.Triplet;
-
-import static pl.sokolak.TicketToRideAssistant.Database.DbService.generalDatabaseName;
-import static pl.sokolak.TicketToRideAssistant.Database.DbService.generalDatabaseVersion;
 
 
 @Data
 public abstract class Game {
     private int id;
-    private String title;
-    private int startCards;
-    private int maxNoOfCardsToDraw;
-    private int numberOfStations;
-    private int stationPoints;
-    private int numberOfCars;
-    private int maxExtraCardsForTunnel;
-    private int carsToLocoTradeRatio;
+    protected String title;
+    protected int startCards;
+    protected int maxNoOfCardsToDraw;
+    protected int numberOfStations = 0;
+    protected int stationPoints = 0;
+    protected int numberOfCars;
+    protected int maxExtraCardsForTunnel;
+    protected int carsToLocoTradeRatio;
+    protected boolean warehousesAvailable;
+    protected boolean stationsAvailable;
+
+    protected CarCardsController stationCarCardController;
+    protected CarCardsController routeCarCardController = new RouteCarCardsController();
+
     private HashMap<Integer, Integer> scoring = new HashMap<>();
     protected HashMap<Integer, Integer> stationCost = new HashMap<>();
-    private List<Card> cards = new ArrayList<>();
+    private List<CarCardColor> carCardColors = new ArrayList<>();
     private List<Route> routes = new ArrayList<>();
     private List<Ticket> tickets = new ArrayList<>();
     protected String databaseName;
@@ -44,8 +46,7 @@ public abstract class Game {
     private Context context;
     protected List<Triplet<String, String, Boolean>> ticketsDecks = new ArrayList<>();
     private long ticketHash;
-    private boolean warehousesAvailable;
-    private boolean stationsAvailable;
+
     protected PointsCalculator pointsCalculator = new DefaultPointsCalculator(this);
 
 
@@ -75,22 +76,21 @@ public abstract class Game {
 
     public void prepareBaseGame(String title) {
         setTitle(title);
-        setCards();
-        DbReader.readGeneralData(context, generalDatabaseName, generalDatabaseVersion, this);
+        setCarCards();
         routes = DbReader.readRoutes(context, databaseName, databaseVersion);
         scoring = DbReader.readScoring(context, databaseName, databaseVersion);
     }
 
-    public void setCards() {
-        cards.add(new Card('V', R.drawable.violet));
-        cards.add(new Card('O', R.drawable.orange));
-        cards.add(new Card('B', R.drawable.blue));
-        cards.add(new Card('Y', R.drawable.yellow));
-        cards.add(new Card('A', R.drawable.black));
-        cards.add(new Card('G', R.drawable.green));
-        cards.add(new Card('R', R.drawable.red));
-        cards.add(new Card('W', R.drawable.white));
-        cards.add(new Card('L', R.drawable.loco));
+    public void setCarCards() {
+        carCardColors.add(CarCardColor.VIOLET);
+        carCardColors.add(CarCardColor.ORANGE);
+        carCardColors.add(CarCardColor.BLUE);
+        carCardColors.add(CarCardColor.YELLOW);
+        carCardColors.add(CarCardColor.BLACK);
+        carCardColors.add(CarCardColor.GREEN);
+        carCardColors.add(CarCardColor.RED);
+        carCardColors.add(CarCardColor.WHITE);
+        carCardColors.add(CarCardColor.LOCO);
     }
 
     public void updateTickets() {

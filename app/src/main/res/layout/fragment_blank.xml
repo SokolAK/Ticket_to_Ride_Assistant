@@ -7,4 +7,4 @@
     android:background="@color/colorBackDark"
     android:gravity="center"
     android:text="Already built!"
-    tools:context="pl.sokolak.TicketToRideAssistant.UI.BlankFragment" />
+    tools:context="pl.sokolak.TicketToRideAssistant.CarCardsPanel.BlankFragment" />
