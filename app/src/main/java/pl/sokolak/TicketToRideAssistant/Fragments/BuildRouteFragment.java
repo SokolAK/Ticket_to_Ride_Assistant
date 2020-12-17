@@ -13,65 +13,59 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import pl.sokolak.TicketToRideAssistant.CarCardsPanel.CarCardTile;
-import pl.sokolak.TicketToRideAssistant.CarCardsPanel.CarCardsController;
-import pl.sokolak.TicketToRideAssistant.CarCardsPanel.CarCardsFragment;
-import pl.sokolak.TicketToRideAssistant.CarCardsPanel.CarCardsObserver;
-import pl.sokolak.TicketToRideAssistant.Domain.CarCardColor;
 import pl.sokolak.TicketToRideAssistant.Domain.Game;
 import pl.sokolak.TicketToRideAssistant.Domain.Player;
 import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.Domain.Route;
 import pl.sokolak.TicketToRideAssistant.TtRA_Application;
+import pl.sokolak.TicketToRideAssistant.UI.Card;
+import pl.sokolak.TicketToRideAssistant.UI.CardsCarFragment;
 import pl.sokolak.TicketToRideAssistant.UI.TextImageItem;
 import pl.sokolak.TicketToRideAssistant.UI.SpinnerRouteFragment;
 import pl.sokolak.TicketToRideAssistant.UI.SpinnerListenerInterface;
 
-import static pl.sokolak.TicketToRideAssistant.Util.carCardsConverter.carCardsTilesToCarCards;
-
-public class BuildRouteFragment extends Fragment implements View.OnClickListener, SpinnerListenerInterface, CarCardsObserver {
+public class BuildRouteFragment extends Fragment implements View.OnClickListener, SpinnerListenerInterface {
     private Game game;
     private Player player;
+    private int[] cardCounter;
+    private int[] cardsNumbers;
+    private int maxCards;
     private Route route;
     int cars;
-    private View view;
-    private List<CarCardTile> carCardTiles;
-    private CarCardsController carCardsController;
+    private View drawer;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         game = ((TtRA_Application) requireActivity().getApplication()).game;
         player = ((TtRA_Application) requireActivity().getApplication()).player;
+        cardCounter = new int[1];
+        cardsNumbers = new int[game.getCards().size()];
 
-        view = inflater.inflate(R.layout.fragment_build_route, container, false);
+        for (int i = 0; i < game.getCards().size(); ++i) {
+            game.getCards().get(i).setClickable(1);
+            game.getCards().get(i).setVisible(1);
+            cardsNumbers[i] = 0;
+        }
 
-        ImageView acceptIcon = view.findViewById(R.id.accept_button);
+        drawer = inflater.inflate(R.layout.fragment_build_route, container, false);
+
+        ImageView acceptIcon = drawer.findViewById(R.id.accept_button);
         acceptIcon.setOnClickListener(this);
-        ImageView resetIcon = view.findViewById(R.id.reset_button);
+        ImageView resetIcon = drawer.findViewById(R.id.reset_button);
         resetIcon.setOnClickListener(this);
 
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        SpinnerRouteFragment spinnerRouteFragment = new SpinnerRouteFragment('R', getContext(), this);
+        SpinnerRouteFragment spinnerRouteFragment = new SpinnerRouteFragment('R');
         ft.replace(R.id.spinners_container, spinnerRouteFragment);
         ft.commit();
 
         Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_buildRoute);
 
-        carCardsController = game.getRouteCarCardController();
-        carCardsController.setPlayer(player);
-        carCardsController.setGame(game);
-        carCardTiles = new ArrayList<>();
-        for (CarCardColor card : game.getCarCardColors()) {
-            carCardTiles.add(new CarCardTile(card, 0, true, true, false));
-        }
-
-        return view;
+        return drawer;
     }
 
     @Override
@@ -79,30 +73,92 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         switch (v.getId()) {
 
             case R.id.accept_button:
-                if (carCardsController.isConditionMet(getContext(), carCardTiles)) {
-                    CarCardColor builtColor = CarCardColor.LOCO;
-                    for (CarCardTile carCardTile : carCardTiles) {
-                        CarCardColor key = carCardTile.getCarCardColor();
-                        if (carCardTile.getAmount() > 0) {
-                            builtColor = key;
-                            break;
+                int length = route.getLength();
+                int locos = route.getLocos();
+                if (length <= player.getNumberOfCars()) {
+                    if (cardCounter[0] >= length) {
+                        int selectedLocos = 0;
+                        for (int i = 0; i < game.getCards().size(); ++i) {
+                            if (game.getCards().get(i).getColor() == 'L') {
+                                selectedLocos = cardsNumbers[i];
+                            }
                         }
-                    }
-                    route.setBuilt(true);
-                    route.setBuiltColor(builtColor);
-                    route.setBuiltCarCards(carCardsTilesToCarCards(carCardTiles));
-                    player.addRoute(route);
-                    player.spendCards(route.getBuiltCarCards());
-                    player.spendCars(route.getLength());
+                        if (selectedLocos >= locos) {
+                            player.spendCars(length);
+                            player.spendCards(cardsNumbers);
+                            route.setBuilt(true);
+                            char builtColor = determineRouteColor(cardsNumbers);
+                            route.setBuiltColor(builtColor);
+                            route.setBuiltCardsNumber(cardsNumbers.clone());
+                            player.addRoute(route);
 
-                    returnToTopPage();
+                            clearCards();
+                            refreshCards();
+                            returnToTopPage();
+                        } else {
+                            Toast.makeText(getContext(), R.string.too_little_locos, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getContext(), R.string.too_little_cards, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), R.string.too_little_cars, Toast.LENGTH_SHORT).show();
                 }
+
                 break;
 
             case R.id.reset_button:
                 clearCards();
+                refreshCards();
                 break;
         }
+    }
+
+    private void clearCards() {
+        cardCounter[0] = 0;
+        Game game = ((TtRA_Application) requireActivity().getApplication()).game;
+        for (int i = 0; i < game.getCards().size(); ++i) {
+            cardsNumbers[i] = 0;
+        }
+
+        if(route.isFerry() && game.getCarsToLocoTradeRatio() > 0) {
+            setAvailableCards('-');
+        }
+        else {
+            setAvailableCards(route.getColor());
+        }
+    }
+
+    private void refreshCards() {
+        int[] maxCardsNumbers = new int[player.getCardsNumbers().length];
+        for (int i = 0; i < player.getCardsNumbers().length; ++i) {
+            if (player.getCardsNumbers()[i] < route.getLength()) {
+                maxCardsNumbers[i] = player.getCardsNumbers()[i];
+            } else {
+                maxCardsNumbers[i] = route.getLength();
+                if (route.isTunnel()) {
+                    maxCardsNumbers[i] += game.getMaxExtraCardsForTunnel();
+                }
+                if (game.getCards().get(i).getColor() != 'L') {
+                    maxCardsNumbers[i] += -route.getLocos() + route.getLocos()*game.getCarsToLocoTradeRatio();
+                }
+                maxCards += route.getLocos()*game.getCarsToLocoTradeRatio();
+            }
+        }
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        CardsCarFragment cardsCarFragment = CardsCarFragment.builder().cardsNumbers(cardsNumbers).
+                cardCounter(cardCounter).maxCards(maxCards).maxCardsNumbers(maxCardsNumbers).
+                active(true).activeLong(true).oneColor(true).
+                build();
+        ft.replace(R.id.cards_container, cardsCarFragment);
+        ft.commit();
+        requireActivity().findViewById(R.id.buttons_panel).setVisibility(View.VISIBLE);
+    }
+
+    private void returnToTopPage() {
+        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, new ShowBuiltRoutesFragment());
+        ft.commit();
     }
 
     @SuppressLint("SetTextI18n")
@@ -112,67 +168,75 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
             int routeId = items[0].getItemId();
             route = game.getRoute(routeId);
             cars = route.getLength() - route.getLocos();
+            maxCards = route.getLength();
 
             if (cars > 0) {
-                view.findViewById(R.id.car_icon).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.car_number).setVisibility(View.VISIBLE);
-                TextView carText = view.findViewById(R.id.car_number);
-                carText.setText(" " + cars);
+                drawer.findViewById(R.id.car_icon).setVisibility(View.VISIBLE);
+                drawer.findViewById(R.id.car_number).setVisibility(View.VISIBLE);
+                TextView carText = drawer.findViewById(R.id.car_number);
+                carText.setText(" " + String.valueOf(cars));
             } else {
-                view.findViewById(R.id.car_icon).setVisibility(View.INVISIBLE);
-                view.findViewById(R.id.car_number).setVisibility(View.INVISIBLE);
+                drawer.findViewById(R.id.car_icon).setVisibility(View.INVISIBLE);
+                drawer.findViewById(R.id.car_number).setVisibility(View.INVISIBLE);
             }
             if (route.getLocos() > 0) {
-                view.findViewById(R.id.loco_icon).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.loco_number).setVisibility(View.VISIBLE);
-                TextView locoText = view.findViewById(R.id.loco_number);
-                locoText.setText(" " + route.getLocos());
+                drawer.findViewById(R.id.loco_icon).setVisibility(View.VISIBLE);
+                drawer.findViewById(R.id.loco_number).setVisibility(View.VISIBLE);
+                TextView locoText = drawer.findViewById(R.id.loco_number);
+                locoText.setText(" " + String.valueOf(route.getLocos()));
             } else {
-                view.findViewById(R.id.loco_icon).setVisibility(View.INVISIBLE);
-                view.findViewById(R.id.loco_number).setVisibility(View.INVISIBLE);
+                drawer.findViewById(R.id.loco_icon).setVisibility(View.INVISIBLE);
+                drawer.findViewById(R.id.loco_number).setVisibility(View.INVISIBLE);
             }
             if (route.isTunnel()) {
-                view.findViewById(R.id.tunnel_icon).setVisibility(View.VISIBLE);
+                drawer.findViewById(R.id.tunnel_icon).setVisibility(View.VISIBLE);
+                maxCards += game.getMaxExtraCardsForTunnel();
             } else {
-                view.findViewById(R.id.tunnel_icon).setVisibility(View.INVISIBLE);
+                drawer.findViewById(R.id.tunnel_icon).setVisibility(View.INVISIBLE);
             }
 
-            TextView lengthText = view.findViewById(R.id.length_value);
-            lengthText.setText(" " + route.getLength());
-            TextView pointsText = view.findViewById(R.id.points_value);
-            pointsText.setText(" " + game.getScoring().get(route.getLength()));
+            TextView lengthText = drawer.findViewById(R.id.length_value);
+            lengthText.setText(" " + String.valueOf(route.getLength()));
+            TextView pointsText = drawer.findViewById(R.id.points_value);
+            pointsText.setText(" " + String.valueOf(game.getScoring().get(route.getLength())));
 
             clearCards();
+            refreshCards();
         }
     }
 
-    private void updateCarCardsFragment(List<CarCardTile> carCardTiles) {
-        carCardsController.setRoute(route);
-        carCardsController.setCardsVisibility(carCardTiles, route);
-        CarCardsFragment carCardsFragment = new CarCardsFragment(carCardTiles, carCardsController);
-        carCardsFragment.getCarCardsObservers().add(this);
-        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        ft.replace(R.id.cards_container, carCardsFragment);
-        ft.commit();
-    }
-
-    private void clearCards() {
-        carCardTiles = new ArrayList<>();
-        for (CarCardColor card : game.getCarCardColors()) {
-            carCardTiles.add(new CarCardTile(card, 0, true, true, true));
+    private void setAvailableCards(char color) {
+        for (Card card : game.getCards()) {
+            card.setClickable(0);
+            card.setVisible(0);
         }
-        updateCarCardsFragment(carCardTiles);
+        for (Card card : game.getCards()) {
+            if (card.getColor() == 'L') {
+                card.setClickable(1);
+                card.setVisible(1);
+            } else {
+                if (color == '-') {
+                    if (cars > 0) {
+                        card.setClickable(1);
+                        card.setVisible(1);
+                    }
+                } else {
+                    if (card.getColor() == color) {
+                        card.setClickable(1);
+                        card.setVisible(1);
+                    }
+                }
+            }
+        }
     }
 
-
-    @Override
-    public void updateCarCards(List<CarCardTile> carCardTiles) {
-        updateCarCardsFragment(carCardTiles);
-    }
-
-    private void returnToTopPage() {
-        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, new ShowBuiltRoutesFragment());
-        ft.commit();
+    private char determineRouteColor(int[] cardsNumbers) {
+        int i = 0;
+        for (; i < cardsNumbers.length; ++i) {
+            if (cardsNumbers[i] > 0) {
+                break;
+            }
+        }
+        return game.getCards().get(i).getColor();
     }
 }

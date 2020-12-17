@@ -42,23 +42,25 @@ public class ShowBuiltStationsFragment extends Fragment implements View.OnClickL
         List<TextImageItem> stationList = new ArrayList<>();
         for(Route route: player.getBuiltStations()) {
             int textSize = getDimension(requireContext(),R.dimen.text_size_small);
-            stationList.add(new TextImageItem(route.toString(), route.getBuiltStationColor().getImageResourceId(), route.getId(), textSize));
+            stationList.add(new TextImageItem(route.toString(), route.getImageId(game,route.getBuiltStationColor()), route.getId(), textSize));
         }
 
         ListView listStations = drawer.findViewById(R.id.list_stations);
-        listStations.setEnabled(false);
         TextImageItemAdapter adapter = new TextImageItemAdapter(getContext(), stationList);
         listStations.setAdapter(adapter);
 
         listStations.setOnItemLongClickListener((arg0, arg1, position, id) -> {
             if(unlockDelete) {
                 Route route = player.getBuiltStations().get(position);
-                player.addCards(route.getBuiltStationCarCards());
+
+                player.addCards(route.getBuiltStationCardsNumber());
                 player.removeRouteStation(position);
                 for (Route rout : game.getRoutes(route.getCity1(), route.getCity2(),false,false)) {
                     rout.setBuiltStation(false);
                 }
+
                 stationList.remove(position);
+
                 adapter.notifyDataSetChanged();
             }
             return true;
@@ -74,14 +76,12 @@ public class ShowBuiltStationsFragment extends Fragment implements View.OnClickL
                     switchControl.setTextColor(getResources().getColor(R.color.cardsUnlocked));
                     TextView deleteComment = drawer.findViewById(R.id.delete_comment);
                     deleteComment.setVisibility(View.VISIBLE);
-                    listStations.setEnabled(true);
                 } else {
                     unlockDelete = false;
                     switchControl.setText(R.string.locked);
                     switchControl.setTextColor(getResources().getColor(R.color.cardsLocked));
                     TextView deleteComment = drawer.findViewById(R.id.delete_comment);
                     deleteComment.setVisibility(View.INVISIBLE);
-                    listStations.setEnabled(false);
                 }
             });
         }

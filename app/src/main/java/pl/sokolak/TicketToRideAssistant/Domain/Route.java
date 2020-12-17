@@ -1,10 +1,7 @@
 package pl.sokolak.TicketToRideAssistant.Domain;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import pl.sokolak.TicketToRideAssistant.CarCardsPanel.CarCard;
 import pl.sokolak.TicketToRideAssistant.R;
+import pl.sokolak.TicketToRideAssistant.UI.Card;
 
 import lombok.Data;
 
@@ -18,19 +15,17 @@ public class Route {
     private int locos;
     private boolean tunnel;
     private boolean ferry;
-    private CarCardColor color;
+    private char color;
 
     private boolean built;
-    private CarCardColor builtColor;
+    private char builtColor;
     private int[] builtCardsNumber;
-    private Map<CarCardColor, Integer> builtCarCards = new LinkedHashMap<>();
 
     private boolean builtStation;
-    private CarCardColor builtStationColor;
+    private char builtStationColor;
     private int[] builtStationCardsNumber;
-    private Map<CarCardColor, Integer> builtStationCarCards = new LinkedHashMap<>();
 
-    public Route(String city1, String city2, int length, int locos, boolean tunnel, CarCardColor color) {
+    public Route(String city1, String city2, int length, int locos, boolean tunnel, char color) {
         counter++;
         id = counter;
         this.city1 = city1;
@@ -42,6 +37,25 @@ public class Route {
         this.built = false;
         this.builtStation = false;
         this.ferry = locos > 0;
+    }
+
+    public int getImageId(Game game, char color) {
+        if(color == '-') {
+            if(length > locos) {
+                return R.drawable.any;
+            }
+            else {
+                return R.drawable.loco;
+            }
+        }
+        else {
+            for (Card card : game.getCards()) {
+                if (card.getColor() == color) {
+                    return card.getImageResourceId();
+                }
+            }
+        }
+        return 0;
     }
 
     @Override

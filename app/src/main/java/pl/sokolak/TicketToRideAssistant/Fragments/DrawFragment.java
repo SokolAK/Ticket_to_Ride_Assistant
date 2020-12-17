@@ -2,7 +2,6 @@ package pl.sokolak.TicketToRideAssistant.Fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
@@ -11,32 +10,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentTransaction;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import pl.sokolak.TicketToRideAssistant.CarCardsPanel.CarCardTile;
-import pl.sokolak.TicketToRideAssistant.CarCardsPanel.CarCardsController;
-import pl.sokolak.TicketToRideAssistant.CarCardsPanel.CarCardsFragment;
-import pl.sokolak.TicketToRideAssistant.CarCardsPanel.CarCardsObserver;
-import pl.sokolak.TicketToRideAssistant.CarCardsPanel.DrawCarCardsController;
-import pl.sokolak.TicketToRideAssistant.Domain.CarCardColor;
 import pl.sokolak.TicketToRideAssistant.Domain.Game;
 import pl.sokolak.TicketToRideAssistant.Domain.Player;
 import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.TtRA_Application;
+import pl.sokolak.TicketToRideAssistant.UI.CardsCarFragment;
 
-import static pl.sokolak.TicketToRideAssistant.Util.carCardsConverter.carCardsTilesToCarCards;
-
-public class DrawFragment extends Fragment implements View.OnClickListener, CarCardsObserver {
+public class DrawFragment extends Fragment implements View.OnClickListener {
     private Game game;
     private Player player;
+    private int[] cardCounter;
+    private int[] cardsNumbers;
     private int maxCards;
     private String title;
-    private List<CarCardTile> carCardTiles = new ArrayList<>();
-    private CarCardsController carCardsController;
 
     public DrawFragment() {
     }
@@ -47,28 +37,35 @@ public class DrawFragment extends Fragment implements View.OnClickListener, CarC
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         game = ((TtRA_Application) requireActivity().getApplication()).game;
         player = ((TtRA_Application) requireActivity().getApplication()).player;
+        cardCounter = new int[1];
+        cardsNumbers = new int[game.getCards().size()];
+        for (int i = 0; i < game.getCards().size(); ++i) {
+            game.getCards().get(i).setClickable(1);
+            game.getCards().get(i).setVisible(1);
+            cardsNumbers[i] = 0;
+        }
 
-        carCardsController = new DrawCarCardsController(maxCards);
-        carCardsController.setGame(game);
+        game = ((TtRA_Application) requireActivity().getApplication()).game;
+        player = ((TtRA_Application) requireActivity().getApplication()).player;
 
-        View view = inflater.inflate(R.layout.fragment_draw_cards, container, false);
+        View drawer = inflater.inflate(R.layout.fragment_draw_cards, container, false);
 
         Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(title);
 
-        ImageView acceptIcon = view.findViewById(R.id.accept_button);
+        ImageView acceptIcon = drawer.findViewById(R.id.accept_button);
         acceptIcon.setOnClickListener(this);
-        ImageView resetIcon = view.findViewById(R.id.reset_button);
+        ImageView resetIcon = drawer.findViewById(R.id.reset_button);
         resetIcon.setOnClickListener(this);
 
-        TextView drawCardsLabel = view.findViewById(R.id.drawCards_label);
-        TextView drawCardsValue = view.findViewById(R.id.drawCards_value);
-        if (maxCards >= 0) {
+        TextView drawCardsLabel = drawer.findViewById(R.id.drawCards_label);
+        TextView drawCardsValue = drawer.findViewById(R.id.drawCards_value);
+        if (maxCards != 0) {
             drawCardsValue.setText(String.valueOf(maxCards));
             drawCardsLabel.setText(R.string.draw_cards_label);
         } else {
@@ -76,24 +73,8 @@ public class DrawFragment extends Fragment implements View.OnClickListener, CarC
             drawCardsLabel.setText("");
         }
 
-        clearDrawCards();
-        return view;
-    }
-
-    private void clearDrawCards() {
-        carCardTiles = new ArrayList<>();
-        for (CarCardColor card : game.getCarCardColors()) {
-            carCardTiles.add(new CarCardTile(card, 0, true, true, true));
-        }
-        updateCarCardsFragment(carCardTiles);
-    }
-
-    private void updateCarCardsFragment(List<CarCardTile> carCardTiles) {
-        CarCardsFragment carCardsFragment = new CarCardsFragment(carCardTiles, carCardsController);
-        carCardsFragment.getCarCardsObservers().add(this);
-        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        ft.replace(R.id.cards_container, carCardsFragment);
-        ft.commit();
+        refreshCards();
+        return drawer;
     }
 
     @Override
@@ -101,22 +82,44 @@ public class DrawFragment extends Fragment implements View.OnClickListener, CarC
         switch (v.getId()) {
 
             case R.id.accept_button:
-                player.addCards(carCardsTilesToCarCards(carCardTiles));
-                returnToTopPage();
+                if (cardCounter[0] == 0) {
+                    String text = getString(R.string.too_little_cards);
+                    Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+                } else {
+                    player.addCards(cardsNumbers);
+                    clearDrawCards();
+                    refreshCards();
+                    returnToTopPage();
+                }
                 break;
 
             case R.id.reset_button:
                 clearDrawCards();
+                refreshCards();
                 break;
         }
     }
 
-    private void returnToTopPage() {
-        requireActivity().getSupportFragmentManager().popBackStack();
+    private void clearDrawCards() {
+        cardCounter[0] = 0;
+        for (int i = 0; i < game.getCards().size(); ++i) {
+            game.getCards().get(i).setClickable(1);
+            game.getCards().get(i).setVisible(1);
+            cardsNumbers[i] = 0;
+        }
     }
 
-    @Override
-    public void updateCarCards(List<CarCardTile> carCardTiles) {
-        updateCarCardsFragment(carCardTiles);
+    private void refreshCards() {
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        CardsCarFragment cardsCarFragment = CardsCarFragment.builder().cardsNumbers(cardsNumbers).
+                cardCounter(cardCounter).maxCards(maxCards).
+                active(true).activeLong(true).
+                build();
+        ft.replace(R.id.cards_container, cardsCarFragment);
+        ft.commit();
+    }
+
+    private void returnToTopPage() {
+        requireActivity().getSupportFragmentManager().popBackStack();
     }
 }

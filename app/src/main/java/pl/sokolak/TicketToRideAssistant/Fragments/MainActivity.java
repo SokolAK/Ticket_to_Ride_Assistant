@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         player = ((TtRA_Application) getApplication()).player;
         game = Game.create(this, gamePosition);
-        game.getPointsCalculator().setPlayer(player);
         ((TtRA_Application) getApplication()).game = game;
 
         player.setGame(game);
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new DrawFragment(game.getMaxNoOfCardsToDraw(), getString(R.string.nav_drawCards));
                 break;
             case R.id.nav_draw_cards_warehouse:
-                fragment = new DrawFragment(-1, getString(R.string.nav_pickCardsFromWarehouse));
+                fragment = new DrawFragment(0, getString(R.string.nav_pickCardsFromWarehouse));
                 break;
             case R.id.nav_show_routes:
                 fragment = new ShowBuiltRoutesFragment();

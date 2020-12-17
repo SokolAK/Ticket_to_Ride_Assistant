@@ -40,10 +40,9 @@ public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickLis
         for (Route route : player.getBuiltRoutes()) {
             String routeString = route.toString() + " ★" + game.getScoring().get(route.getLength());
             int textSize = getDimension(requireContext(),R.dimen.text_size_small);
-            routeList.add(new TextImageItem(routeString, route.getBuiltColor().getImageResourceId(), route.getId(), textSize));
+            routeList.add(new TextImageItem(routeString, route.getImageId(game, route.getBuiltColor()), route.getId(), textSize));
         }
         ListView listRoutes = drawer.findViewById(R.id.list_routes);
-        listRoutes.setEnabled(false);
         TextImageItemAdapter adapter = new TextImageItemAdapter(getContext(), routeList);
         listRoutes.setAdapter(adapter);
 
@@ -51,13 +50,13 @@ public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickLis
             if (unlockDelete) {
                 Route route = player.getBuiltRoutes().get(position);
 
-                player.addCards(route.getBuiltCarCards());
+                player.addCards(route.getBuiltCardsNumber());
                 player.addCars(route.getLength());
                 player.removeRoute(position);
-                for (Route rout : game.getRoutes(route.getCity1(), route.getCity2(),false,false)) {
-                    rout.setBuilt(false);
-                }
+                game.getRoute(route.getId()).setBuilt(false);
+
                 routeList.remove(position);
+
                 adapter.notifyDataSetChanged();
             }
             return true;
@@ -73,14 +72,12 @@ public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickLis
                     switchControl.setTextColor(getResources().getColor(R.color.cardsUnlocked));
                     TextView deleteComment = drawer.findViewById(R.id.delete_comment);
                     deleteComment.setVisibility(View.VISIBLE);
-                    listRoutes.setEnabled(true);
                 } else {
                     unlockDelete = false;
                     switchControl.setText(R.string.locked);
                     switchControl.setTextColor(getResources().getColor(R.color.cardsLocked));
                     TextView deleteComment = drawer.findViewById(R.id.delete_comment);
                     deleteComment.setVisibility(View.INVISIBLE);
-                    listRoutes.setEnabled(false);
                 }
             });
         }

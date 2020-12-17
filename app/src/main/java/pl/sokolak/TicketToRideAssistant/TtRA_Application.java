@@ -6,6 +6,6 @@ import pl.sokolak.TicketToRideAssistant.Domain.Game;
 import pl.sokolak.TicketToRideAssistant.Domain.Player;
 
 public class TtRA_Application extends Application {
-    public Game game;
+    public Game game = null;
     public Player player = new Player();
 }

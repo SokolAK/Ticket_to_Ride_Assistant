@@ -2,28 +2,23 @@ package pl.sokolak.TicketToRideAssistant.Domain;
 
 import pl.sokolak.TicketToRideAssistant.Calculators.ConnectionCalculator;
 import pl.sokolak.TicketToRideAssistant.Calculators.PointsCalculator;
-import pl.sokolak.TicketToRideAssistant.CarCardsPanel.CarCardTile;
-import pl.sokolak.TicketToRideAssistant.CarCardsPanel.CarCardsObserver;
 import pl.sokolak.TicketToRideAssistant.Util.Triplet;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import lombok.Data;
 
 @Data
-public class Player implements Serializable, CarCardsObserver {
+public class Player implements Serializable {
     private Game game;
 
     private int points;
     private int numberOfStations;
     private int numberOfCars;
     private int longestPathLength;
-    private int[] cardsNumbers; //TO REMOVE
-    private Map<CarCardColor, Integer> carCards = new LinkedHashMap<>();
+    private int[] cardsNumbers;
     private List<Route> builtRoutes = new ArrayList<>();
     private List<Route> builtStations = new ArrayList<>();
     private List<Ticket> tickets = new ArrayList<>();
@@ -36,29 +31,21 @@ public class Player implements Serializable, CarCardsObserver {
         numberOfCars = game.getNumberOfCars();
         numberOfStations = game.getNumberOfStations();
         points = numberOfStations * game.getStationPoints();
-        cardsNumbers = new int[game.getCarCardColors().size()];
-        for (int i = 0; i < game.getCarCardColors().size(); ++i) {
+        cardsNumbers = new int[game.getCards().size()];
+        for (int i = 0; i < game.getCards().size(); ++i) {
             cardsNumbers[i] = 0;
         }
+    }
 
-        for(CarCardColor carCardColor : game.getCarCardColors()) {
-            carCards.put(carCardColor, 0);
+    public void addCards(int[] cardsNumbers) {
+        for (int i = 0; i < this.cardsNumbers.length; ++i) {
+            this.cardsNumbers[i] += cardsNumbers[i];
         }
     }
 
-    public void addCards(Map<CarCardColor, Integer> carCards) {
-        for (Map.Entry<CarCardColor, Integer> card : carCards.entrySet()) {
-            CarCardColor key = card.getKey();
-            int value = getCarCards().get(key) + card.getValue();
-            getCarCards().put(key, value);
-        }
-    }
-
-    public void spendCards(Map<CarCardColor, Integer> carCards) {
-        for (Map.Entry<CarCardColor, Integer> card : carCards.entrySet()) {
-            CarCardColor key = card.getKey();
-            int value = getCarCards().get(key) - card.getValue();
-            getCarCards().put(key, value);
+    public void spendCards(int[] cardsNumbers) {
+        for (int i = 0; i < this.cardsNumbers.length; ++i) {
+            this.cardsNumbers[i] -= cardsNumbers[i];
         }
     }
 
@@ -74,42 +61,36 @@ public class Player implements Serializable, CarCardsObserver {
         builtRoutes.add(0, route);
         //updatePoints();
         longestPathLength = findLongestPath();
-        updatePoints();
         checkIfTicketsRealized();
     }
 
     public void removeRoute(int i) {
         builtRoutes.remove(i);
         longestPathLength = findLongestPath();
-        updatePoints();
         checkIfTicketsRealized();
     }
 
     public void addRouteStation(Route route) {
         builtStations.add(0, route);
         numberOfStations--;
-        updatePoints();
-        //longestPathLength = findLongestPath();
+        longestPathLength = findLongestPath();
         checkIfTicketsRealized();
     }
 
     public void removeRouteStation(int i) {
         builtStations.remove(i);
         numberOfStations++;
-        updatePoints();
-        //longestPathLength = findLongestPath();
+        longestPathLength = findLongestPath();
         checkIfTicketsRealized();
     }
 
     public void addTicket(Ticket ticket) {
         tickets.add(0, ticket);
-        updatePoints();
         ticket.setInHand(true);
     }
 
     public void removeTicket(int i) {
         tickets.get(i).setInHand(false);
-        updatePoints();
         tickets.remove(i);
     }
 
@@ -137,20 +118,13 @@ public class Player implements Serializable, CarCardsObserver {
 
     public void updatePoints() {
         PointsCalculator pointsCalculator = game.getPointsCalculator();
-        //pointsCalculator.setPlayer(this);
+        pointsCalculator.setPlayer(this);
         points = pointsCalculator.sumPoints();
     }
 
     private int findLongestPath() {
         ConnectionCalculator connectionCalc = new ConnectionCalculator(this);
         return connectionCalc.findLongestPath();
-    }
-
-    @Override
-    public void updateCarCards(List<CarCardTile> carCardTiles) {
-        for(CarCardTile carCardTile : carCardTiles) {
-            carCards.put(carCardTile.getCarCardColor(), carCardTile.getAmount());
-        }
     }
 }
 
