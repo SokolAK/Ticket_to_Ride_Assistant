@@ -83,7 +83,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                                 selectedLocos = cardsNumbers[i];
                             }
                         }
-                        if (selectedLocos >= locos) {
+                        if (selectedLocos + (cardCounter[0] - length + locos) / game.getCarsToLocoTradeRatio() >= locos) {
                             player.spendCars(length);
                             player.spendCards(cardsNumbers);
                             route.setBuilt(true);
@@ -121,10 +121,9 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
             cardsNumbers[i] = 0;
         }
 
-        if(route.isFerry() && game.getCarsToLocoTradeRatio() > 0) {
+        if (route.isFerry() && game.getCarsToLocoTradeRatio() > 0) {
             setAvailableCards('-');
-        }
-        else {
+        } else {
             setAvailableCards(route.getColor());
         }
     }
@@ -140,9 +139,9 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                     maxCardsNumbers[i] += game.getMaxExtraCardsForTunnel();
                 }
                 if (game.getCards().get(i).getColor() != 'L') {
-                    maxCardsNumbers[i] += -route.getLocos() + route.getLocos()*game.getCarsToLocoTradeRatio();
+                    maxCardsNumbers[i] += -route.getLocos() + route.getLocos() * game.getCarsToLocoTradeRatio();
                 }
-                maxCards += route.getLocos()*game.getCarsToLocoTradeRatio();
+                maxCards += route.getLocos() * game.getCarsToLocoTradeRatio();
             }
         }
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
@@ -174,7 +173,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                 drawer.findViewById(R.id.car_icon).setVisibility(View.VISIBLE);
                 drawer.findViewById(R.id.car_number).setVisibility(View.VISIBLE);
                 TextView carText = drawer.findViewById(R.id.car_number);
-                carText.setText(" " + String.valueOf(cars));
+                carText.setText(" " + cars);
             } else {
                 drawer.findViewById(R.id.car_icon).setVisibility(View.INVISIBLE);
                 drawer.findViewById(R.id.car_number).setVisibility(View.INVISIBLE);
@@ -183,7 +182,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                 drawer.findViewById(R.id.loco_icon).setVisibility(View.VISIBLE);
                 drawer.findViewById(R.id.loco_number).setVisibility(View.VISIBLE);
                 TextView locoText = drawer.findViewById(R.id.loco_number);
-                locoText.setText(" " + String.valueOf(route.getLocos()));
+                locoText.setText(" " + route.getLocos());
             } else {
                 drawer.findViewById(R.id.loco_icon).setVisibility(View.INVISIBLE);
                 drawer.findViewById(R.id.loco_number).setVisibility(View.INVISIBLE);
@@ -196,9 +195,9 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
             }
 
             TextView lengthText = drawer.findViewById(R.id.length_value);
-            lengthText.setText(" " + String.valueOf(route.getLength()));
+            lengthText.setText(" " + route.getLength());
             TextView pointsText = drawer.findViewById(R.id.points_value);
-            pointsText.setText(" " + String.valueOf(game.getScoring().get(route.getLength())));
+            pointsText.setText(" " + game.getScoring().get(route.getLength()));
 
             clearCards();
             refreshCards();
