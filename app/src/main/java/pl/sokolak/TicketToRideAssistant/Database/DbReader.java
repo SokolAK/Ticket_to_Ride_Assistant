@@ -120,7 +120,6 @@ public final class DbReader {
                 game.setNumberOfStations(cursor.getInt(7));
                 game.setStationPoints(cursor.getInt(8));
                 game.setWarehousesAvailable(cursor.getInt(9) > 0);
-                game.setCarsToLocoTradeRatio(cursor.getInt(10));
             }
         }
         cursor.close();

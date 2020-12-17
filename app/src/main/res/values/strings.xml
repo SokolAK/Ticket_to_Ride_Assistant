@@ -28,6 +28,9 @@
     <string name="claimed_routes">Claimed Routes</string>
     <string name="stations_left">Stations left</string>
     <string name="total">Total</string>
+    <string name="possibleBonuses">Possible bonuses</string>
+    <string name="longestPathBonus">Longest Path Bonus</string>
+    <string name="globetrotterBonus">Globetrotter Bonus</string>
 
     <!-- Cards panel -->
     <string name="too_much_cards">Too much cards</string>
@@ -103,7 +106,10 @@
     <string name="TtRA_Europe_Tickets_1912_Short">Europe 1912. Short</string>
     <string name="TtRA_Europe_Tickets_1912_Long">Europe 1912. Long</string>
     <string name="TtRA_Europe_Tickets_1912_BigCities">Europe 1912. Big cities</string>
-    <string name="TtRA_USA_Tickets_Base">USA Base</string>
+    <string name="TtRA_USA_Tickets_Base_Short">USA Base. Short</string>
+    <string name="TtRA_USA_Tickets_Base_BigCities">USA Base. BigCities</string>
+    <string name="TtRA_USA_Tickets_1910_Classic">USA 1910. Classic</string>
+    <string name="TtRA_USA_Tickets_1910_BigCities">USA 1910. BigCities</string>
     <string name="TtRA_Nordic_Tickets_Base">Nordic Countries Base</string>
 
     <string name="choose_game">Choose your game</string>

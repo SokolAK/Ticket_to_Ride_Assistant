@@ -27,6 +27,9 @@
     <string name="claimed_routes">Utworzone połączenia</string>
     <string name="stations_left">Pozostałe dworce</string>
     <string name="total">Razem</string>
+    <string name="possibleBonuses">Ewentualne bonusy</string>
+    <string name="longestPathBonus">Najdłuższa trasa</string>
+    <string name="globetrotterBonus">Globtroter</string>
 
     <!-- Cards panel -->
     <string name="too_much_cards">Zbyt dużo kart</string>
@@ -107,7 +110,10 @@
     <string name="TtRA_Europe_Tickets_1912_Short">Europa 1912. Krótkie</string>
     <string name="TtRA_Europe_Tickets_1912_Long">Europa 1912. Długie</string>
     <string name="TtRA_Europe_Tickets_1912_BigCities">Europa 1912. Metropolie</string>
-    <string name="TtRA_USA_Tickets_Base">USA podstawowe</string>
+    <string name="TtRA_USA_Tickets_Base_Short">USA podstawowa - Krótkie</string>
+    <string name="TtRA_USA_Tickets_Base_BigCities">USA podstawowa - Metropolie</string>
+    <string name="TtRA_USA_Tickets_1910_Classic">USA 1910 - Klasyczne</string>
+    <string name="TtRA_USA_Tickets_1910_BigCities">USA 1910 - Metropolie</string>
     <string name="TtRA_Nordic_Tickets_Base">Kraje Północy podstawowe</string>
 
     <string name="choose_game">Proszę wybrać grę</string>

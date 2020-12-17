@@ -5,9 +5,9 @@ import android.content.Context;
 import pl.sokolak.TicketToRideAssistant.Calculators.DefaultPointsCalculator;
 import pl.sokolak.TicketToRideAssistant.Calculators.PointsCalculator;
 import pl.sokolak.TicketToRideAssistant.Database.DbReader;
-import pl.sokolak.TicketToRideAssistant.Games.Europe;
-import pl.sokolak.TicketToRideAssistant.Games.Nordic;
-import pl.sokolak.TicketToRideAssistant.Games.USA;
+import pl.sokolak.TicketToRideAssistant.Games.Europe.Europe;
+import pl.sokolak.TicketToRideAssistant.Games.Nordic.Nordic;
+import pl.sokolak.TicketToRideAssistant.Games.USA.USA;
 import pl.sokolak.TicketToRideAssistant.R;
 
 import pl.sokolak.TicketToRideAssistant.UI.Card;
@@ -19,21 +19,18 @@ import java.util.List;
 import lombok.Data;
 import pl.sokolak.TicketToRideAssistant.Util.Triplet;
 
-import static pl.sokolak.TicketToRideAssistant.Database.DbService.generalDatabaseName;
-import static pl.sokolak.TicketToRideAssistant.Database.DbService.generalDatabaseVersion;
-
 
 @Data
 public abstract class Game {
     private int id;
-    private String title;
-    private int startCards;
-    private int maxNoOfCardsToDraw;
-    private int numberOfStations;
-    private int stationPoints;
-    private int numberOfCars;
-    private int maxExtraCardsForTunnel;
-    private int carsToLocoTradeRatio;
+    protected String title;
+    protected int startCards;
+    protected int maxNoOfCardsToDraw;
+    protected int numberOfStations;
+    protected int stationPoints;
+    protected int numberOfCars;
+    protected int maxExtraCardsForTunnel;
+    protected int carsToLocoTradeRatio;
     private HashMap<Integer, Integer> scoring = new HashMap<>();
     protected HashMap<Integer, Integer> stationCost = new HashMap<>();
     private List<Card> cards = new ArrayList<>();
@@ -44,8 +41,8 @@ public abstract class Game {
     private Context context;
     protected List<Triplet<String, String, Boolean>> ticketsDecks = new ArrayList<>();
     private long ticketHash;
-    private boolean warehousesAvailable;
-    private boolean stationsAvailable;
+    protected boolean warehousesAvailable;
+    protected boolean stationsAvailable;
     protected PointsCalculator pointsCalculator = new DefaultPointsCalculator(this);
 
 
@@ -73,10 +70,9 @@ public abstract class Game {
         return game;
     }
 
-    public void prepareBaseGame(String title) {
-        setTitle(title);
+    public void prepareBaseGame() {
         setCards();
-        DbReader.readGeneralData(context, generalDatabaseName, generalDatabaseVersion, this);
+        //DbReader.readGeneralData(context, generalDatabaseName, generalDatabaseVersion, this);
         routes = DbReader.readRoutes(context, databaseName, databaseVersion);
         scoring = DbReader.readScoring(context, databaseName, databaseVersion);
     }
