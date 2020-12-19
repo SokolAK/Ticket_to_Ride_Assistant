@@ -3,7 +3,9 @@ package pl.sokolak.TicketToRideAssistant.Domain;
 import android.content.Context;
 
 import pl.sokolak.TicketToRideAssistant.Calculators.DefaultPointsCalculator;
+import pl.sokolak.TicketToRideAssistant.Calculators.DefaultStatusCalculator;
 import pl.sokolak.TicketToRideAssistant.Calculators.PointsCalculator;
+import pl.sokolak.TicketToRideAssistant.Calculators.StatusCalculator;
 import pl.sokolak.TicketToRideAssistant.Database.DbReader;
 import pl.sokolak.TicketToRideAssistant.Games.Europe.Europe;
 import pl.sokolak.TicketToRideAssistant.Games.Nordic.Nordic;
@@ -22,6 +24,7 @@ import pl.sokolak.TicketToRideAssistant.Util.Triplet;
 
 @Data
 public abstract class Game {
+    private Player player;
     private int id;
     protected String title;
     protected int startCards;
@@ -44,6 +47,7 @@ public abstract class Game {
     protected boolean warehousesAvailable;
     protected boolean stationsAvailable;
     protected PointsCalculator pointsCalculator = new DefaultPointsCalculator(this);
+    protected StatusCalculator statusCalculator = new DefaultStatusCalculator(this);
 
 
     public Game(Context context) {
@@ -75,6 +79,12 @@ public abstract class Game {
         //DbReader.readGeneralData(context, generalDatabaseName, generalDatabaseVersion, this);
         routes = DbReader.readRoutes(context, databaseName, databaseVersion);
         scoring = DbReader.readScoring(context, databaseName, databaseVersion);
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+        pointsCalculator.setPlayer(player);
+        statusCalculator.setPlayer(player);
     }
 
     public void setCards() {

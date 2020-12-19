@@ -19,21 +19,21 @@ import pl.sokolak.TicketToRideAssistant.TtRA_Application;
 import lombok.Builder;
 
 @Builder
-public class CardsCarFragment extends Fragment {
+public class CarCardsFragment extends Fragment {
     @Builder.Default
-    private int[] cardCounter = new int[1];
-    private int maxCards;
-    private int[] cardsNumbers;
-    private boolean active;
-    private boolean activeLong;
-    private boolean oneColor;
-    private int[] maxCardsNumbers;
+    private final int[] cardCounter = new int[1];
+    private final int maxCards;
+    private final int[] cardsNumbers;
+    private final boolean active;
+    private final boolean activeLong;
+    private final boolean oneColor;
+    private final int[] maxCardsNumbers;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Game game = ((TtRA_Application) requireActivity().getApplication()).game;
-        View drawer = inflater.inflate(R.layout.fragment_cards, container, false);
-        RecyclerView cardRecycler = drawer.findViewById(R.id.card_recycler);
+        View view = inflater.inflate(R.layout.fragment_cards, container, false);
+        RecyclerView cardRecycler = view.findViewById(R.id.card_recycler);
 
         int[] cardImages = new int[game.getCards().size()];
         for (int i = 0; i < cardImages.length; i++) {
@@ -49,10 +49,10 @@ public class CardsCarFragment extends Fragment {
             if (active) {
                 if (maxCardsNumbers != null) {
                     if (cardsNumbers[position] == maxCardsNumbers[position]) {
-                        game.getCards().get(position).setClickable(0);
+                        game.getCards().get(position).setClickable(false);
                     }
                 }
-                if (game.getCards().get(position).getClickable() == 1) {
+                if (game.getCards().get(position).isVisible()) {
                     if (cardCounter[0] < maxCards || maxCards == 0) {
                         cardCounter[0]++;
                         cardsNumbers[position]++;
@@ -61,8 +61,8 @@ public class CardsCarFragment extends Fragment {
                         if (game.getCards().get(position).getColor() != 'L') {
                             for (int i = 0; i < game.getCards().size(); ++i) {
                                 if (i != position && game.getCards().get(i).getColor() != 'L') {
-                                    game.getCards().get(i).setClickable(0);
-                                    game.getCards().get(i).setVisible(0);
+                                    game.getCards().get(i).setClickable(false);
+                                    game.getCards().get(i).setVisible(false);
                                 }
                             }
                         }
@@ -83,16 +83,16 @@ public class CardsCarFragment extends Fragment {
             }
         });
 
-        return drawer;
+        return view;
     }
 
     private void refreshPage() {
         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-        CardsCarFragment cardsCarFragment = CardsCarFragment.builder().cardsNumbers(cardsNumbers).
+        CarCardsFragment carCardsFragment = CarCardsFragment.builder().cardsNumbers(cardsNumbers).
                 cardCounter(cardCounter).maxCards(maxCards).maxCardsNumbers(maxCardsNumbers).
                 active(active).activeLong(activeLong).oneColor(oneColor).
                 build();
-        ft.replace(R.id.cards_container, cardsCarFragment);
+        ft.replace(R.id.cards_container, carCardsFragment);
         ft.commit();
     }
 }

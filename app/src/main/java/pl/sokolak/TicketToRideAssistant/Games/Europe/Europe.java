@@ -26,12 +26,13 @@ public class Europe extends Game {
         numberOfCars = 45;
         maxExtraCardsForTunnel = 3;
         warehousesAvailable = true;
-        stationsAvailable = false;
+        stationsAvailable = true;
 
         prepareBaseGame();
         stationCost = DbReader.readStationCost(context, databaseName, databaseVersion);
         addTicketDecks();
         pointsCalculator = new EuropePointsCalculator(this);
+        statusCalculator = new EuropeStatusCalculator(this);
     }
 
     private void addTicketDecks() {

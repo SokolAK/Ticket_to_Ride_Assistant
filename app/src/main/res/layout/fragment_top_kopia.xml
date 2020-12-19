@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/status_frag"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackDark"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/points_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorBackLight"
+        android:text="@string/points"
+        android:textSize="@dimen/text_size_normal"
+        app:layout_constraintEnd_toStartOf="@+id/points_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/points_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorBackLight"
+        android:text="0"
+        android:textSize="@dimen/text_size_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/cars_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/cars"
+        android:textSize="@dimen/text_size_normal"
+        app:layout_constraintEnd_toStartOf="@+id/cars_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/points_label" />
+
+    <TextView
+        android:id="@+id/cars_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="0"
+        android:textSize="@dimen/text_size_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/points_value" />
+
+    <TextView
+        android:id="@+id/stations_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorBackLight"
+        android:text="@string/stations"
+        android:textSize="@dimen/text_size_normal"
+        app:layout_constraintEnd_toStartOf="@+id/stations_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cars_label" />
+
+    <TextView
+        android:id="@+id/stations_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorBackLight"
+        android:text="0"
+        android:textSize="@dimen/text_size_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cars_value" />
+
+    <TextView
+        android:id="@+id/tickets_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/tickets"
+        android:textSize="@dimen/text_size_normal"
+        app:layout_constraintEnd_toStartOf="@+id/realized_tickets_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stations_label" />
+
+    <TextView
+        android:id="@+id/realized_tickets_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="0"
+        android:textSize="@dimen/text_size_normal"
+        android:textColor="@color/colorAccept"
+        app:layout_constraintEnd_toStartOf="@+id/slash"
+        app:layout_constraintTop_toBottomOf="@+id/stations_value" />
+
+    <TextView
+        android:id="@+id/slash"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="/"
+        android:textSize="@dimen/text_size_normal"
+        app:layout_constraintEnd_toStartOf="@+id/unrealized_tickets_value"
+        app:layout_constraintTop_toBottomOf="@+id/stations_value" />
+
+    <TextView
+        android:id="@+id/unrealized_tickets_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="0"
+        android:textSize="@dimen/text_size_normal"
+        android:textColor="@color/colorReset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stations_value" />
+
+    <TextView
+        android:id="@+id/longest_path_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorBackLight"
+        android:text="@string/longestPath"
+        android:textSize="@dimen/text_size_normal"
+        app:layout_constraintEnd_toStartOf="@+id/longest_path_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tickets_label" />
+
+    <TextView
+        android:id="@+id/longest_path_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorBackLight"
+        android:text="0"
+        android:textSize="@dimen/text_size_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tickets_label" />
+
+    <FrameLayout
+        android:id="@+id/cards_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toTopOf="@+id/switch_control"
+        app:layout_constraintTop_toBottomOf="@+id/longest_path_label"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switch_control"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:text="@string/cards_locked"
+        android:textSize="@dimen/lock_text_size"
+        android:textColor="@color/colorReset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cards_container"
+        tools:ignore="UseSwitchCompatOrMaterialXml"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

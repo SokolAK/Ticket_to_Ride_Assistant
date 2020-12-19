@@ -21,7 +21,7 @@ import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.Domain.Route;
 import pl.sokolak.TicketToRideAssistant.TtRA_Application;
 import pl.sokolak.TicketToRideAssistant.UI.Card;
-import pl.sokolak.TicketToRideAssistant.UI.CardsCarFragment;
+import pl.sokolak.TicketToRideAssistant.UI.CarCardsFragment;
 import pl.sokolak.TicketToRideAssistant.UI.TextImageItem;
 import pl.sokolak.TicketToRideAssistant.UI.SpinnerRouteFragment;
 import pl.sokolak.TicketToRideAssistant.UI.SpinnerListenerInterface;
@@ -45,8 +45,8 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         cardsNumbers = new int[game.getCards().size()];
 
         for (int i = 0; i < game.getCards().size(); ++i) {
-            game.getCards().get(i).setClickable(1);
-            game.getCards().get(i).setVisible(1);
+            game.getCards().get(i).setClickable(true);
+            game.getCards().get(i).setVisible(true);
             cardsNumbers[i] = 0;
         }
 
@@ -145,11 +145,11 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
             }
         }
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        CardsCarFragment cardsCarFragment = CardsCarFragment.builder().cardsNumbers(cardsNumbers).
+        CarCardsFragment carCardsFragment = CarCardsFragment.builder().cardsNumbers(cardsNumbers).
                 cardCounter(cardCounter).maxCards(maxCards).maxCardsNumbers(maxCardsNumbers).
                 active(true).activeLong(true).oneColor(true).
                 build();
-        ft.replace(R.id.cards_container, cardsCarFragment);
+        ft.replace(R.id.cards_container, carCardsFragment);
         ft.commit();
         requireActivity().findViewById(R.id.buttons_panel).setVisibility(View.VISIBLE);
     }
@@ -206,23 +206,23 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
 
     private void setAvailableCards(char color) {
         for (Card card : game.getCards()) {
-            card.setClickable(0);
-            card.setVisible(0);
+            card.setClickable(false);
+            card.setVisible(false);
         }
         for (Card card : game.getCards()) {
             if (card.getColor() == 'L') {
-                card.setClickable(1);
-                card.setVisible(1);
+                card.setClickable(true);
+                card.setVisible(true);
             } else {
                 if (color == '-') {
                     if (cars > 0) {
-                        card.setClickable(1);
-                        card.setVisible(1);
+                        card.setClickable(true);
+                        card.setVisible(true);
                     }
                 } else {
                     if (card.getColor() == color) {
-                        card.setClickable(1);
-                        card.setVisible(1);
+                        card.setClickable(true);
+                        card.setVisible(true);
                     }
                 }
             }

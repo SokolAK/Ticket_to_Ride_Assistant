@@ -46,7 +46,7 @@ public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.View
 
     @Override
     public int getItemViewType(int position) {
-        return cards.get(position).getVisible();
+        return cards.get(position).isVisible() ? 1 : 0;
     }
 
     @Override
@@ -62,7 +62,6 @@ public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.View
         if (viewType == 0)
             cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.blank_card_view, parent, false);
         GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) cv.getLayoutParams();
-        float density = parent.getContext().getResources().getDisplayMetrics().density;
         int margin = parent.getContext().getResources().getDimensionPixelSize(R.dimen.card_margin);
         int space = margin * (2 +2*2);
         params.width = (int) ((parent.getMeasuredWidth() - space) / 3);

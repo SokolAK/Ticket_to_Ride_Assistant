@@ -18,7 +18,7 @@ import pl.sokolak.TicketToRideAssistant.Domain.Game;
 import pl.sokolak.TicketToRideAssistant.Domain.Player;
 import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.TtRA_Application;
-import pl.sokolak.TicketToRideAssistant.UI.CardsCarFragment;
+import pl.sokolak.TicketToRideAssistant.UI.CarCardsFragment;
 
 public class DrawFragment extends Fragment implements View.OnClickListener {
     private Game game;
@@ -45,8 +45,8 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
         cardCounter = new int[1];
         cardsNumbers = new int[game.getCards().size()];
         for (int i = 0; i < game.getCards().size(); ++i) {
-            game.getCards().get(i).setClickable(1);
-            game.getCards().get(i).setVisible(1);
+            game.getCards().get(i).setClickable(true);
+            game.getCards().get(i).setVisible(true);
             cardsNumbers[i] = 0;
         }
 
@@ -103,19 +103,19 @@ public class DrawFragment extends Fragment implements View.OnClickListener {
     private void clearDrawCards() {
         cardCounter[0] = 0;
         for (int i = 0; i < game.getCards().size(); ++i) {
-            game.getCards().get(i).setClickable(1);
-            game.getCards().get(i).setVisible(1);
+            game.getCards().get(i).setClickable(true);
+            game.getCards().get(i).setVisible(true);
             cardsNumbers[i] = 0;
         }
     }
 
     private void refreshCards() {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        CardsCarFragment cardsCarFragment = CardsCarFragment.builder().cardsNumbers(cardsNumbers).
+        CarCardsFragment carCardsFragment = CarCardsFragment.builder().cardsNumbers(cardsNumbers).
                 cardCounter(cardCounter).maxCards(maxCards).
                 active(true).activeLong(true).
                 build();
-        ft.replace(R.id.cards_container, cardsCarFragment);
+        ft.replace(R.id.cards_container, carCardsFragment);
         ft.commit();
     }
 

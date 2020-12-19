@@ -57,7 +57,7 @@ public class PointsFragment extends Fragment {
             String label = pointsRow.first;
             String value = pointsRow.second;
             TextTextItem textTextItem = new TextTextItem(label, value);
-            textTextItem.setTextSize(getDimension(context, R.dimen.text_size_small));
+            textTextItem.setTextSize(getDimension(context, R.dimen.text_size_normal));
             textTextItems.add(textTextItem);
         }
         return textTextItems;

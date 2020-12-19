@@ -118,7 +118,6 @@ public class Player implements Serializable {
 
     public void updatePoints() {
         PointsCalculator pointsCalculator = game.getPointsCalculator();
-        pointsCalculator.setPlayer(this);
         points = pointsCalculator.sumPoints();
     }
 

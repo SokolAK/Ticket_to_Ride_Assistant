@@ -18,7 +18,7 @@ import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.Domain.Route;
 import pl.sokolak.TicketToRideAssistant.TtRA_Application;
 import pl.sokolak.TicketToRideAssistant.UI.Card;
-import pl.sokolak.TicketToRideAssistant.UI.CardsCarFragment;
+import pl.sokolak.TicketToRideAssistant.UI.CarCardsFragment;
 import pl.sokolak.TicketToRideAssistant.UI.TextImageItem;
 import pl.sokolak.TicketToRideAssistant.UI.SpinnerListenerInterface;
 import pl.sokolak.TicketToRideAssistant.UI.SpinnerRouteFragment;
@@ -43,8 +43,8 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
         maxCards = game.getStationCost().get(numberOfStation);
 
         for (int i = 0; i < game.getCards().size(); ++i) {
-            game.getCards().get(i).setClickable(1);
-            game.getCards().get(i).setVisible(1);
+            game.getCards().get(i).setClickable(true);
+            game.getCards().get(i).setVisible(true);
             cardsNumbers[i] = 0;
         }
 
@@ -114,8 +114,8 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
             cardsNumbers[i] = 0;
         }
         for (Card card : game.getCards()) {
-            card.setClickable(1);
-            card.setVisible(1);
+            card.setClickable(true);
+            card.setVisible(true);
         }
     }
 
@@ -129,11 +129,11 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
             }
         }
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        CardsCarFragment cardsCarFragment = CardsCarFragment.builder().cardsNumbers(cardsNumbers).
+        CarCardsFragment carCardsFragment = CarCardsFragment.builder().cardsNumbers(cardsNumbers).
                 cardCounter(cardCounter).maxCards(maxCards).maxCardsNumbers(maxCardsNumbers).
                 active(true).activeLong(true).oneColor(true).
                 build();
-        ft.replace(R.id.cards_container, cardsCarFragment);
+        ft.replace(R.id.cards_container, carCardsFragment);
         ft.commit();
     }
 
