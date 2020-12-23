@@ -16,7 +16,7 @@ No more missed connections, scoring mistakes or tedious calculations of the long
 
 
 ## Currently available games
-* USA
+* USA + 1910 Expansion Pack
 * Europe + 1912 Expansion Pack
 * Nordic Countries
 
