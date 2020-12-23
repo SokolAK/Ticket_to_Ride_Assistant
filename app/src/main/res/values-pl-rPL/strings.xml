@@ -42,11 +42,11 @@
     <string name="draw_cards_label">Liczba kart do dobrania:</string>
 
     <!-- Routes -->
-    <string name="build_new_route">Utwórz nowe połączenie</string>
+    <string name="build_new_route">Utwórz połączenie</string>
     <string name="built_routes_header">Utworzone połączenia:</string>
 
     <!-- Stations -->
-    <string name="build_new_station">Zbuduj nowy dworzec</string>
+    <string name="build_new_station">Zbuduj dworzec</string>
     <string name="station_cost">Koszt dworca:</string>
     <string name="built_stations_header">Zbudowane dworce:</string>
     <string name="no__more_stations">Brak dostępnych dworców</string>

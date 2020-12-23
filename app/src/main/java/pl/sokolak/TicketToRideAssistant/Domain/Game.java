@@ -88,15 +88,15 @@ public abstract class Game {
     }
 
     public void setCards() {
-        cards.add(new Card('V', R.drawable.violet));
-        cards.add(new Card('O', R.drawable.orange));
-        cards.add(new Card('B', R.drawable.blue));
-        cards.add(new Card('Y', R.drawable.yellow));
-        cards.add(new Card('A', R.drawable.black));
-        cards.add(new Card('G', R.drawable.green));
-        cards.add(new Card('R', R.drawable.red));
-        cards.add(new Card('W', R.drawable.white));
-        cards.add(new Card('L', R.drawable.loco));
+        cards.add(new Card(Card.CarCardColor.VIOLET, R.drawable.violet));
+        cards.add(new Card(Card.CarCardColor.ORANGE, R.drawable.orange));
+        cards.add(new Card(Card.CarCardColor.BLUE, R.drawable.blue));
+        cards.add(new Card(Card.CarCardColor.YELLOW, R.drawable.yellow));
+        cards.add(new Card(Card.CarCardColor.BLACK, R.drawable.black));
+        cards.add(new Card(Card.CarCardColor.GREEN, R.drawable.green));
+        cards.add(new Card(Card.CarCardColor.RED, R.drawable.red));
+        cards.add(new Card(Card.CarCardColor.WHITE, R.drawable.white));
+        cards.add(new Card(Card.CarCardColor.LOCO, R.drawable.loco));
     }
 
     public void updateTickets() {

@@ -79,15 +79,15 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                     if (cardCounter[0] >= length) {
                         int selectedLocos = 0;
                         for (int i = 0; i < game.getCards().size(); ++i) {
-                            if (game.getCards().get(i).getColor() == 'L') {
+                            if (game.getCards().get(i).getCarCardColor() == Card.CarCardColor.LOCO) {
                                 selectedLocos = cardsNumbers[i];
                             }
                         }
-                        if (selectedLocos + (cardCounter[0] - length + locos) / game.getCarsToLocoTradeRatio() >= locos) {
+                        if (cardCounter[0] >= (locos - selectedLocos) * game.getCarsToLocoTradeRatio() + length - locos + selectedLocos) {
                             player.spendCars(length);
                             player.spendCards(cardsNumbers);
                             route.setBuilt(true);
-                            char builtColor = determineRouteColor(cardsNumbers);
+                            Card.CarCardColor builtColor = determineRouteColor(cardsNumbers);
                             route.setBuiltColor(builtColor);
                             route.setBuiltCardsNumber(cardsNumbers.clone());
                             player.addRoute(route);
@@ -122,7 +122,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         }
 
         if (route.isFerry() && game.getCarsToLocoTradeRatio() > 0) {
-            setAvailableCards('-');
+            setAvailableCards(Card.CarCardColor.NONE);
         } else {
             setAvailableCards(route.getColor());
         }
@@ -138,7 +138,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                 if (route.isTunnel()) {
                     maxCardsNumbers[i] += game.getMaxExtraCardsForTunnel();
                 }
-                if (game.getCards().get(i).getColor() != 'L') {
+                if (game.getCards().get(i).getCarCardColor() != Card.CarCardColor.LOCO) {
                     maxCardsNumbers[i] += -route.getLocos() + route.getLocos() * game.getCarsToLocoTradeRatio();
                 }
                 maxCards += route.getLocos() * game.getCarsToLocoTradeRatio();
@@ -204,23 +204,23 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         }
     }
 
-    private void setAvailableCards(char color) {
+    private void setAvailableCards(Card.CarCardColor carCardColor) {
         for (Card card : game.getCards()) {
             card.setClickable(false);
             card.setVisible(false);
         }
         for (Card card : game.getCards()) {
-            if (card.getColor() == 'L') {
+            if (card.getCarCardColor() == Card.CarCardColor.LOCO) {
                 card.setClickable(true);
                 card.setVisible(true);
             } else {
-                if (color == '-') {
+                if (carCardColor == Card.CarCardColor.NONE) {
                     if (cars > 0) {
                         card.setClickable(true);
                         card.setVisible(true);
                     }
                 } else {
-                    if (card.getColor() == color) {
+                    if (card.getCarCardColor() == carCardColor) {
                         card.setClickable(true);
                         card.setVisible(true);
                     }
@@ -229,13 +229,13 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
         }
     }
 
-    private char determineRouteColor(int[] cardsNumbers) {
+    private Card.CarCardColor determineRouteColor(int[] cardsNumbers) {
         int i = 0;
         for (; i < cardsNumbers.length; ++i) {
             if (cardsNumbers[i] > 0) {
                 break;
             }
         }
-        return game.getCards().get(i).getColor();
+        return game.getCards().get(i).getCarCardColor();
     }
 }

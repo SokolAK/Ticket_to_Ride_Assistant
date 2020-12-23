@@ -2,6 +2,8 @@ package pl.sokolak.TicketToRideAssistant.Domain;
 
 import pl.sokolak.TicketToRideAssistant.Calculators.ConnectionCalculator;
 import pl.sokolak.TicketToRideAssistant.Calculators.PointsCalculator;
+import pl.sokolak.TicketToRideAssistant.UI.Card;
+import pl.sokolak.TicketToRideAssistant.Util.Pair;
 import pl.sokolak.TicketToRideAssistant.Util.Triplet;
 
 import java.io.Serializable;
@@ -18,7 +20,8 @@ public class Player implements Serializable {
     private int numberOfStations;
     private int numberOfCars;
     private int longestPathLength;
-    private int[] cardsNumbers;
+    private int[] cardsNumbers; //TO REMOVE
+    private List<Pair<Card.CarCardColor, Integer>> carCardsList = new ArrayList<>();
     private List<Route> builtRoutes = new ArrayList<>();
     private List<Route> builtStations = new ArrayList<>();
     private List<Ticket> tickets = new ArrayList<>();

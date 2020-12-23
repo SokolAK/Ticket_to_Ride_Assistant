@@ -21,6 +21,7 @@ import pl.sokolak.TicketToRideAssistant.Domain.Game;
 import pl.sokolak.TicketToRideAssistant.Domain.Player;
 import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.TtRA_Application;
+import pl.sokolak.TicketToRideAssistant.UI.CarCardsFragment2;
 import pl.sokolak.TicketToRideAssistant.UI.Card;
 import pl.sokolak.TicketToRideAssistant.UI.CarCardsFragment;
 import pl.sokolak.TicketToRideAssistant.UI.TextTextItem;

@@ -76,7 +76,7 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
                     for (Route rout : game.getRoutes(route.getCity1(), route.getCity2(), false, false)) {
                         rout.setBuiltStation(true);
                     }
-                    char builtColor = determineRouteColor(cardsNumbers);
+                    Card.CarCardColor builtColor = determineRouteColor(cardsNumbers);
                     route.setBuiltStationColor(builtColor);
                     route.setBuiltStationCardsNumber(cardsNumbers.clone());
                     player.addRouteStation(route);
@@ -122,12 +122,9 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
     private void refreshCards() {
         int[] maxCardsNumbers = new int[player.getCardsNumbers().length];
         for (int i = 0; i < player.getCardsNumbers().length; ++i) {
-            if (player.getCardsNumbers()[i] < maxCards) {
-                maxCardsNumbers[i] = player.getCardsNumbers()[i];
-            } else {
-                maxCardsNumbers[i] = maxCards;
-            }
+            maxCardsNumbers[i] = Math.min(player.getCardsNumbers()[i], maxCards);
         }
+
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         CarCardsFragment carCardsFragment = CarCardsFragment.builder().cardsNumbers(cardsNumbers).
                 cardCounter(cardCounter).maxCards(maxCards).maxCardsNumbers(maxCardsNumbers).
@@ -143,13 +140,13 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
         ft.commit();
     }
 
-    private char determineRouteColor(int[] cardsNumbers) {
+    private Card.CarCardColor determineRouteColor(int[] cardsNumbers) {
         int i = 0;
         for (; i < cardsNumbers.length; ++i) {
             if (cardsNumbers[i] > 0) {
                 break;
             }
         }
-        return game.getCards().get(i).getColor();
+        return game.getCards().get(i).getCarCardColor();
     }
 }

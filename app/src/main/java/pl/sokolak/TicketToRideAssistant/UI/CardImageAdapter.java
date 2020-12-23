@@ -76,7 +76,7 @@ public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.View
             case 1:
                 //cardView.setRadius(24); //to avoid ghosts
                 ImageView imageView = cardView.findViewById(R.id.card_image);
-                Drawable drawable = ContextCompat.getDrawable(cardView.getContext(), cards.get(position).getImageResourceId());
+                Drawable drawable = ContextCompat.getDrawable(cardView.getContext(), cards.get(position).getCarCardColor().getImageResourceId());
                 imageView.setImageDrawable(drawable);
                 TextView textView = cardView.findViewById(R.id.card_number);
                 textView.setText(String.valueOf(cardsNumbers[position]));

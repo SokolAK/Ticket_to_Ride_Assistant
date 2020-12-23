@@ -12,6 +12,9 @@ import java.util.List;
 import pl.sokolak.TicketToRideAssistant.Domain.Game;
 import pl.sokolak.TicketToRideAssistant.Domain.Route;
 import pl.sokolak.TicketToRideAssistant.Domain.Ticket;
+import pl.sokolak.TicketToRideAssistant.UI.Card;
+
+import static pl.sokolak.TicketToRideAssistant.Util.ColorConverter.CharToCarCardColor;
 
 public final class DbReader {
 
@@ -63,7 +66,11 @@ public final class DbReader {
             int locos = cursor.getInt(4);
             boolean tunnel = cursor.getInt(5) > 0;
             char color = cursor.getString(6).charAt(0);
-            routes.add(new Route(city1, city2, length, locos, tunnel, color));
+            Card.CarCardColor carCardColor = CharToCarCardColor(color);
+            if(locos == length) {
+                carCardColor = Card.CarCardColor.LOCO;
+            }
+            routes.add(new Route(city1, city2, length, locos, tunnel, carCardColor));
         }
         cursor.close();
         database.close();

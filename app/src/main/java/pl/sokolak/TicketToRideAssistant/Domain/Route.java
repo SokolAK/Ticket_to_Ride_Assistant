@@ -15,17 +15,17 @@ public class Route {
     private int locos;
     private boolean tunnel;
     private boolean ferry;
-    private char color;
+    private Card.CarCardColor color;
 
     private boolean built;
-    private char builtColor;
+    private Card.CarCardColor builtColor;
     private int[] builtCardsNumber;
 
     private boolean builtStation;
-    private char builtStationColor;
+    private Card.CarCardColor builtStationColor;
     private int[] builtStationCardsNumber;
 
-    public Route(String city1, String city2, int length, int locos, boolean tunnel, char color) {
+    public Route(String city1, String city2, int length, int locos, boolean tunnel, Card.CarCardColor color) {
         counter++;
         id = counter;
         this.city1 = city1;
@@ -39,8 +39,8 @@ public class Route {
         this.ferry = locos > 0;
     }
 
-    public int getImageId(Game game, char color) {
-        if(color == '-') {
+    public int getImageId(Game game, Card.CarCardColor carCardColor) {
+        if(color == Card.CarCardColor.NONE) {
             if(length > locos) {
                 return R.drawable.any;
             }
@@ -50,8 +50,8 @@ public class Route {
         }
         else {
             for (Card card : game.getCards()) {
-                if (card.getColor() == color) {
-                    return card.getImageResourceId();
+                if (card.getCarCardColor() == carCardColor) {
+                    return card.getCarCardColor().getImageResourceId();
                 }
             }
         }
