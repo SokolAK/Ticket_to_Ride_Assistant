@@ -40,7 +40,7 @@ public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickLis
         for (Route route : player.getBuiltRoutes()) {
             String routeString = route.toString() + " ★" + game.getScoring().get(route.getLength());
             int textSize = getDimension(requireContext(),R.dimen.text_size_small);
-            routeList.add(new TextImageItem(routeString, route.getImageId(game, route.getBuiltColor()), route.getId(), textSize));
+            routeList.add(new TextImageItem(routeString, route.getBuiltColor().getImageResourceId(), route.getId(), textSize));
         }
         ListView listRoutes = drawer.findViewById(R.id.list_routes);
         TextImageItemAdapter adapter = new TextImageItemAdapter(getContext(), routeList);

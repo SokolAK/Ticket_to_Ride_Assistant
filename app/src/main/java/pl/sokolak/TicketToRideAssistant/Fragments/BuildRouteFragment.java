@@ -83,7 +83,7 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
                                 selectedLocos = cardsNumbers[i];
                             }
                         }
-                        if (cardCounter[0] >= (locos - selectedLocos) * game.getCarsToLocoTradeRatio() + length - locos + selectedLocos) {
+                        if ((locos - selectedLocos) * game.getCarsToLocoTradeRatio() <= cardCounter[0] - length) {
                             player.spendCars(length);
                             player.spendCards(cardsNumbers);
                             route.setBuilt(true);
@@ -230,12 +230,14 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
     }
 
     private Card.CarCardColor determineRouteColor(int[] cardsNumbers) {
-        int i = 0;
-        for (; i < cardsNumbers.length; ++i) {
-            if (cardsNumbers[i] > 0) {
-                break;
+        int imax = 0;
+        int max = 0;
+        for (int i = 0; i < cardsNumbers.length; ++i) {
+            if (cardsNumbers[i] > max) {
+                imax = i;
+                max = cardsNumbers[i];
             }
         }
-        return game.getCards().get(i).getCarCardColor();
+        return game.getCards().get(imax).getCarCardColor();
     }
 }
