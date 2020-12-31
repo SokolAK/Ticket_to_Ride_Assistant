@@ -3,7 +3,7 @@ This application makes it easy to play the absolutely fantastic board game _Tick
 Manage your cards, routes and tickets in an intuitive way.
 No more missed connections, scoring mistakes or tedious calculations of the longest route!
 
-<a href='https://play.google.com/store/apps/details?id=com.sokolak.androdream&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="200"/></a>
+<a href='https://play.google.com/store/apps/details?id=pl.sokolak.TicketToRideAssistant&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="200"/></a>
 
 
 ## System requirements
