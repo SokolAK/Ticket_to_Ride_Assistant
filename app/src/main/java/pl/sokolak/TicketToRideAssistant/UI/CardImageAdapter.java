@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import pl.sokolak.TicketToRideAssistant.R;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.ViewHolder> {

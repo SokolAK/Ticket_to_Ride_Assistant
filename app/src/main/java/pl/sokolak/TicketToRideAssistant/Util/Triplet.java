@@ -1,6 +1,8 @@
 package pl.sokolak.TicketToRideAssistant.Util;
 
-public class Triplet<F, S, T> {
+import java.io.Serializable;
+
+public class Triplet<F, S, T> implements Serializable {
     public F first;
     public S second;
     public T third;

@@ -20,7 +20,7 @@ public class Player implements Serializable {
     private int numberOfStations;
     private int numberOfCars;
     private int longestPathLength;
-    private int[] cardsNumbers; //TO REMOVE
+    private int[] cardsNumbers;
     private List<Pair<Card.CarCardColor, Integer>> carCardsList = new ArrayList<>();
     private List<Route> builtRoutes = new ArrayList<>();
     private List<Route> builtStations = new ArrayList<>();

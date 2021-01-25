@@ -30,6 +30,9 @@ import static pl.sokolak.TicketToRideAssistant.Util.DimensionUtils.getDimension;
 public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickListener {
     private boolean unlockDelete;
 
+    public ShowBuiltRoutesFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View drawer = inflater.inflate(R.layout.fragment_show_built_routes, container, false);
@@ -58,6 +61,7 @@ public class ShowBuiltRoutesFragment extends Fragment implements View.OnClickLis
                 routeList.remove(position);
 
                 adapter.notifyDataSetChanged();
+                System.out.println(((TtRA_Application) requireActivity().getApplication()).player.getNumberOfCars());
             }
             return true;
         });

@@ -19,9 +19,9 @@ public class EuropeStatusCalculator extends DefaultStatusCalculator {
     @Override
     public List<Pair<String, String>> getAdditionalItems(Context context) {
         List<Pair<String, String>> list = new ArrayList<>();
-        String carsLabel = context.getResources().getString(R.string.stations);
-        String carsValue = String.valueOf(player.getNumberOfStations());
-        list.add(Pair.create(carsLabel, carsValue));
+        String stationsLabel = context.getResources().getString(R.string.stations);
+        String stationsValue = String.valueOf(player.getNumberOfStations());
+        list.add(Pair.create(stationsLabel, stationsValue));
         return list;
     }
 }

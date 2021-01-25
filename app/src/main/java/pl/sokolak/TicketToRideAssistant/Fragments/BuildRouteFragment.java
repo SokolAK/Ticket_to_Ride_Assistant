@@ -36,6 +36,9 @@ public class BuildRouteFragment extends Fragment implements View.OnClickListener
     int cars;
     private View drawer;
 
+    public BuildRouteFragment() {
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

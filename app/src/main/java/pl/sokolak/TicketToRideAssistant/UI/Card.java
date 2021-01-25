@@ -1,11 +1,13 @@
 package pl.sokolak.TicketToRideAssistant.UI;
 
+import java.io.Serializable;
+
 import lombok.Data;
 import lombok.Getter;
 import pl.sokolak.TicketToRideAssistant.R;
 
 @Data
-public class Card {
+public class Card implements Serializable {
     //private char color;
     private CarCardColor carCardColor;
     //private int imageResourceId;

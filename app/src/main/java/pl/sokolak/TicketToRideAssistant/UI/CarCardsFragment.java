@@ -12,6 +12,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import java.util.Arrays;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import pl.sokolak.TicketToRideAssistant.Domain.Game;
 import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.TtRA_Application;
@@ -19,15 +23,17 @@ import pl.sokolak.TicketToRideAssistant.TtRA_Application;
 import lombok.Builder;
 
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CarCardsFragment extends Fragment {
     @Builder.Default
-    private final int[] cardCounter = new int[1];
-    private final int maxCards;
-    private final int[] cardsNumbers;
-    private final boolean active;
-    private final boolean activeLong;
-    private final boolean oneColor;
-    private final int[] maxCardsNumbers;
+    private int[] cardCounter = new int[1];
+    private int maxCards;
+    private int[] cardsNumbers;
+    private boolean active;
+    private boolean activeLong;
+    private boolean oneColor;
+    private int[] maxCardsNumbers;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

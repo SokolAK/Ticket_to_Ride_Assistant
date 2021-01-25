@@ -1,5 +1,6 @@
 package pl.sokolak.TicketToRideAssistant.Fragments;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,9 +34,12 @@ import android.widget.TextView;
 
 import androidx.core.view.GravityCompat;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.io.Serializable;
+import java.util.Arrays;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Serializable {
     private Game game;
-    private Player player;
+    public Player player;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -44,7 +48,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         inflater.inflate(R.menu.drawer_nav, menu);
         MenuItem item = menu.findItem(R.id.nav_draw_cards_warehouse);
         item.setVisible(false);
-        return true;
+        //Hide three dots on toolbar
+        return false;
     }
 
     @Override
@@ -57,19 +62,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
         Intent intent = getIntent();
+        if(savedInstanceState != null) {
+            restartActivity(savedInstanceState, intent);
+        }
+
         int gamePosition = intent.getIntExtra("gamePosition", 0);
-        //String gameTitle = getResources().getStringArray(R.array.games)[gameId];
+        ((TtRA_Application) getApplication()).game = (Game) intent.getSerializableExtra("game");
+        game = ((TtRA_Application) getApplication()).game;
 
-        player = ((TtRA_Application) getApplication()).player;
-        game = Game.create(this, gamePosition);
-        ((TtRA_Application) getApplication()).game = game;
+        if(!setPlayer(intent)) {
+            ((TtRA_Application) getApplication()).game = Game.create(this, gamePosition);
+            game = ((TtRA_Application) getApplication()).game;
+            game.setPlayer(player);
+            player.setGame(game);
+            player.prepare();
+        } else {
+            game.setPlayer(player);
+            player.setGame(game);
+        }
 
-        game.setPlayer(player);
-        player.setGame(game);
-        player.prepare();
+        setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_top);
@@ -212,5 +225,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
         return super.dispatchTouchEvent( event );
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putSerializable("game", game);
+        savedInstanceState.putSerializable("player", player);
+    }
+
+    private void restartActivity(Bundle savedInstanceState, Intent intent) {
+        game = (Game) savedInstanceState.getSerializable("game");
+        player = (Player) savedInstanceState.getSerializable("player");
+        intent.putExtra("player", player);
+        intent.putExtra("game", game);
+        finish();
+        startActivity(intent);
+    }
+
+    private boolean setPlayer(Intent intent) {
+        boolean isInitialize = false;
+        if(intent.getSerializableExtra("player") != null) {
+            ((TtRA_Application) getApplication()).player = (Player) intent.getSerializableExtra("player");
+            isInitialize = true;
+        } else {
+            ((TtRA_Application) getApplication()).player = new Player();
+        }
+        player = ((TtRA_Application) getApplication()).player;
+        return isInitialize;
     }
 }

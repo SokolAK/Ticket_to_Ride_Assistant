@@ -33,6 +33,9 @@ public class ShowBuiltStationsFragment extends Fragment implements View.OnClickL
     private Player player;
     private Game game;
 
+    public ShowBuiltStationsFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View drawer = inflater.inflate(R.layout.fragment_show_built_stations, container, false);

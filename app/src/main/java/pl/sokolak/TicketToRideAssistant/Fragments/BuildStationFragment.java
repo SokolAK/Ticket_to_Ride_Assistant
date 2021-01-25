@@ -32,6 +32,9 @@ public class BuildStationFragment extends Fragment implements View.OnClickListen
     private Route route;
     private View drawer;
 
+    public BuildStationFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

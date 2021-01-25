@@ -2,13 +2,15 @@ package pl.sokolak.TicketToRideAssistant.Games.Europe;
 
 import android.content.Context;
 
+import java.io.Serializable;
+
 import pl.sokolak.TicketToRideAssistant.Database.DbReader;
 import pl.sokolak.TicketToRideAssistant.Domain.Game;
 import pl.sokolak.TicketToRideAssistant.Games.USA.USAPointsCalculator;
 import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.Util.Triplet;
 
-public class Europe extends Game {
+public class Europe extends Game implements Serializable {
     Context context;
 
     public Europe(Context context) {

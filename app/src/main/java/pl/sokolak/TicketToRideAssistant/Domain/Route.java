@@ -1,12 +1,14 @@
 package pl.sokolak.TicketToRideAssistant.Domain;
 
+import java.io.Serializable;
+
 import pl.sokolak.TicketToRideAssistant.R;
 import pl.sokolak.TicketToRideAssistant.UI.Card;
 
 import lombok.Data;
 
 @Data
-public class Route {
+public class Route implements Serializable {
     private static int counter;
     private int id;
     private String city1;

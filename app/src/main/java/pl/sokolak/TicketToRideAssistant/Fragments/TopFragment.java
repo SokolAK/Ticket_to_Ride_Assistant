@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import pl.sokolak.TicketToRideAssistant.Domain.Game;
@@ -34,6 +35,9 @@ public class TopFragment extends Fragment {
     private Player player;
     private Game game;
 
+    public TopFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_top, container, false);
@@ -47,7 +51,6 @@ public class TopFragment extends Fragment {
         List<TextTextItem> rows = getStatusList(activity);
         TextTextItemAdapter adapter = new TextTextItemAdapter(getContext(), rows);
         pointsList.setAdapter(adapter);
-
 
         for (Card card : game.getCards()) {
             card.setClickable(true);

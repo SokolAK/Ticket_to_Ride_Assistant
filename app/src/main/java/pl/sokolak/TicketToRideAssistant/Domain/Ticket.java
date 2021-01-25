@@ -1,10 +1,12 @@
 package pl.sokolak.TicketToRideAssistant.Domain;
 
+import java.io.Serializable;
+
 import lombok.Data;
 import pl.sokolak.TicketToRideAssistant.Calculators.ConnectionCalculator;
 
 @Data
-public class Ticket {
+public class Ticket implements Serializable {
     private static int counter;
     private int id;
     private String city1;

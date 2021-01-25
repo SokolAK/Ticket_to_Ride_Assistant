@@ -1,6 +1,7 @@
 package pl.sokolak.TicketToRideAssistant.Domain;
 
 import android.content.Context;
+import android.os.Parcelable;
 
 import pl.sokolak.TicketToRideAssistant.Calculators.DefaultPointsCalculator;
 import pl.sokolak.TicketToRideAssistant.Calculators.DefaultStatusCalculator;
@@ -14,6 +15,7 @@ import pl.sokolak.TicketToRideAssistant.R;
 
 import pl.sokolak.TicketToRideAssistant.UI.Card;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +25,7 @@ import pl.sokolak.TicketToRideAssistant.Util.Triplet;
 
 
 @Data
-public abstract class Game {
+public abstract class Game implements Serializable {
     private Player player;
     private int id;
     protected String title;

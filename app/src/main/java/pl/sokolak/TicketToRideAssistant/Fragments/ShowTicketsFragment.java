@@ -29,6 +29,9 @@ import static pl.sokolak.TicketToRideAssistant.Util.DimensionUtils.getDimension;
 public class ShowTicketsFragment extends Fragment implements View.OnClickListener {
     private boolean unlockDelete;
 
+    public ShowTicketsFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View drawer = inflater.inflate(R.layout.fragment_show_tickets, container, false);

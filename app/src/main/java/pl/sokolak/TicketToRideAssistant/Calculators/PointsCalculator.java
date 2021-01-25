@@ -2,6 +2,7 @@ package pl.sokolak.TicketToRideAssistant.Calculators;
 
 import android.content.Context;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import pl.sokolak.TicketToRideAssistant.Domain.Route;
 import pl.sokolak.TicketToRideAssistant.Domain.Ticket;
 import pl.sokolak.TicketToRideAssistant.Util.Pair;
 
-public interface PointsCalculator {
+public interface PointsCalculator extends Serializable {
     void setPlayer(Player player);
 
     int sumPoints();

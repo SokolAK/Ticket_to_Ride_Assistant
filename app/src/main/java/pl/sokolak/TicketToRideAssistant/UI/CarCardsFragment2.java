@@ -80,7 +80,7 @@ public class CarCardsFragment2 extends Fragment {
 
     private void refreshPage() {
         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-        CarCardsFragment2 carCardsFragment = CarCardsFragment2.builder().cardsNumbers(cardsNumbers).
+        CarCardsFragment carCardsFragment = CarCardsFragment.builder().cardsNumbers(cardsNumbers).
                 cardCounter(cardCounter).maxCards(maxCards).maxCardsNumbers(maxCardsNumbers).
                 active(active).activeLong(activeLong).oneColor(oneColor).
                 build();

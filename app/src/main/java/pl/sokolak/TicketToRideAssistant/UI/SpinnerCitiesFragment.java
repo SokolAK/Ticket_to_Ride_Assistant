@@ -33,6 +33,9 @@ public class SpinnerCitiesFragment extends Fragment {
     private Spinner spinner1;
     private Spinner spinner2;
 
+    public SpinnerCitiesFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View drawer = inflater.inflate(R.layout.custom_spinner, container, false);

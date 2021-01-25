@@ -1,5 +1,6 @@
 package pl.sokolak.TicketToRideAssistant.Calculators;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Set;
 import pl.sokolak.TicketToRideAssistant.Domain.Player;
 import pl.sokolak.TicketToRideAssistant.Domain.Route;
 
-public final class ConnectionCalculator {
+public final class ConnectionCalculator implements Serializable {
     private Set<Route> builtSegments;
     private Set<Route> builtRoutes;
     private int maxLength = 0;

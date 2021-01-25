@@ -39,6 +39,9 @@ public class AddTicketFragment extends Fragment implements View.OnClickListener,
     private String city2;
     private EditText pointsField;
 
+    public AddTicketFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

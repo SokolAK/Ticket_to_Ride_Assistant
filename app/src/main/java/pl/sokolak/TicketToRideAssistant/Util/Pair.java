@@ -1,6 +1,8 @@
 package pl.sokolak.TicketToRideAssistant.Util;
 
-public class Pair<F, S> {
+import java.io.Serializable;
+
+public class Pair<F, S> implements Serializable {
     public F first;
     public S second;
 

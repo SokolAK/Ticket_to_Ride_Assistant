@@ -30,6 +30,9 @@ public class SpinnerRouteFragment extends Fragment {
     private Player player;
     private char type;
 
+    public SpinnerRouteFragment() {
+    }
+
     public SpinnerRouteFragment(char type) {
         this.type = type;
     }
