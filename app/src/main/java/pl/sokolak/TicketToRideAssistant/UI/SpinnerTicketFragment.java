@@ -47,13 +47,13 @@ public class SpinnerTicketFragment extends Fragment {
 
         spinner1 = drawer.findViewById(R.id.spinner1);
         spinner2 = drawer.findViewById(R.id.spinner2);
-        manageSpinner1(drawer);
+        manageSpinner1();
         manageSpinner2(drawer);
 
         return drawer;
     }
 
-    private void manageSpinner1(View drawer) {
+    private void manageSpinner1() {
         List<String> cities1 = new ArrayList<>();
         for (Ticket ticket : game.getTickets()) {
             if (!ticket.isInHand()) {

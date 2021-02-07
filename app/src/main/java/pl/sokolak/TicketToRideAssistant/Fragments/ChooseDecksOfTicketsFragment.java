@@ -25,6 +25,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class ChooseDecksOfTicketsFragment extends Fragment implements View.OnClickListener {
+    private ListView checkableList;
 
     public ChooseDecksOfTicketsFragment() {
     }
@@ -33,7 +34,7 @@ public class ChooseDecksOfTicketsFragment extends Fragment implements View.OnCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View drawer = inflater.inflate(R.layout.fragment_choose_decks_of_tickets, container, false);
 
-        ListView checkableList = drawer.findViewById(R.id.decks_of_tickets_list);
+        checkableList = drawer.findViewById(R.id.decks_of_tickets_list);
         checkableList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         Game game = ((TtRA_Application) requireActivity().getApplication()).game;
@@ -48,9 +49,9 @@ public class ChooseDecksOfTicketsFragment extends Fragment implements View.OnCli
             checkableList.setItemChecked(i, (Boolean) deck.third);
         }
 
-        checkableList.setOnItemClickListener((parent, view, position, id) -> {
-            game.getTicketsDecks().get(position).third = !game.getTicketsDecks().get(position).third;
-        });
+//        checkableList.setOnItemClickListener((parent, view, position, id) -> {
+//            game.getTicketsDecks().get(position).third = !game.getTicketsDecks().get(position).third;
+//        });
 
         Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_tickets_decks);
@@ -67,8 +68,14 @@ public class ChooseDecksOfTicketsFragment extends Fragment implements View.OnCli
             case R.id.accept_button:
                 Game game = ((TtRA_Application) requireActivity().getApplication()).game;
                 Player player = ((TtRA_Application) requireActivity().getApplication()).player;
+
+                for (int i = 0; i < game.getTicketsDecks().size(); ++i) {
+                    game.getTicketsDecks().get(i).third = checkableList.isItemChecked(i);
+                }
+
                 game.updateTickets();
                 player.updateTickets();
+
                 requireActivity().getSupportFragmentManager().popBackStack();
                 break;
         }
