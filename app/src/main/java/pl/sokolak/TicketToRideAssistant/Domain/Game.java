@@ -37,15 +37,15 @@ public abstract class Game implements Serializable {
     protected int maxExtraCardsForTunnel;
     protected int carsToLocoTradeRatio;
     private HashMap<Integer, Integer> scoring = new HashMap<>();
-    protected HashMap<Integer, Integer> stationCost = new HashMap<>();
+    private HashMap<Integer, Integer> stationCost = new HashMap<>();
     private List<Card> cards = new ArrayList<>();
-    private List<Route> routes = new ArrayList<>();
-    private List<Ticket> tickets = new ArrayList<>();
+    protected List<Route> routes = new ArrayList<>();
+    protected List<Ticket> tickets = new ArrayList<>();
     protected String databaseName;
     protected int databaseVersion;
     private Context context;
     protected List<Triplet<String, String, Boolean>> ticketsDecks = new ArrayList<>();
-    private long ticketHash;
+    protected long ticketHash;
     protected boolean warehousesAvailable;
     protected boolean stationsAvailable;
     protected PointsCalculator pointsCalculator = new DefaultPointsCalculator(this);
@@ -79,8 +79,8 @@ public abstract class Game implements Serializable {
     public void prepareBaseGame() {
         setCards();
         //DbReader.readGeneralData(context, generalDatabaseName, generalDatabaseVersion, this);
-        routes = DbReader.readRoutes(context, databaseName, databaseVersion);
-        scoring = DbReader.readScoring(context, databaseName, databaseVersion);
+        //routes = DbReader.readRoutes(context, databaseName, databaseVersion);
+        //scoring = DbReader.readScoring(context, databaseName, databaseVersion);
     }
 
     public void setPlayer(Player player) {
@@ -101,20 +101,22 @@ public abstract class Game implements Serializable {
         cards.add(new Card(Card.CarCardColor.LOCO, R.drawable.loco));
     }
 
+//    public void updateTickets() {
+//        long newTicketHash = calculateTicketsHash();
+//        if (ticketHash != newTicketHash) {
+//            ticketHash = newTicketHash;
+//            tickets.clear();
+//            for (Triplet<String, String, Boolean> deck : ticketsDecks) {
+//                if (deck.third) {
+//                    tickets.addAll(DbReader.readTickets(context, databaseName, databaseVersion, (String) deck.first));
+//                }
+//            }
+//        }
+//    }
     public void updateTickets() {
-        long newTicketHash = calculateTicketsHash();
-        if (ticketHash != newTicketHash) {
-            ticketHash = newTicketHash;
-            tickets.clear();
-            for (Triplet<String, String, Boolean> deck : ticketsDecks) {
-                if (deck.third) {
-                    tickets.addAll(DbReader.readTickets(context, databaseName, databaseVersion, (String) deck.first));
-                }
-            }
-        }
     }
 
-    private long calculateTicketsHash() {
+    protected long calculateTicketsHash() {
         long hash = 0;
         for (Triplet<String, String, Boolean> deck : ticketsDecks) {
             int c = deck.third ? 1 : 0;

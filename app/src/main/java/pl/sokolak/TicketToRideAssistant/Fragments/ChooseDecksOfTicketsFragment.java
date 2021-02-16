@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import pl.sokolak.TicketToRideAssistant.Domain.Game;
 import pl.sokolak.TicketToRideAssistant.Domain.Player;
@@ -76,7 +77,8 @@ public class ChooseDecksOfTicketsFragment extends Fragment implements View.OnCli
                 game.updateTickets();
                 player.updateTickets();
 
-                requireActivity().getSupportFragmentManager().popBackStack();
+                Toast.makeText(getContext(), R.string.decks_updated, Toast.LENGTH_SHORT).show();
+                //requireActivity().getSupportFragmentManager().popBackStack();
                 break;
         }
     }

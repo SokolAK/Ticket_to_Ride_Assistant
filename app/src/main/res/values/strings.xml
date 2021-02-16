@@ -107,11 +107,12 @@
     <string name="TtRA_Europe_Tickets_1912_Long">Europe 1912. Long</string>
     <string name="TtRA_Europe_Tickets_1912_BigCities">Europe 1912. Big cities</string>
     <string name="TtRA_USA_Tickets_Base_Short">USA Base. Short</string>
-    <string name="TtRA_USA_Tickets_Base_BigCities">USA Base. BigCities</string>
-    <string name="TtRA_USA_Tickets_1910_Classic">USA 1910. Classic</string>
-    <string name="TtRA_USA_Tickets_1910_BigCities">USA 1910. BigCities</string>
+    <string name="TtRA_USA_Tickets_MysteryTrain">USA Mystery Train</string>
+    <string name="TtRA_USA_Tickets_1910">USA 1910</string>
+    <string name="TtRA_USA_Tickets_1910_Standard">USA 1910. Standard</string>
     <string name="TtRA_Nordic_Tickets_Base">Nordic Countries Base</string>
 
+    <string name="decks_updated">Ticket decks updated</string>
     <string name="choose_game">Choose your game</string>
     <string name="exit">Exit</string>
     <string name="exit_message">Do you want to exit?</string>
