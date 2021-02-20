@@ -91,7 +91,7 @@
     <string name="help_ticket">Tu znajduje się lista Twoich biletów. Zrealizowane bilety oznaczone są zielonym ptaszkiem, niezrezalizowane - czerwonym krzyżykiem.
         By usunąć połączenie, odbolokuj listę przy pomocy suwaka, a następnie przytrzymaj odpowiednią pozycję.
         By dobrać nowy bilet, naciśnij przycisk "Dobierz bilet". W nowym oknie wybierz miasta, a następnie zzakceptuj wybór zielonym przyciskiem.
-        Możesz również zdefiniować własny bilet (jeśli nie występuje w wybranych taliach biletów). Na ekranie dobierania biletu nacisniś przycisk "+".</string>
+        Możesz również zdefiniować własny bilet (jeśli nie występuje w wybranych taliach biletów). Na ekranie dobierania biletu naciśnij przycisk "+".</string>
     <string name="help_station">(Dostępne tylko w wybranych grach)
         Zawiera listę zbudowanych dworców.
         By usunąć zbudowany dworzec, odbolokuj listę przy pomocy suwaka, a następnie przytrzymaj odpowiednią pozycję.

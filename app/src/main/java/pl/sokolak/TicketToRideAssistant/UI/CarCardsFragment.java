@@ -81,6 +81,7 @@ public class CarCardsFragment extends Fragment {
             if (activeLong) {
                 if (cardsNumbers[position] > 0) {
                     cardsNumbers[position]--;
+                    game.getCards().get(position).setClickable(true);
                 }
                 if (cardCounter[0] > 0) {
                     cardCounter[0]--;
